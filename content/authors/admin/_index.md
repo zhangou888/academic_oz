@@ -81,6 +81,6 @@ I received my PhD in Educational Research, Evaluation, and Methodology from [Uni
 
 Prior to joining Pearson Psychometrics Service,  I was a Psychometrician II and team lead at clinical assessment branch in Pearson. While at clinical branch, I led multiple flagship clinical assessment products, including WISC-5, GFTA-3, KLPA-3, Quotient ADHD diagnosis test, TEACH-2 Behavior test. 
 
-Outside of psychometrics and statistical modeling, I am also a data scientist, and a programming lover, and a father of two.
+Outside of psychometrics and data science, I am also a programming lover, a football fan, and a father of two.
 
 

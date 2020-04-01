@@ -10,15 +10,15 @@ authors:
 superuser: true
 
 # Role/position
-role: Research Scientist & Data Scientist
+role: Research Scientist &  Data Scientist
 
 # Organizations/Affiliations
 organizations:
 - name: Pearson Psychometrics Service
-  url: ""
+  url: https://www.pearsonassessments.com/
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include psychometrics, applied statistics, data visualization, machine learning, and general data science.
+bio: I'm a research scientist, psychometrician, and data scientist, who loves psychometrics, applied statistics, general data science, and programming.
 
 interests:
 - Psychometrics
@@ -44,7 +44,7 @@ education:
 #   For an email link, use "fas" icon pack, "envelope" icon, and a link in the
 #   form "mailto:your-email@example.com" or "#contact" for contact widget.
 social:
-- icon: envelope
+- icon: paper-plane
   icon_pack: fas
   link: '#contact'  # For a direct email link, use "mailto:zhangou888@gmail.com".
 - icon: twitter
@@ -56,6 +56,9 @@ social:
 - icon: github
   icon_pack: fab
   link: https://github.com/zhangou888
+- icon: linkedin-in
+  icon_pack: fab
+  link: https://www.linkedin.com/in/zhangou/
   
 # Link to a PDF of your resume/CV from the About widget.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
@@ -72,8 +75,8 @@ user_groups:
 - Researchers
 - Visitors
 ---
-Ou Zhang is a data scientist and Psychometrician at Pearson. His research interests include psychometrics, applied statistics, data visualization, machine learning, and general data science. He currently works with the psychometrics service team at Pearson, where I focus on data science, psychometrics modeling and analysis, testing development, and consulting. I’m also the data geek with R, Python and SAS.
+I am a data scientist and psychometrician at [Pearson](https://www.pearsonassessments.com/). My research interests include psychometrics, applied statistics, data visualization, machine learning, and general data science. I currently works with the psychometrics service team at Pearson, where I focus on data science, psychometrics modeling and analysis, testing development, and consulting. 
 
-He has previously worked at clinical assessment branch at Pearson, playing a key role in multiple flagship clinical assessment products, including WISC-5, GFTA-3, KLPA-3, Quotient ADHD diagnosis test, TEACH-2 Behavior test. Outside of psychometrics and statistical modeling, Ou has also been a data scientist and a R programming educator.
+I received my PhD in Educational Research, Evaluation, and Methodology from University of Florida in 2012. Prior to joining Pearson Psychometrics Service,  I was a Psychometrician II and team lead at clinical assessment branch in Pearson. While at clinical branch, I led multiple flagship clinical assessment products, including WISC-5, GFTA-3, KLPA-3, Quotient ADHD diagnosis test, TEACH-2 Behavior test. Outside of psychometrics and statistical modeling, I am also a data scientist, and a programming lover, and a father of two.
 
 

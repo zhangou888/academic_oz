@@ -1,0 +1,108 @@
+---
+title: Fight with TinyTex and Rmarkdown can't knit to PDF on my PC
+author: Ou Zhang
+date: '2020-02-23'
+slug: fight-with-tinytex-and-rmarkdown-can-t-knit-to-pdf-on-my-pc
+categories:
+  - R
+  - LaTex
+  - Rmarkdown
+tags:
+  - R Markdown
+---
+
+## A little bit History
+
+I started to learn R markdown since 2018. 
+
+```{r fig1, out.width='20%', fig.align='center', fig.pos='h', fig.cap='R Markdown',echo = FALSE}
+
+    knitr::include_graphics("rmarkdown.jpg", error = FALSE)
+
+```
+
+After attending RStudio conference 2019 @Austin, I decided write my tech report for project in **R markdown**.
+
+```{r fig2, out.width='50%', fig.align='center', fig.pos='h', fig.cap='RStudio Conf 2019',echo = FALSE}
+
+    knitr::include_graphics("rstudioconf2019.jpg", error = FALSE)
+
+```
+
+Although it's a tough process, I finally nailed it and wrote at least 2 tech report in Rmarkdown then produced the final tech report in **PDF** for client.
+
+## Year 2020 Story
+
+Then, we are getting into year 2020. Clients asked us to update tech report for this year. I was so confident at the beginning, thinking what I need to do are changing the parameters and hitting the **knit** button. 
+
+Then, **the reality hit me**.
+
+I was unable to knit any rmarkdown file to PDF document and a lengthy error message showed up. 
+Here is the error message.
+
+```{r fig3, out.width='85%', fig.align='center', fig.pos='h', fig.cap='Cannot knit PDF error',echo = FALSE}
+
+    knitr::include_graphics("screen1.jpg", error = FALSE)
+
+```
+
+OK, fine! Let's **debugging**.
+
+I first went to search the [**stackoverflow**](https://stackoverflow.com/) and found that after version 1.8, Rmarkdown automatically connects to package-TinyTex. 
+
+Then I went to [TinyTex webpage](https://yihui.org/tinytex/r/) and it seems like there are some answers to my problem.
+
+
+```{r fig4, out.width='20%', fig.align='center', fig.pos='h', fig.cap='TinyTex',echo = FALSE}
+
+    knitr::include_graphics("tinytex.jpg", error = FALSE)
+
+```
+I started to try different solutions and even created an [R code](/R_code/tinytex_install_code.R) (*Feel free to download*) for the TinyTex debugging. 
+
+After more than 2 days trials, I thought it might be a good idea to post my issue to the online community so that the expert (probably Yihui himself) could help me out. 
+
+[My question post](https://community.rstudio.com/t/tinytex-isnt-working-and-cant-generate-pdf-file-in-rmarkdown/53916)
+
+After 12 hours, I even received Yihui's reply--> Oh Yeah!
+
+```{r fig5, out.width='150%', fig.align='center', fig.pos='h', fig.cap='Yihui reply',echo = FALSE}
+
+    knitr::include_graphics("yihui.jpg", error = FALSE)
+
+```
+
+However, nothing really worked out:( 
+
+my Rstudio constantly received this error message.
+
+```{r fig6, out.width='85%', fig.align='center', fig.pos='h', fig.cap='What a creepy error',echo = FALSE}
+
+    knitr::include_graphics("screen2.jpg", error = FALSE)
+
+```
+
+Alright then! I came and I tried. Now it's time to move on and reinstall the entire WINDOWS system, I guess. 
+
+The possible root cause might be I have installed multiple versions of Latex distribution in the past. 
+
+But anyway, it's a good debugging experience and at least, I let my patience play out entire process. 
+
+```{r fig7, out.width='50%', fig.align='center', fig.pos='h', fig.cap=' ',echo = FALSE}
+
+    knitr::include_graphics("nothing.jpg", error = FALSE)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

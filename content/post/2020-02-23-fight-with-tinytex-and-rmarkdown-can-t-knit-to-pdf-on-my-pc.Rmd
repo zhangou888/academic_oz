@@ -17,7 +17,7 @@ I started to learn R markdown since 2018.
 
 ```{r fig1, out.width='20%', fig.align='center', fig.pos='h', fig.cap='R Markdown',echo = FALSE}
 
-    knitr::include_graphics("rmarkdown.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/Tinytex/rmarkdown.jpg", error = FALSE)
 
 ```
 
@@ -25,7 +25,7 @@ After attending RStudio conference 2019 @Austin, I decided write my tech report 
 
 ```{r fig2, out.width='50%', fig.align='center', fig.pos='h', fig.cap='RStudio Conf 2019',echo = FALSE}
 
-    knitr::include_graphics("rstudioconf2019.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/Tinytex/rstudioconf2019.jpg", error = FALSE)
 
 ```
 
@@ -42,7 +42,7 @@ Here is the error message.
 
 ```{r fig3, out.width='85%', fig.align='center', fig.pos='h', fig.cap='Cannot knit PDF error',echo = FALSE}
 
-    knitr::include_graphics("screen1.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/Tinytex/screen1.jpg", error = FALSE)
 
 ```
 
@@ -55,7 +55,7 @@ Then I went to [TinyTex webpage](https://yihui.org/tinytex/r/) and it seems like
 
 ```{r fig4, out.width='20%', fig.align='center', fig.pos='h', fig.cap='TinyTex',echo = FALSE}
 
-    knitr::include_graphics("tinytex.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/Tinytex/tinytex.jpg", error = FALSE)
 
 ```
 I started to try different solutions and even created an [R code](/R_code/tinytex_install_code.R) (*Feel free to download*) for the TinyTex debugging. 
@@ -68,7 +68,7 @@ After 12 hours, I even received Yihui's reply--> Oh Yeah!
 
 ```{r fig5, out.width='150%', fig.align='center', fig.pos='h', fig.cap='Yihui reply',echo = FALSE}
 
-    knitr::include_graphics("yihui.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/Tinytex/yihui.jpg", error = FALSE)
 
 ```
 
@@ -78,7 +78,7 @@ my Rstudio constantly received this error message.
 
 ```{r fig6, out.width='85%', fig.align='center', fig.pos='h', fig.cap='What a creepy error',echo = FALSE}
 
-    knitr::include_graphics("screen2.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/Tinytex/screen2.jpg", error = FALSE)
 
 ```
 
@@ -90,7 +90,7 @@ But anyway, it's a good debugging experience and at least, I let my patience pla
 
 ```{r fig7, out.width='50%', fig.align='center', fig.pos='h', fig.cap=' ',echo = FALSE}
 
-    knitr::include_graphics("nothing.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/Tinytex/nothing.jpg", error = FALSE)
 
 ```
 

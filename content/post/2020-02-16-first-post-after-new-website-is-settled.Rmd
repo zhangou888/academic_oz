@@ -19,7 +19,7 @@ Today is Sunday 2-16-2020. Alex and I went to soccer game this morning to cheer 
 
 ```{r fig1, out.width='50%', fig.align='center', fig.pos='h', fig.cap='Alex and I playing soccer',echo = FALSE}
 
-    knitr::include_graphics("Alex_me_play.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/play_soccer/Alex_me_play.jpg", error = FALSE)
 
 ```
 
@@ -28,7 +28,7 @@ But Alex and I had a great time this morning. We kicked soccer balls to each oth
 
 ```{r fig2, out.width='35%', fig.align='center', fig.pos='h', fig.cap='Alex is kicking',echo = FALSE, out.extra="style='transform:rotate(90deg);'"}
 
-    knitr::include_graphics("Alex1.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/play_soccer/Alex1.jpg", error = FALSE)
 ```
 
 
@@ -37,7 +37,7 @@ Alex really enjoy playing soccer! I wish he improve his skill fast.
 
 ```{r fig3, out.width='35%', fig.align='center', fig.pos='h', fig.cap='Alex loves play soccer',echo = FALSE, out.extra="style='transform:rotate(90deg);'"}
 
-    knitr::include_graphics("Alex2.jpg", error = FALSE)
+    knitr::include_graphics("/img/post/play_soccer/Alex2.jpg", error = FALSE)
 
 ```
 

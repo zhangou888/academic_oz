@@ -1,0 +1,81 @@
+---
+title: Fight with TinyTex and Rmarkdown can't knit to PDF on my PC
+author: Ou Zhang
+date: '2020-02-23'
+slug: fight-with-tinytex-and-rmarkdown-can-t-knit-to-pdf-on-my-pc
+categories:
+  - R
+  - LaTex
+  - Rmarkdown
+tags:
+  - R Markdown
+---
+
+
+
+<div id="a-little-bit-history" class="section level2">
+<h2>A little bit History</h2>
+<p>I started to learn R markdown since 2018.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig1"></span>
+<img src="/img/post/Tinytex/rmarkdown.jpg" alt="R Markdown" width="20%" />
+<p class="caption">
+Figure 1: R Markdown
+</p>
+</div>
+<p>After attending RStudio conference 2019 <span class="citation">@Austin</span>, I decided write my tech report for project in <strong>R markdown</strong>.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig2"></span>
+<img src="/img/post/Tinytex/rstudioconf2019.jpg" alt="RStudio Conf 2019" width="50%" />
+<p class="caption">
+Figure 2: RStudio Conf 2019
+</p>
+</div>
+<p>Although it’s a tough process, I finally nailed it and wrote at least 2 tech report in Rmarkdown then produced the final tech report in <strong>PDF</strong> for client.</p>
+</div>
+<div id="year-2020-story" class="section level2">
+<h2>Year 2020 Story</h2>
+<p>Then, we are getting into year 2020. Clients asked us to update tech report for this year. I was so confident at the beginning, thinking what I need to do are changing the parameters and hitting the <strong>knit</strong> button.</p>
+<p>Then, <strong>the reality hit me</strong>.</p>
+<p>I was unable to knit any rmarkdown file to PDF document and a lengthy error message showed up.
+Here is the error message.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig3"></span>
+<img src="/img/post/Tinytex/screen1.jpg" alt="Cannot knit PDF error" width="85%" />
+<p class="caption">
+Figure 3: Cannot knit PDF error
+</p>
+</div>
+<p>OK, fine! Let’s <strong>debugging</strong>.</p>
+<p>I first went to search the <a href="https://stackoverflow.com/"><strong>stackoverflow</strong></a> and found that after version 1.8, Rmarkdown automatically connects to package-TinyTex.</p>
+<p>Then I went to <a href="https://yihui.org/tinytex/r/">TinyTex webpage</a> and it seems like there are some answers to my problem.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig4"></span>
+<img src="/img/post/Tinytex/tinytex.jpg" alt="TinyTex" width="20%" />
+<p class="caption">
+Figure 4: TinyTex
+</p>
+</div>
+<p>I started to try different solutions and even created an <a href="/R_code/tinytex_install_code.R">R code</a> (<em>Feel free to download</em>) for the TinyTex debugging.</p>
+<p>After more than 2 days trials, I thought it might be a good idea to post my issue to the online community so that the expert (probably Yihui himself) could help me out.</p>
+<p><a href="https://community.rstudio.com/t/tinytex-isnt-working-and-cant-generate-pdf-file-in-rmarkdown/53916">My question post</a></p>
+<p>After 12 hours, I even received Yihui’s reply–&gt; Oh Yeah!</p>
+<div class="figure" style="text-align: center"><span id="fig:fig5"></span>
+<img src="/img/post/Tinytex/yihui.jpg" alt="Yihui reply" width="150%" />
+<p class="caption">
+Figure 5: Yihui reply
+</p>
+</div>
+<p>However, nothing really worked out:(</p>
+<p>my Rstudio constantly received this error message.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig6"></span>
+<img src="/img/post/Tinytex/screen2.jpg" alt="What a creepy error" width="85%" />
+<p class="caption">
+Figure 6: What a creepy error
+</p>
+</div>
+<p>Alright then! I came and I tried. Now it’s time to move on and reinstall the entire WINDOWS system, I guess.</p>
+<p>The possible root cause might be I have installed multiple versions of Latex distribution in the past.</p>
+<p>But anyway, it’s a good debugging experience and at least, I let my patience play out entire process.</p>
+<div class="figure" style="text-align: center">
+<img src="/img/post/Tinytex/nothing.jpg" alt=" " width="50%" />
+<p class="caption">
+</p>
+</div>
+</div>

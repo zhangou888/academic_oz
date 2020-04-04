@@ -75,12 +75,12 @@ user_groups:
 - Researchers
 - Visitors
 ---
-I am a data scientist and psychometrician at [Pearson](https://www.pearsonassessments.com/). My research interests include psychometrics, applied statistics, data visualization, machine learning, and general data science. I currently works with the psychometrics service team at Pearson, where I focus on data science, psychometrics modeling and analysis, testing development, and consulting. 
+I am a data scientist and psychometrician at [Pearson](https://www.pearsonassessments.com/). My research interests include psychometrics, applied statistics, data visualization, machine learning, and general data science. My current work mainly focuses on data science, psychometrics modeling, statistical analysis, testing development, and consulting. 
 
 I received my PhD in Educational Research, Evaluation, and Methodology from [University of Florida](http://www.ufl.edu/) in 2012. 
 
 Prior to joining Pearson Psychometrics Service,  I was a Psychometrician II and team lead at clinical assessment branch in Pearson. While at clinical branch, I led multiple flagship clinical assessment products, including WISC-5, GFTA-3, KLPA-3, Quotient ADHD diagnosis test, TEACH-2 Behavior test. 
 
-Outside of psychometrics and data science, I am also a programming lover, a football fan, and a father of two.
+Outside of psychometrics and data science, I am also a programming lover, a sport fan, and a father of two wonderful kids.
 
 

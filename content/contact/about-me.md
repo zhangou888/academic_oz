@@ -67,8 +67,9 @@ I have written numerous scientific [publications](/publication) on psychometrics
 	<img src="ncme_2011.JPG" class="center-block" alt="NCME 2011 Poster" style="width:40%;height:20%;">
 </p>
 
-While at UF, I became an avid user of the statistical programming language R, Python, and SAS, both in the lab as a research fellow and in the classroom as a teaching assistant. I developed a passion for programming and education, and during my tenure at Pearson I developed and taught multiple 
-[training sessions](/categories/talks/) and [workshops](/categories/workshop/).
+While at UF, I became an enthusiastic coder including R, Python, and SAS, both in the lab as a research fellow and in the classroom as a teaching assistant. 
+I developed a passion for programming and data science, and during my tenure at Pearson I developed and gave talks on multiple 
+[training seminars](/categories/talks/).
 
 You can follow my current work for [My projects on GitHub](https://github.com/zhangou888). 
 

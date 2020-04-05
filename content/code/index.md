@@ -1,5 +1,5 @@
 ---
-title: Code Script
+title: Code
 
 # View.
 #   1 = List

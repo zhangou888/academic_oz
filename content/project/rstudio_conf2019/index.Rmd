@@ -17,6 +17,7 @@ links:
   icon_pack: fas
   name: Notes
   url: ../../slides/rstudio_conf_notes.html
+  
 - icon: github
   icon_pack: fab
   name: source file

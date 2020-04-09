@@ -1,0 +1,31 @@
+---
+title: RStudio Conference 2019 Notes @Austin
+date: "2019-01-18 T00:00:00Z"
+external_link: "https://rpubs.com/zhangou888/rstd_conf2019"
+image:
+  caption: "Photo by Ben Carney on RStudio"
+  focal_point: Smart
+summary: A RStudio Conference 2019 Notes @Austin 
+tags:
+- R
+url_code: ""
+url_pdf: ""
+url_slides: ""
+url_video: ""
+links:
+- icon: flask
+  icon_pack: fas
+  name: Notes
+  url: ../../slides/rstudio_conf_notes.html
+- icon: github
+  icon_pack: fab
+  name: source file
+  url: https://github.com/zhangou888/rstudio_2019/blob/master/rstudio_conf_notes.Rmd
+
+---
+
+Here is a notes slide:
+
+```{r echo = FALSE}
+knitr::include_url('https://ouzhang.me/slides/rstudio_conf_notes.html')
+```

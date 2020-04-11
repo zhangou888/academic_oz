@@ -26,20 +26,20 @@ subtitle = ""
     tag = "*"
   
   [[content.filter_button]]
-    name = "R"
-    tag = "R"
-    
-  [[content.filter_button]]
-    name = "Python"
-    tag = "Python"
-
-  [[content.filter_button]]
     name = "Psychometrics"
     tag = "Psychometrics"
   
   [[content.filter_button]]
     name = "Data Science"
     tag = "Data Science"
+	
+  [[content.filter_button]]
+    name = "R"
+    tag = "R"
+    
+  [[content.filter_button]]
+    name = "Python"
+    tag = "Python"
 	
   [[content.filter_button]]
     name = "Other"

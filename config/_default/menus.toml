@@ -7,22 +7,22 @@
 
 [[main]]
   name = "Blog"
-  url = "/post"
+  url = "#posts"
   weight = 10
 
 [[main]]
   name = "Projects"
-  url = "/project"
+  url = "#projects"
   weight = 30
 
 [[main]]
   name = "Talks"
-  url = "/talks"
+  url = "#talks"
   weight = 50
 
 [[main]]
   name = "Resources"
-  url = "/resource"
+  url = "#resources"
   weight = 60
   
 [[main]]

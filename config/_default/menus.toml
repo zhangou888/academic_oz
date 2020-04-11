@@ -13,26 +13,26 @@
 [[main]]
   name = "Projects"
   url = "/project"
-  weight = 20
+  weight = 30
 
 [[main]]
   name = "Talks"
   url = "/talks"
-  weight = 30
+  weight = 50
 
 [[main]]
   name = "Resources"
   url = "/resource"
-  weight = 40
+  weight = 60
   
 [[main]]
   name = "About / Contact"
   url = "/contact"
-  weight = 50
+  weight = 70
 
 # Link to a PDF of your resume/CV from the menu.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
 [[main]]
     name = "CV"
     url = "pdf/cv.pdf"
-    weight = 60
+    weight = 80

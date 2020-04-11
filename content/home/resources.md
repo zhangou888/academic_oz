@@ -30,16 +30,20 @@ subtitle = ""
     tag = "R"
     
   [[content.filter_button]]
-    name = "Software"
-    tag = "software"
+    name = "Python"
+    tag = "Python"
 
   [[content.filter_button]]
-    name = "Workshop"
-    tag = "workshop"
+    name = "Psychometrics"
+    tag = "Psychometrics"
   
   [[content.filter_button]]
-    name = "Course"
-    tag = "course"
+    name = "Data Science"
+    tag = "Data Science"
+	
+  [[content.filter_button]]
+    name = "Other"
+    tag = "Other"
     
 
 [design]

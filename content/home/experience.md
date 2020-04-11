@@ -2,8 +2,8 @@
 # Experience widget.
 widget = "experience"  # See https://sourcethemes.com/academic/docs/page-builder/
 headless = true  # This file represents a page section.
-active = false  # Activate this widget? true/false
-weight = 40  # Order that this section will appear.
+active = true  # Activate this widget? true/false
+weight = 20  # Order that this section will appear.
 
 title = "Experience"
 subtitle = ""
@@ -18,27 +18,31 @@ date_format = "Jan 2006"
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 [[experience]]
-  title = "CEO"
-  company = "GenCoin"
-  company_url = ""
-  location = "California"
-  date_start = "2017-01-01"
+  title = "Data Scientist & Research Scientist"
+  company = "Pearson Psychometrics Service"
+  company_url = "https://www.pearsonassessments.com/"
+  location = "San Antonio, Texas"
+  date_start = "2017-03-27"
   date_end = ""
   description = """
-  Responsibilities include:
-  
-  * Analysing
-  * Modelling
-  * Deploying
   """
 
 [[experience]]
-  title = "Professor"
-  company = "University X"
-  company_url = ""
-  location = "California"
-  date_start = "2016-01-01"
-  date_end = "2016-12-31"
-  description = """Taught electronic engineering and researched semiconductor physics."""
+  title = "Psychometrician II & Team Lead"
+  company = "Pearson Clinical Assessment"
+  company_url = "https://www.pearsonassessments.com/professional-assessments.html"
+  location = "San Antonio, Texas"
+  date_start = "2012-08-20"
+  date_end = "2017-03-24"
+  description = """ """
+  
+[[experience]]
+  title = "Research Fellow & Statistical Consultant"
+  company = "Assessment and Program Evaluation Services, University of Florida"
+  company_url = "https://education.ufl.edu/capes/"
+  location = "Gainesville, Florida"
+  date_start = "2008-11-01"
+  date_end = "2012-08-15"
+  description = """ """
 
 +++

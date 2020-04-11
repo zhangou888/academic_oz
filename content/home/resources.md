@@ -1,9 +1,9 @@
 +++
-# A Codes section created with the Portfolio widget.
+# A Resource section created with the Portfolio widget.
 widget = "portfolio"  # See https://sourcethemes.com/academic/docs/page-builder/
 headless = true  # This file represents a page section.
 active = true # Activate this widget? true/false
-weight = 55  # Order that this section will appear.
+weight = 60  # Order that this section will appear.
 
 title = "Resources"
 subtitle = ""
@@ -30,14 +30,18 @@ subtitle = ""
     tag = "R"
     
   [[content.filter_button]]
-    name = "Python"
-    tag = "Python"
+    name = "Software"
+    tag = "software"
 
   [[content.filter_button]]
-    name = "SAS"
-    tag = "SAS"
+    name = "Workshop"
+    tag = "workshop"
   
- 
+  [[content.filter_button]]
+    name = "Course"
+    tag = "course"
+    
+
 [design]
   # Choose how many columns the section has. Valid values: 1 or 2.
   columns = "1"

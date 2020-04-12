@@ -47,7 +47,7 @@ You can fidn the post below.
 
 8.	**Do document your work.** You probably cannot have enough describing where data files came from, what scripts do what, how particular pieces of code work. Avoid writing comments that just repeat what the code says, and try and write comments that describe your intent, reasons for approaches, sources of data / code / algorithm — things that will make your life easier when you come back to a project.
 
-9.	Keep things tidy. Tidy data is a wonderful data manipulation philosophy proposed by the great Hadley Wickham. You can find his paper [here](https://vita.had.co.nz/papers/tidy-data.pdf). In my personal opinion, every data scientist or statistical analyst should read this paper once. 
+9.	**Keep things tidy**. Tidy data is a wonderful data manipulation philosophy proposed by the great [**Hadley Wickham**](http://hadley.nz/). You can find his paper **[here](https://vita.had.co.nz/papers/tidy-data.pdf)**. In my personal opinion, every data scientist or statistical analyst should read this paper once. 
 
 10.	Indent your code, and do it consistently (I usually set my auto-indentation by 4-space). There are many styles (google around to be amazed) but proper indentation is the difference between easy to read and hard to read code, as indent depth implies something about program structure. Take our variance function from earlier.
 

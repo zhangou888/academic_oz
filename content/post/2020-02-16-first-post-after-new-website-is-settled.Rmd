@@ -11,10 +11,14 @@ output:
     dev: svg
 ---
 
-This is the first post I create afte the website is settled. 
+This is the first post I created after my personal website is set. 
 
-Today is Sunday 2-16-2020. Alex and I went to soccer game this morning to cheer up my teammate. Luckily, our team won 4:1. I was injuired hitting by a 300 lbs guy with full speed on my chest 2 weeks ago. So, I couldn't dressed up and played today. 
+This is the 2nd time I've built my personal website. Last time, I was in graduate school still. 
 
+Today is Sunday 2-16-2020. 
+This morning Alex and I went to our local team's soccer game to cheer up my teammate and experience the true soccer game after weeks of his first soccer shot training. 
+
+Unfortunately, I got injured a week before, hitting by a 300 lbs guy with full speed on my chest. So, I couldn't dressed up and played today. But **our team won 4:1.** Yeah! Alex really enjoy watching the game and played soccer with Daddy on the sideline. 
 
 
 ```{r fig1, out.width='50%', fig.align='center', fig.pos='h', fig.cap='Alex and I playing soccer',echo = FALSE}
@@ -23,19 +27,17 @@ Today is Sunday 2-16-2020. Alex and I went to soccer game this morning to cheer 
 
 ```
 
-But Alex and I had a great time this morning. We kicked soccer balls to each other. Alex made a couple of shots to the goal. I am so proud of him.
+Alex and I had a great time this morning. We kicked soccer ball back and forth. Alex made a couple of good shots to the goal. I am so proud of him.
 
 
-```{r fig2, out.width='35%', fig.align='center', fig.pos='h', fig.cap='Alex is kicking',echo = FALSE, out.extra="style='transform:rotate(90deg);'"}
+```{r fig2, out.width='35%', fig.align='center', fig.pos='h', fig.cap='Alex is kicking',echo = FALSE}
 
     knitr::include_graphics("/img/post/play_soccer/Alex1.jpg", error = FALSE)
 ```
 
+Alex really enjoy playing soccer! I wish he improves his skill fast.
 
-
-Alex really enjoy playing soccer! I wish he improve his skill fast.
-
-```{r fig3, out.width='35%', fig.align='center', fig.pos='h', fig.cap='Alex loves play soccer',echo = FALSE, out.extra="style='transform:rotate(90deg);'"}
+```{r fig3, out.width='35%', fig.align='center', fig.pos='h', fig.cap='Alex loves play soccer',echo = FALSE}
 
     knitr::include_graphics("/img/post/play_soccer/Alex2.jpg", error = FALSE)
 

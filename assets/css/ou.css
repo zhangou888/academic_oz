@@ -249,6 +249,13 @@ hr {
   padding: 0;
 }
 
+/* define card preview image size */
+.card .card-image {
+	display: block;
+	position: relative;
+	max-width: 200px;
+}
+
 /* images more like cards; iframes more seamless */
 
 img {

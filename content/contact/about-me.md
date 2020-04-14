@@ -56,7 +56,7 @@ I am now a data scientist and psychometrician at [Pearson Psychometrics Service]
 Prior to that, I was an psychometrician II and team lead at [Pearson Clinical Assessment](https://www.pearsonassessments.com/professional-assessments.html), and research fellow at [Assessment and Program Evaluation Services, University of Florida](https://education.ufl.edu/capes/).
 
 <p align="center">
-	<img src="wisc5_int.jpg" class="center-block" alt="One assessment project I led is published" style="width:40%;height:20%;">
+	<img src="wisc5_int.jpg" class="center-block" alt="One assessment project I led is published" style="width:60%;height:30%;">
 </p>
 
 My [research](https://www.github.com/zhangou888) mainly focuses on data science, psychometrics (i.e., MIRT, equating, norming), statistical modeling, and testing development.
@@ -64,7 +64,7 @@ My [research](https://www.github.com/zhangou888) mainly focuses on data science,
 I have written numerous scientific [publications](/publication) on psychometrics, test equating, norming and have presented my research at over 10 international conferences.
 
 <p align="center">
-	<img src="ncme_2011.JPG" class="center-block" alt="NCME 2011 Poster" style="width:40%;height:20%;">
+	<img src="ncme_2011.JPG" class="center-block" alt="NCME 2011 Poster" style="width:60%;height:30%;">
 </p>
 
 While at UF, I became an enthusiastic coder including R, Python, and SAS, both in the lab as a research fellow and in the classroom as a teaching assistant. 
@@ -76,7 +76,7 @@ You can follow my current work for [My projects on GitHub](https://github.com/zh
 In my free time, I love watching and participating in all types of sports–football, basketball, baseball, soccer, swimming, etc. 
 
 <p align="center">
-	<img align="center" src="soccer.jpg" class="center-block" alt="Play soccer 2020" style="width:40%;height:25%;">. 
+	<img align="center" src="soccer.jpg" class="center-block" alt="Play soccer 2020" style="width:60%;height:35%;">. 
 </p>
 Thank you so much for reading.
 

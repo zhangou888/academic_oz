@@ -129,7 +129,7 @@ The 2nd parallel analysis example is from a factor anlaysis tutorial document by
 
 You can find this document [here](https://github.com/zhangou888/parallel_analysis/blob/master/R/%5BR_Tutorial%5D_FactorAnalysis.pdf).
 
-```{r psych1, echo = TRUE, eval = TRUE, message=FALSE, include = TRUE}
+```{r psych1, echo = TRUE, eval = TRUE, message=FALSE, include = TRUE, fig.show='hide'}
 library(psych)
 data("bfi")
 
@@ -153,11 +153,14 @@ cortest.bartlett(bfi[1:25])
 
 # Test 1: Scree Plot
 bfi[,1:25] %>% scree()
-
+```
+![](figure/psych1-1.png)
+```{r psych2, echo = TRUE, eval = TRUE, message=FALSE, include = TRUE, fig.show='hide'}
 # Test 2: Parallel Analysis
 bfi[,1:25] %>% fa.parallel()
-
 ```
+
+![](figure/psych1-2.png)
 
 I also found that a web post by Sakaluk & Short (2016) provides a very good R code example using `psych` and `ggplot` to do the parallel analysis.
 
@@ -165,7 +168,7 @@ I also found that a web post by Sakaluk & Short (2016) provides a very good R co
 
 You can find the web post [here](https://sakaluk.wordpress.com/2016/05/26/11-make-it-pretty-scree-plots-and-parallel-analysis-using-psych-and-ggplot2/#parallel).
 
-```{r psych2, echo = TRUE, eval = TRUE, message=FALSE, include = TRUE}
+```{r psych3, echo = TRUE, eval = TRUE, message=FALSE, include = TRUE, fig.show='hide'}
 
 library(psych)
 library(ggplot2)
@@ -218,7 +221,10 @@ parallel = fa.parallel(efa.data,      # specify our data frame;
                        SMC = TRUE,    # indicate that we want to use squared multiple correlations (SMCs)
                        quant = .95)   # specify that we would like the 95th quantile
 
+```
+![](figure/psych2-1.png)
 
+```{r psych4, echo = TRUE, eval = TRUE, message=FALSE, include = TRUE, fig.show='hide'}
 
 # ---  Making a Pretty Scree Plot with Parallel Analysis Using ggplot2 --- # 
 # STEP 1: Create data frame from observed eigenvalue data
@@ -284,6 +290,7 @@ p
 # and you've got yourself a pretty scree plot with parallel analysis:
 # ggsave('parallel.png', width=6, height=6, unit='in', dpi=300)
 ```
+![](figure/psych2-2.png)
 
 Finally, William Revelle's `psych` package tutorial document is helpful too.
 

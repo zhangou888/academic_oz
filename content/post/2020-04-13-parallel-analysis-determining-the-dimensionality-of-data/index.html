@@ -20,6 +20,11 @@ image:
   focal_point: 'Smart'
   preview_only: no
 projects: []
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 1
 ---
 
 
@@ -29,7 +34,7 @@ projects: []
 <p>Then, I just started searching materials online and create some source code in both <code>SAS</code> and <code>R</code>.</p>
 <p>So, before I start sharing materials, we need to know what is parallel analysis and how are we going to use it in our analysis.</p>
 <div id="what-is-parallel-analysis" class="section level2">
-<h2>WHAT IS PARALLEL ANALYSIS</h2>
+<h2><span class="header-section-number">0.1</span> WHAT IS PARALLEL ANALYSIS</h2>
 <p>When we operate factor analysis, the first decision that we will face in our factor analysis is the decision as to the number of factors that we will need to extract, in order to achieve the most parsimonious (but still interpretatable) factor structure.</p>
 <p>There are a number of methods that we could use, but the two most commonly employed methods are the <strong>scree plot</strong>, and <strong>parallel analysis</strong>.</p>
 <p>So here’s how parallel analysis helps you to decide how may factors to retain. You start with creating a scree plot, in which you plot the eigenvalues (variance explained), in descending order, of each factor you could conceivably extract. The scree plot is so-named because of the scree test proposed by Cattell (1966), who suggested you could look at where the “scree”–a term for rubble at the base of a hill–begins, in order to determine how many factors are necessary to retain.</p>
@@ -37,7 +42,7 @@ projects: []
 <p>Parallel analysis (introduced by Horn, 1965) is a technique designed to help take some of the subjectivity out of interpreting the scree plot. It is a simulation-based method, and the logic is pretty straightforward:</p>
 </div>
 <div id="methodology" class="section level2">
-<h2>METHODOLOGY</h2>
+<h2><span class="header-section-number">0.2</span> METHODOLOGY</h2>
 <p>Let <code>N</code> represent the number of observations in the dataset, and <code>p</code> represent the number of variables. In general, parallel analysis is completed as follows:</p>
 <ol style="list-style-type: decimal">
 <li><p>Calculate the <code>p x p</code> sample correlation matrix from the <code>N x p</code> sample dataset. Create a scree plot by plotting the eigenvalues of the sample correlation matrix against their position from largest to smallest (<code>1, 2,…,p</code>) and connecting the points with straight lines</p></li>
@@ -50,17 +55,17 @@ projects: []
 <p><em>Note: other summary statistics can be used in place of the median at step 4 (e.g., 99th percentile, 95th percentile, etc.).</em></p>
 </div>
 <div id="parallel-analysis-in-sas" class="section level2">
-<h2>PARALLEL ANALYSIS IN SAS</h2>
+<h2><span class="header-section-number">0.3</span> PARALLEL ANALYSIS IN SAS</h2>
 <p>In a few minutes, I’ve found a very useful resource online. Kabacoff (2003) published a paper in SAS conference-“Determining the dimensionality of Data: A SAS Macro for Parallel Analysis”. This paper mainly introduce a macro that you can use it to operate parallel analysis.</p>
 <p>You can find his paper <a href="https://github.com/zhangou888/parallel_analysis/blob/master/sas/%5Bsas%5Ddetermine_the_dimensionality_of_data_macro_for_parallel_analysis.pdf">here</a></p>
 <p>I’ve also reformatted and modified his macro code and it can be download via this <a href="https://github.com/zhangou888/parallel_analysis/blob/master/sas/parallel_analysis_macro.sas">link</a>.</p>
 </div>
 <div id="parallel-analysis-in-r" class="section level2">
-<h2>PARALLEL ANALYSIS IN R</h2>
+<h2><span class="header-section-number">0.4</span> PARALLEL ANALYSIS IN R</h2>
 <p>Various R-packages include functions that can conduct parallel analysis. Among all of them, 2 packages are worthwhile to be introduced- <code>paran</code>(Alexis Dinno, 2015), and <code>psych</code> (William Revelle, 2017).</p>
 <p>You can find some parallel analysis R code example below.</p>
 <div id="paran-package-example" class="section level3">
-<h3>paran package example</h3>
+<h3><span class="header-section-number">0.4.1</span> paran package example</h3>
 <p>The key option in the <code>paran</code> function is its centile option.
 By default, the centile option is set as <span class="math inline">\(50%\)</span>. However, the traditional centile is usually set as <span class="math inline">\(95%\)</span> or <span class="math inline">\(99%\)</span>.</p>
 <pre class="r"><code>library(paran)
@@ -82,7 +87,7 @@ paran(USArrests, iterations=5000)</code></pre>
 ## Component   Adjusted    Unadjusted    Estimated 
 ##             Eigenvalue  Eigenvalue    Bias 
 ## -------------------------------------------------- 
-## 1           2.154211    2.480241      0.326029
+## 1           2.155462    2.480241      0.324779
 ## -------------------------------------------------- 
 ## 
 ## Adjusted eigenvalues &gt; 1 indicate dimensions to retain.
@@ -101,14 +106,14 @@ paran(USArrests, iterations=5000, centile=95)</code></pre>
 ## Component   Adjusted    Unadjusted    Estimated 
 ##             Eigenvalue  Eigenvalue    Bias 
 ## -------------------------------------------------- 
-## 1           1.954274    2.480241      0.525967
+## 1           1.955261    2.480241      0.524979
 ## -------------------------------------------------- 
 ## 
 ## Adjusted eigenvalues &gt; 1 indicate dimensions to retain.
 ## (1 components retained)</code></pre>
 </div>
 <div id="psych-package-example" class="section level3">
-<h3>psych package example</h3>
+<h3><span class="header-section-number">0.4.2</span> psych package example</h3>
 <p>The 2nd parallel analysis example is from a factor anlaysis tutorial document by Rachael Smyth and Andrew Johnson.</p>
 <p>You can find this document <a href="https://github.com/zhangou888/parallel_analysis/blob/master/R/%5BR_Tutorial%5D_FactorAnalysis.pdf">here</a>.</p>
 <pre class="r"><code>library(psych)

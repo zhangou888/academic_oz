@@ -4,7 +4,10 @@ author: Ou Zhang
 date: '2020-04-13'
 slug: parallel-analysis-determining-the-dimensionality-of-data
 draft: no
-categories: []
+categories: 
+  - Psychometrics
+  - SAS
+  - R
 tags:
   - Psychometrics
   - R
@@ -87,7 +90,7 @@ paran(USArrests, iterations=5000)</code></pre>
 ## Component   Adjusted    Unadjusted    Estimated 
 ##             Eigenvalue  Eigenvalue    Bias 
 ## -------------------------------------------------- 
-## 1           2.151378    2.480241      0.328863
+## 1           2.153516    2.480241      0.326724
 ## -------------------------------------------------- 
 ## 
 ## Adjusted eigenvalues &gt; 1 indicate dimensions to retain.
@@ -106,7 +109,7 @@ paran(USArrests, iterations=5000, centile=95)</code></pre>
 ## Component   Adjusted    Unadjusted    Estimated 
 ##             Eigenvalue  Eigenvalue    Bias 
 ## -------------------------------------------------- 
-## 1           1.955830    2.480241      0.524411
+## 1           1.965009    2.480241      0.515232
 ## -------------------------------------------------- 
 ## 
 ## Adjusted eigenvalues &gt; 1 indicate dimensions to retain.

@@ -253,7 +253,8 @@ hr {
 .card .card-image {
 	display: block;
 	position: relative;
-	max-width: 200px;
+	max-width:  200px;
+	max-height: 200px;
 }
 
 /* images more like cards; iframes more seamless */

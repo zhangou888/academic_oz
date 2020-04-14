@@ -3,6 +3,7 @@ title: 'Parallel Analysis: Determining the Dimensionality of Data'
 author: Ou Zhang
 date: '2020-04-13'
 slug: parallel-analysis-determining-the-dimensionality-of-data
+draft: no
 categories: []
 tags:
   - Psychometrics

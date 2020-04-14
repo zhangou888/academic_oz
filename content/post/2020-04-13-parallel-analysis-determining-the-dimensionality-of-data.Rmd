@@ -74,7 +74,7 @@ Parallel analysis (introduced by Horn, 1965) is a technique designed to help tak
 ## METHODOLOGY
 Let `N` represent the number of observations in the dataset, and `p` represent the number of variables. In general, parallel analysis is completed as follows:  
 
-1. Calculate the `$p x p` sample correlation matrix from the N x p sample dataset. Create a scree plot by plotting the eigenvalues of the sample correlation matrix against their position from largest to smallest (1, 2,…,p) and connecting the points with straight lines
+1. Calculate the $p x p$ sample correlation matrix from the N x p sample dataset. Create a scree plot by plotting the eigenvalues of the sample correlation matrix against their position from largest to smallest (1, 2,…,p) and connecting the points with straight lines
 
 2. Generate a simulated dataset with N observations randomly sampled from p independent normal variates. Calculate the p x p correlation matrix for this simulated data and extract the p eigenvalues and order them from largest (position 1) to smallest (position p).
 

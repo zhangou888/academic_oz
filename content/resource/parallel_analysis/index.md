@@ -1,8 +1,9 @@
 ---
+aliases: [arm]
 title: Parallel Analysis
 date: 2020-04-13T00:00:00
 weight: 2
-external_link: "https://github.com/zhangou888/parallel_analysis/"
+external_link: ""
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
@@ -39,7 +40,7 @@ links:
 - icon: github
   icon_pack: fab
   name: source file
-  url: https://github.com/zhangou888/rstudio_2019/blob/master/rstudio_conf_notes.Rmd
+  url: https://github.com/zhangou888/parallel_analysis
 
 ---
 

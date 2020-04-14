@@ -18,26 +18,29 @@ image:
   preview_only: no
 projects: []
 ---
-Recently, I've prepared/refreshed my old programming talk materials, I found an very interesting and good post from the web.
+Recently, I've prepared/refreshed my old programming talk materials. It was a talk I gave internally to all the summer interns in 2018. I found an very interesting and good post from the web.
 
-It gives a lot of good and bad programming examples. I thought it might be worthwhile for me to share here so that people including myself in the future could be benefited from it.
+This web post gives a lot of good and bad programming examples. I thought it might be worthwhile for me to share the post content here so that people including myself could be benefited from it in the future.
 
 The original post is [here](https://nicercode.github.io/intro/bad-habits.html).
 
-You can fidn the post below.
+You can also read the post below.
 
 ----------
-
 1.	Avoid indexing by location unless you compute those locations. 
+
 
 2.	Don’t use `T` and `F` as shortcuts for `TRUE` and `FALSE`. This dates back to the language that predates R. For why not to do this, try running `T <- FALSE`. Now both `T` and `F` are `FALSE`! Try running `TRUE <- FALSE` — R prevents you from doing this.
 
+
 3.	Don’t be inconsistent (i.e., be consistent) with assignment symbols, variable names, etc. The more consistent you are, the easier you will find it to revisit your code in the future.
+
 
 4.	Don’t use `attach`. I’m debating even listing this function’s name, but don’t use it. If you see it in somebody’s code, don’t copy it. Just trust me on this one.
 
 
 5.	**Avoid** copy and pasting large chunks of code between projects. Once you get in the habit of making functions, copy those around, but I have seen huge messes of code with problems that are impossible to track down due to this.
+
 
 6.	Don’t write enormously long functions that are difficult to read (this is sometimes unavoidable to a degree in cleaning up ecological data). _Try to have each function do just one thing_.
 
@@ -47,7 +50,9 @@ You can fidn the post below.
 
 8.	**Do document your work.** You probably cannot have enough describing where data files came from, what scripts do what, how particular pieces of code work. Avoid writing comments that just repeat what the code says, and try and write comments that describe your intent, reasons for approaches, sources of data / code / algorithm — things that will make your life easier when you come back to a project.
 
+
 9.	**Keep things tidy**. Tidy data is a wonderful data manipulation philosophy proposed by the great [**Hadley Wickham**](http://hadley.nz/). You can find his paper **[here](https://vita.had.co.nz/papers/tidy-data.pdf)**. In my personal opinion, every data scientist or statistical analyst should read this paper once. 
+
 
 10.	Indent your code, and do it consistently (I usually set my auto-indentation by 4-space). There are many styles (google around to be amazed) but proper indentation is the difference between easy to read and hard to read code, as indent depth implies something about program structure. Take our variance function from earlier.
 
@@ -78,4 +83,4 @@ It is much more obvious that the body of the variance function is three lines lo
 
 A **good rule of thumb** is to code for the person who will maintain your code. As this is usually you, that should not be too hard to motivate.
 
-Hope you like this post.
+Hope you like what you just read.

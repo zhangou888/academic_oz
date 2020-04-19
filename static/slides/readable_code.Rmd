@@ -122,9 +122,7 @@ class: center, inverse, middle
 
 --
   
-<center>
-Good programming means <p style="color:red"> Work efficiency</p> 
-</center>
+## .center[Good programming means <p style="color:red"> Work efficiency</p>]
 
 
 ---
@@ -148,7 +146,7 @@ You may have your own opinions or existing standards and...
 
 --
 
-<span style="color: blue;">**it is completely fine.**<span/>
+## .center[<span style="color: red;">**it is completely fine.**<span/>]
 
 ---
 name: ugly code runs

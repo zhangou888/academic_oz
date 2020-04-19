@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Write Readable Code</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ou Zhang" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script defer src="https://use.fontawesome.com/releases/v5.6.1/js/all.js" integrity="sha384-R5JkiUweZpJjELPWqttAYmYM1P3SNEJRM6ecTQF05pFFtxmCO+Y1CiUhvuDzgSVZ" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css\sfah.css" type="text/css" />
+    <link rel="stylesheet" href="css\fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+layout: true
+  
+&lt;div class="my-footer"&gt;&lt;span&gt;ouzhang.me/talk/readable_code&lt;/span&gt;&lt;/div&gt;
+
+&lt;!-- this adds the link footer to all slides, depends on my-footer class in css--&gt;
+
+---
+name: xaringan-title
+class: left, middle
+background-image: url(img/front_page.jpg)
+background-size: cover
+
+# Write Readable Code
+
+### .fancy[Simple and Practical Techniques for Better Statistical Programming]
+
+.large[Ou Zhang | Summer Intern::Seminar 2018]
+
+&lt;!-- this ends up being the title slide since seal = FALSE--&gt;
+
+---
+class: right, middle
+
+&lt;img class="circle" src="img/Ou_Zhang.jpg" width="150px"/&gt;
+
+# Find me at...
+
+[&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/&gt;&lt;/svg&gt; @zhangou](http://twitter.com/zhangou888)  
+[&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 496 512"&gt;&lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/&gt;&lt;/svg&gt; @zhangou](http://github.com/zhangou888)  
+[&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M326.612 185.391c59.747 59.809 58.927 155.698.36 214.59-.11.12-.24.25-.36.37l-67.2 67.2c-59.27 59.27-155.699 59.262-214.96 0-59.27-59.26-59.27-155.7 0-214.96l37.106-37.106c9.84-9.84 26.786-3.3 27.294 10.606.648 17.722 3.826 35.527 9.69 52.721 1.986 5.822.567 12.262-3.783 16.612l-13.087 13.087c-28.026 28.026-28.905 73.66-1.155 101.96 28.024 28.579 74.086 28.749 102.325.51l67.2-67.19c28.191-28.191 28.073-73.757 0-101.83-3.701-3.694-7.429-6.564-10.341-8.569a16.037 16.037 0 0 1-6.947-12.606c-.396-10.567 3.348-21.456 11.698-29.806l21.054-21.055c5.521-5.521 14.182-6.199 20.584-1.731a152.482 152.482 0 0 1 20.522 17.197zM467.547 44.449c-59.261-59.262-155.69-59.27-214.96 0l-67.2 67.2c-.12.12-.25.25-.36.37-58.566 58.892-59.387 154.781.36 214.59a152.454 152.454 0 0 0 20.521 17.196c6.402 4.468 15.064 3.789 20.584-1.731l21.054-21.055c8.35-8.35 12.094-19.239 11.698-29.806a16.037 16.037 0 0 0-6.947-12.606c-2.912-2.005-6.64-4.875-10.341-8.569-28.073-28.073-28.191-73.639 0-101.83l67.2-67.19c28.239-28.239 74.3-28.069 102.325.51 27.75 28.3 26.872 73.934-1.155 101.96l-13.087 13.087c-4.35 4.35-5.769 10.79-3.783 16.612 5.864 17.194 9.042 34.999 9.69 52.721.509 13.906 17.454 20.446 27.294 10.606l37.106-37.106c59.271-59.259 59.271-155.699.001-214.959z"/&gt;&lt;/svg&gt; ouzhang.me](https://ouzhang.me)  
+[&lt;svg style="height:0.8em;top:.04em;position:relative;" viewBox="0 0 512 512"&gt;&lt;path d="M476 3.2L12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/&gt;&lt;/svg&gt; zhangou888@gmail.com](mailto:zhangou888@gmail.com)
+
+---
+
+# .center[Agenda]
+
+What is the readable code?
+
+--
+
+Why we need to write readable code?
+
+--
+
+Factors Influence Code Readability
+
+--
+
+Version Control
+
+--
+
+Q &amp; A
+
+---
+name: why
+class: center, inverse, middle
+
+# .fancy[Why I give this talk to **Psychometrician** and **statistical analyst**?]
+
+
+---
+
+# .center[Key elements to success]
+
+--
+
+- Content Knowledge
+
+--
+
+- Psychometrics skills
+
+--
+
+- Programming 
+
+--
+  
+&lt;center&gt;
+Good programming means &lt;p style="color:red"&gt; Work efficiency&lt;/p&gt; 
+&lt;/center&gt;
+
+
+---
+# .center[Disclaimer]
+
+--
+
+I am presenting what I consider the &lt;span style="color: red;"&gt;best&lt;span/&gt; practice.
+
+--
+
+I acknowledge that there are other ways of doing things. 
+
+--
+
+Suggestions &amp; Personal Opinion &lt;span style="color: blue;"&gt;(Biased)&lt;span/&gt;
+
+--
+
+You may have your own opinions or existing standards and... 
+
+--
+
+&lt;span style="color: blue;"&gt;**it is completely fine.**&lt;span/&gt;
+
+---
+name: ugly code runs
+
+# .center[Ugly code runs]
+
+--
+
+&lt;img src="/img/ugly_code_run.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+name: what is good code
+class: center, inverse, middle
+
+# .fancy[What is readable code?]
+
+---
+# .center[A readable code is...]
+
+--
+
+Easy to read &amp; understand
+
+--
+
+Easy to extend &amp; reuse
+
+--
+
+Gives reliable results 
+
+--
+
+Easy to maintain
+
+--
+
+Testable
+
+--
+
+Easy to share with others
+
+---
+name: why write a readable code
+class: center, inverse, middle
+
+# .fancy[Why write a readable code?]
+
+---
+## .center[Why write a readable code?]
+
+People often share their code with others
+
+--
+
+Code might be adapted or modified by others
+
+--
+
+![](img/reuse_code.jpg)
+
+---
+## .center[More importantly, the code is...]
+
+--
+
+For your **FUTURE SELF**
+
+--
+
+&lt;img src="/img/code_is_for_future_self.jpg" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+name: two concept
+class: center, inverse, middle
+
+# .fancy[Readable code vs. Efficient code]
+
+---
+## .center[Readable code vs. Efficient code]
+
+--
+
+
+Code efficiency is directly linked with algorithmic efficiency and the speed of runtime execution for software. It is the key element in ensuring ** computer** high performance
+
+--
+
+Code readability is directly related to the most important qualities of code. If code is easy to read **by the user**, it will be easy to understand which makes it easier to debug, maintain and extend.
+
+---
+name: Focus
+class: center, inverse, middle
+
+# .fancy[Today's focus: Code Readability]
+
+---
+## .center[Code Readability]
+
+--
+
+&gt;"Programs must be written for people to read, and
+only incidentally for machines to execute."
+
+.right[Abelson &amp; Sussman, Structure and Interpretation of Computer Programs]
+
+--
+
+&gt; At present, the work efficiency bottleneck is **human brain** not machine.
+
+.right[Hadley Wickham]
+
+--
+
+&lt;img src="/img/computer_VS_human.jpg" width="35%" style="display: block; margin: auto;" /&gt;
+
+---
+name: what do you mean
+class: center, inverse, middle
+
+# .fancy[What do you mean by readable code?]
+
+---
+## .center[What do you mean?]
+
+--
+
+Keep it simple, Keep it short. 
+
+--
+
+At least, keep the **module** simple and short.
+
+--
+
+&lt;img src="/img/keep_code_small.png" width="65%" style="display: block; margin: auto;" /&gt;
+
+---
+## .center[Key elements of readable code]
+
+--
+
+.pull-left[
+
+Readable – clarity in the structure and content of the code
+
+* is easy for the user to read
+* is as self-explaining as possible
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="/img/self-explaining.PNG" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+
+## .center[Key elements of readable code]
+
+--
+
+.pull-left[
+
+Shareable – how quickly and easily someone new can understand and modify your code
+
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="/img/shareable_code.jpg" width="100%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+## .center[Suggestion]
+
+--
+
+Don’t implement code that you won’t need
+
+--
+
+Simplify requirements
+
+--
+
+Keep your codebase small
+
+--
+
+Be familiar with libraries around
+
+---
+## .center[Good code standards]
+
+--
+
+Beautiful is better than ugly
+
+--
+
+Explicit is better than implicit
+
+--
+
+Simple is better than complex
+
+--
+
+Complex is better than complicated
+
+--
+
+Readability counts
+
+---
+name: factors
+class: center, inverse, middle
+
+# .fancy[Factors influence code readability]
+
+---
+## .center[Factors]
+
+--
+
+Naming convention
+
+--
+
+Style/ Aesthetic
+
+--
+
+Commenting
+
+--
+
+Functions/Macros
+
+-- 
+* Split Your Code into Short, Focused Units
+* Don’t repeat yourself
+* Avoid nesting definition 
+
+--
+
+Check errors and Respond to Them
+
+--
+Avoid dead code
+
+---
+name: naming convention title
+class: right, inverse, bottom
+background-image: url(img/naming-conventions.png)
+background-size: cover
+
+# Naming Convention
+
+---
+name: naming convention1
+
+# Naming Convention 
+
+--
+
+Adopt a convention and stick with it (fetch vs. retrieve vs. get)
+
+--
+
+Use intention-revealing names
+
+--
+
+Avoid misleading readers
+
+--
+
+Make meaningful distinctions
+
+--
+
+Use searchable names
+
+--
+
+Avoid mental mapping
+
+--
+
+Use domain names
+
+---
+name: naming convention2
+
+# Naming Convention ⏭
+&lt;!-- grep("uk", names(emo::ji_name), value = TRUE, ignore.case = TRUE) --&gt;
+
+--
+
+Avoid Generic Names 
+
+--
+
+Bad name example: &lt;span style="color: red;"&gt;v1, v2, v3, temp1&lt;/span&gt;
+
+--
+
+One exception: **well-written, verified function/macro**
+
+--
+
+Prefer Concrete Names 
+
+--
+
+Example: &lt;span style="color: red;"&gt;percent_a, average_item_time&lt;/span&gt;, etc.
+  
+---
+name: naming convention3
+
+# Naming Convention ⏭
+
+--
+
+Use searchable names &lt;span style="color: blue;"&gt;(for debugging) &lt;/span&gt;
+
+--
+
+&lt;img src="/img/searchable_name.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+name: naming convention4
+
+# Naming Convention ⏭
+
+--
+
+.pull-left[
+
+Length vs Meaning
+
+Shorter names for shorter scopes
+
+Longer names for larger scopes
+
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="/img/Name_is_the_key.PNG" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+name: naming convention5
+
+# Naming Convention ⏭
+
+--
+
+.pull-left[
+
+Formatting
+
+* All lower letter
+* All UPPER letter
+* period.separated
+* underscore_spearated
+* lowerCamelCase
+* UpperCamelCase
+]
+
+--
+
+.pull-right[
+
+Example
+
+* &lt;span style="color: blue;"&gt;searchpaths&lt;/span&gt;
+* &lt;span style="color: blue;"&gt;IRT_A&lt;/span&gt;
+* &lt;span style="color: blue;"&gt;item.info&lt;/span&gt;
+* &lt;span style="color: blue;"&gt;expect_theta&lt;/span&gt;
+* &lt;span style="color: blue;"&gt;seq_Along&lt;/span&gt;
+* &lt;span style="color: blue;"&gt;NextMethod&lt;/span&gt;
+
+]
+
+--
+
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="/img/matching_naming_convention.png" alt="From “The State of Naming Conventions in R " width="65%" /&gt;
+&lt;p class="caption"&gt;From “The State of Naming Conventions in R &lt;/p&gt;
+&lt;/div&gt;
+---
+name: naming convention6
+
+# Naming Convention ⏭
+
+--
+
+&lt;span style="color: red;"&gt;Noun&lt;/span&gt; for variable name, object name, class name, property name, arguments name
+
+--
+
+&lt;span style="color: red;"&gt;Verb&lt;/span&gt; for function name, method name
+
+--
+
+Avoid using the same word for two purposes
+
+--
+
+Ask yourself...
+
+---
+name: naming convention7 
+class: center, inverse, middle
+
+# .fancy[What other meanings could someone interpret from this name?]
+
+---
+name: naming convention8
+
+# Naming Convention ⏭
+
+--
+
+Names That Can’t Be Misconstrued
+
+--
+
+&lt;img src="/img/misconstrued.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+--
+
+.right[The State of Naming Conventions in R    – Rasmus Baath]
+
+--
+
+---
+name: style_aesthetic title 
+class: center, inverse, middle
+background-image: url(img/Style-vs-Aesthetics.jpg)
+background-size: cover
+
+# .fancy[style &amp; aesthetic]
+
+---
+name: style_aesthetic1
+
+# Style and Aesthetics 
+
+--
+
+Use consistent layout
+
+--
+
+* Indent your code &amp; Vertical and horizontal spacing
+
+--
+
+* Limit the width of your code per row (80 columns)
+
+--
+
+* Limit the length of function
+
+--
+
+Make similar code look similar
+
+--
+
+Group related lines of code into blocks
+
+---
+name: style_aesthetic2
+
+# Style and Aesthetics ⏭
+
+--
+
+.pull-left[
+
+Coding text
+
+* All lower case text
+* All UPPER case text
+* CamelCase text
+
+]
+
+--
+
+.pull-right[
+
+Follow the Style Guide
+* [Google’s R Style Guide](https://google.github.io/styleguide/Rguide.html)             
+* Code like it matters (Paul Kaefer)
+* Hadley Wickham: [Style Guide](http://adv-r.had.co.nz/Style.html)                    
+* SAS Programming Guidelines
+* [R Style. An Rchaeological Commentary](https://cran.r-project.org/web/packages/rockchalk/vignettes/Rstyle.pdf)   
+
+]
+
+---
+name: Style suggestion 
+class: center, inverse, middle
+
+# .fancy[Write code like you work on your daily writing]
+
+---
+name: style_aesthetic3
+
+# Style and Aesthetics  ⏭
+
+--
+
+.pull-left[
+
+Good example
+
+&lt;img src="/img/good_example.png" width="125%" style="display: block; margin: auto auto auto 0;" /&gt;
+
+]
+
+--
+
+.pull-right[
+
+Bad example
+
+&lt;img src="/img/bad_example.png" width="125%" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+]
+
+---
+name: commenting title 
+class: left, middle
+background-image: url(img/comment.png)
+background-size: cover
+
+# .fancy[Commenting]
+
+---
+name: comment1
+
+# Commenting 
+
+--
+
+.pull-left[
+
+
+The purpose of commenting is to help the reader know as much as the writer did.
+
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="/img/put_yourself_in_reader_shoes.jpg" width="125%" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+]
+
+---
+name: comment2
+
+# Commenting ⏭
+
+--
+
+.pull-left[
+
+
+Recording Your Thoughts
+
+* Include “Director Commentary”
+  
+* Comment the Flaws in Your Code  
+  
+* Comment on Your Constants
+
+]
+
+--
+
+.pull-right[
+
+Put yourself in the reader’s shoes
+
+* Anticipating Likely Questions  
+
+* Advertising Likely Pitfalls  
+  
+* “Big Picture”  
+  
+* Summary
+
+]
+
+---
+name: No_comment title 
+class: center, inverse, middle
+background-image: url(img/no_comment.jpg)
+background-size: cover
+
+# .fancy[Don’t comment on the facts that can be derived quickly from the code itself.]
+---
+name: comment3
+
+# Commenting ⏭
+
+--
+
+Comment while writing your code
+
+--
+
+&lt;img src="/img/Add_comment_is_important.jpg" width="70%" style="display: block; margin: auto;" /&gt;
+---
+name: comment4
+
+# Commenting ⏭
+
+--
+.pull-left[
+
+Keep Comments Compact
+
+Describe Function Behavior Precisely
+
+Use Examples
+
+State the Intent
+
+]
+
+--
+
+.pull-right[
+
+
+&lt;img src="/img/Meaningful_comments.PNG" width="80%" style="display: block; margin: auto;" /&gt;
+]
+---
+name: comment5
+
+# Keep comments compact
+
+--
+
+&lt;img src="/img/compact_comment.png" width="80%" style="display: block; margin: auto;" /&gt;
+---
+name: comment6
+
+# Describe Function Precisely
+
+--
+
+&lt;img src="/img/precise_comment.png" width="80%" style="display: block; margin: auto;" /&gt;
+---
+name: comment7
+
+# Use Examples
+
+--
+
+&lt;img src="/img/use_example_comment.png" width="80%" style="display: block; margin: auto;" /&gt;
+---
+name: comment8
+
+# Precise &amp; Compact Comments
+
+&lt;img src="/img/Concise_comment.jpg" width="75%" style="display: block; margin: auto;" /&gt;
+---
+name: Good_header
+class: center, inverse, middle
+
+# .fancy[Having a good header delivers most information of the code.]
+---
+name: sas_header
+
+# Header Example 1
+
+--
+
+&lt;img src="/img/sas_header.png" width="75%" style="display: block; margin: auto;" /&gt;
+---
+name: r_header
+
+# Header Example 2
+
+--
+
+&lt;img src="/img/r_header.png" width="75%" style="display: block; margin: auto;" /&gt;
+---
+name: loops_logic 
+class: center, middle
+background-image: url(img/loops.jpg)
+background-size: cover
+
+# .fancy[Loops &amp; Logic]
+---
+name: loop1
+
+# Loop &amp; Logic
+
+--
+.pull-left[
+
+Make your logic as “**natural**” as possible
+
+
+The code is not just “**Get the job done**”. 
+
+A good readable code means better work efficiency and better work transition in the future.
+
+
+]
+
+--
+
+.pull-right[
+&lt;img src="/img/how to write good code.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+name: loop2
+
+# Loop &amp; Logic ⏭
+
+--
+
+Avoid **do/while** Loops  
+
+--
+
+Returning Early form a Function
+
+--
+
+Minimize Nesting
+
+--
+
+Flow of Execution
+---
+name: loop3
+
+# Loop &amp; Logic ⏭
+
+--
+
+Minimize the time needed for someone to understand it instead of minimizing the number of lines
+
+--
+
+&lt;img src="/img/bad_function.png" width="65%" style="display: block; margin: auto;" /&gt;
+---
+name: loop4
+
+# Loop &amp; Logic ⏭
+
+--
+
+Breaking Down Giant Expressions
+
+--
+
+&lt;img src="/img/one_bite.png" width="65%" style="display: block; margin: auto;" /&gt;
+---
+name: loop5
+
+# Loop &amp; Logic ⏭
+
+--
+
+.pull-left[
+
+Explaining Variables
+
+* Summary Variables
+  
+* Use De Morgan’s Laws
+  
+* Break Down Giant Statements
+
+]
+
+.pull-right[
+
+&lt;img src="/img/Demorgan_laws.png" width="75%" style="display: block; margin: auto;" /&gt;
+]
+---
+name: loop6
+
+# Loop &amp; Logic ⏭
+
+--
+
+Separate data input/output steps from core function modules
+
+
+.pull-left[
+
+Bad Example:
+
+One Big function:
+
+1. Data input
+2. Core calculation
+3. Data output
+
+]
+
+.pull-right[
+
+Good Example:
+
+* Function 1: Data input function
+
+* Function 2: Short Core calculation function
+
+* Function 3: Data output function 
+
+]
+---
+name: No_comment title 
+class: center, middle
+background-image: url(img/modules.png)
+background-size: cover
+
+# .fancy[Function, Module, Macro]
+---
+name: function1
+
+# Function, Module, Macro 
+
+--
+
+One Task &lt;span style="color: red;"&gt;Well&lt;span/&gt; at a Time, One Task &lt;span style="color: red;"&gt;Only&lt;span/&gt; at a Time
+
+--
+
+&lt;img src="/img/multi_tasking.png" width="65%" style="display: block; margin: auto;" /&gt;
+---
+name: function2
+
+# Function, Module, Macro ⏭
+
+--
+
+Don't &lt;span style="color: red;"&gt;repeat&lt;span/&gt; yourself
+
+--
+
+&lt;img src="/img/repeat_line.png" width="75%" style="display: block; margin: auto;" /&gt;
+---
+name: function3
+
+# Function, Module, Macro ⏭
+
+--
+
+Bad Example:
+
+&lt;img src="/img/bad_repeat.png" width="85%" style="display: block; margin: auto;" /&gt;
+---
+name: function4
+
+# Function, Module, Macro ⏭
+
+--
+
+Good Example:
+
+&lt;img src="/img/good_no_repeat.png" width="85%" style="display: block; margin: auto;" /&gt;
+---
+name: function5
+
+# Function, Module, Macro ⏭
+
+--
+
+Avoid definition nesting
+
+--
+
+&lt;img src="/img/nesting_function.png" width="85%" style="display: block; margin: auto;" /&gt;
+---
+name: function6
+
+# Modularity
+
+--
+
+Write code so it is multi-purpose and can be repurposed e.g., macro variables for filenames and date values
+
+--
+
+&lt;img src="/img/macro_driver.png" width="85%" style="display: block; margin: auto;" /&gt;
+---
+name: No_comment title 
+class: center, middle
+background-image: url(img/version_control.png)
+background-size: cover
+
+# .fancy[Version Control]
+---
+name: vc1
+
+# Version Control
+
+--
+
+All codes should use version control
+
+--
+
+Even useful in other fields (writing/editing, anybody who makes presentations or has a resume)
+
+--
+Rudimentary strategy is a terrible idea (i.e., code.sas, code_v2.sas, code_new.sas, code_old.sas...)
+
+--
+
+Use software like git &lt;img src="img/git.png" width="5%"/&gt;&amp;nbsp;, Subversion (svn), Mercurial, etc.
+
+[Youtube tutorial](https://www.youtube.com/watch?v=HVsySz-h9r4)
+
+--
+
+You will hit some learning curve, but the basics can be taught within 1 hour
+
+--
+
+Makes sharing easier
+
+--
+
+Saves you over and over (story time…)
+---
+name: vc2
+
+# github &lt;img src="img/github.png" width="5%"/&gt;&amp;nbsp;
+
+--
+
+&lt;img src="/img/oz_github.jpg" width="85%" style="display: block; margin: auto;" /&gt;
+--
+
+You can learn how to use github from this youtube link below
+
+[Youtube tutorial](https://www.youtube.com/watch?v=xuB1Id2Wxak)
+
+---
+name: Further Reading
+
+# Further Reading
+
+.pull-left[
+
+&lt;img src="/img/clean_code_book.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="/img/sas_book.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+]
+---
+# Further Reading
+
+.pull-left[
+
+&lt;img src="/img/advance_r.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="/img/git_book.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+]
+---
+class: center, middle
+
+# Thanks!
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

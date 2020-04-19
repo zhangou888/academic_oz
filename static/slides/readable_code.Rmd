@@ -18,7 +18,16 @@ output:
     includes:
       in_header: header.html
 ---
-
+```{r set-global-options, echo = FALSE}
+knitr::opts_chunk$set(eval = TRUE, 
+                      echo = FALSE, 
+                      cache = FALSE,
+                      include = TRUE,
+                      collapse = FALSE,
+                      dependson = NULL,
+                      engine = "R", # Chunks will always have R code, unless noted
+                      error = TRUE)
+```
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 library(knitr)
@@ -148,11 +157,7 @@ name: ugly code runs
 
 --
 
-```{r fig0, out.width='90%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
-
-    knitr::include_graphics("/img/ugly_code_run.png", error = FALSE)
-
-```
+<img src="img/ugly_code_run.png" width="90%" />
 
 ---
 name: what is good code
@@ -215,9 +220,10 @@ For your **FUTURE SELF**
 
 --
 
+
 ```{r fig1, out.width='60%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
 
-    knitr::include_graphics("/img/code_is_for_future_self.jpg", error = FALSE)
+    knitr::include_graphics("img/code_is_for_future_self.jpg", error = FALSE)
 
 ```
 
@@ -265,7 +271,7 @@ only incidentally for machines to execute."
 
 ```{r fig2, out.width='35%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
 
-    knitr::include_graphics("/img/computer_VS_human.jpg", error = FALSE)
+    knitr::include_graphics("img/computer_VS_human.jpg", error = FALSE)
 
 ```
 
@@ -290,7 +296,7 @@ At least, keep the **module** simple and short.
 
 ```{r fig3, out.width='65%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
 
-    knitr::include_graphics("/img/keep_code_small.png", error = FALSE)
+    knitr::include_graphics("img/keep_code_small.png", error = FALSE)
 
 ```
 
@@ -314,7 +320,7 @@ Readable – clarity in the structure and content of the code
 
 ```{r fig4, out.width='100%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
 
-    knitr::include_graphics("/img/self-explaining.PNG", error = FALSE)
+    knitr::include_graphics("img/self-explaining.PNG", error = FALSE)
 
 ```
 
@@ -339,7 +345,7 @@ Shareable – how quickly and easily someone new can understand and modify your 
 
 ```{r fig5, out.width='100%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
 
-    knitr::include_graphics("/img/shareable_code.jpg", error = FALSE)
+    knitr::include_graphics("img/shareable_code.jpg", error = FALSE)
 
 ```
 
@@ -504,7 +510,7 @@ Use searchable names <span style="color: blue;">(for debugging) </span>
 
 ```{r fig6, out.width='100%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
 
-    knitr::include_graphics("/img/searchable_name.png", error = FALSE)
+    knitr::include_graphics("img/searchable_name.png", error = FALSE)
 
 ```
 
@@ -532,7 +538,7 @@ Longer names for larger scopes
 
 ```{r fig7, out.width='100%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
 
-    knitr::include_graphics("/img/Name_is_the_key.PNG", error = FALSE)
+    knitr::include_graphics("img/Name_is_the_key.PNG", error = FALSE)
 
 ```
 ]
@@ -575,7 +581,7 @@ Example
 
 ```{r fig8, out.width='65%', fig.align='center', fig.pos='h', fig.cap='From “The State of Naming Conventions in R ', echo = FALSE}
 
-    knitr::include_graphics("/img/matching_naming_convention.png", error = FALSE)
+    knitr::include_graphics("img/matching_naming_convention.png", error = FALSE)
 
 ```
 ---
@@ -618,7 +624,7 @@ Names That Can’t Be Misconstrued
 
 ```{r fig9, out.width='70%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/misconstrued.png", error = FALSE)
+    knitr::include_graphics("img/misconstrued.png", error = FALSE)
 
 ```
 
@@ -714,7 +720,7 @@ Good example
 
 ```{r fig10, out.width='125%', fig.align='left', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/good_example.png", error = FALSE)
+    knitr::include_graphics("img/good_example.png", error = FALSE)
 
 ```
 
@@ -728,7 +734,7 @@ Bad example
 
 ```{r fig11, out.width='125%', fig.align='right', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/bad_example.png", error = FALSE)
+    knitr::include_graphics("img/bad_example.png", error = FALSE)
 
 ``` 
 
@@ -763,7 +769,7 @@ The purpose of commenting is to help the reader know as much as the writer did.
 
 ```{r fig12, out.width='125%', fig.align='right', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/put_yourself_in_reader_shoes.jpg", error = FALSE)
+    knitr::include_graphics("img/put_yourself_in_reader_shoes.jpg", error = FALSE)
 
 ``` 
 
@@ -825,7 +831,7 @@ Comment while writing your code
 
 ```{r fig13, out.width='70%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/Add_comment_is_important.jpg", error = FALSE)
+    knitr::include_graphics("img/Add_comment_is_important.jpg", error = FALSE)
 
 ``` 
 ---
@@ -853,7 +859,7 @@ State the Intent
 
 ```{r fig14, out.width='80%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/Meaningful_comments.PNG", error = FALSE)
+    knitr::include_graphics("img/Meaningful_comments.PNG", error = FALSE)
 
 ``` 
 ]
@@ -866,7 +872,7 @@ name: comment5
 
 ```{r fig15, out.width='80%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/compact_comment.png", error = FALSE)
+    knitr::include_graphics("img/compact_comment.png", error = FALSE)
 
 ``` 
 ---
@@ -878,7 +884,7 @@ name: comment6
 
 ```{r fig16, out.width='80%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/precise_comment.png", error = FALSE)
+    knitr::include_graphics("img/precise_comment.png", error = FALSE)
 
 ``` 
 ---
@@ -890,7 +896,7 @@ name: comment7
 
 ```{r fig17, out.width='80%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/use_example_comment.png", error = FALSE)
+    knitr::include_graphics("img/use_example_comment.png", error = FALSE)
 
 ``` 
 ---
@@ -900,7 +906,7 @@ name: comment8
 
 ```{r fig18, out.width='75%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/Concise_comment.jpg", error = FALSE)
+    knitr::include_graphics("img/Concise_comment.jpg", error = FALSE)
 
 ``` 
 ---
@@ -917,7 +923,7 @@ name: sas_header
 
 ```{r fig19, out.width='75%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/sas_header.png", error = FALSE)
+    knitr::include_graphics("img/sas_header.png", error = FALSE)
 
 ``` 
 ---
@@ -929,7 +935,7 @@ name: r_header
 
 ```{r fig20, out.width='75%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/r_header.png", error = FALSE)
+    knitr::include_graphics("img/r_header.png", error = FALSE)
 
 ``` 
 ---
@@ -962,7 +968,7 @@ A good readable code means better work efficiency and better work transition in 
 .pull-right[
 ```{r fig21, out.width='80%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/how to write good code.png", error = FALSE)
+    knitr::include_graphics("img/how to write good code.png", error = FALSE)
 
 ``` 
 ]
@@ -1000,7 +1006,7 @@ Minimize the time needed for someone to understand it instead of minimizing the 
 
 ```{r fig22, out.width='65%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/bad_function.png", error = FALSE)
+    knitr::include_graphics("img/bad_function.png", error = FALSE)
 
 ``` 
 ---
@@ -1016,7 +1022,7 @@ Breaking Down Giant Expressions
 
 ```{r fig23, out.width='65%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/one_bite.png", error = FALSE)
+    knitr::include_graphics("img/one_bite.png", error = FALSE)
 
 ``` 
 ---
@@ -1042,7 +1048,7 @@ Explaining Variables
 
 ```{r fig24, out.width='75%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/Demorgan_laws.png", error = FALSE)
+    knitr::include_graphics("img/Demorgan_laws.png", error = FALSE)
 
 ``` 
 ]
@@ -1099,7 +1105,7 @@ One Task <span style="color: red;">Well<span/> at a Time, One Task <span style="
 
 ```{r fig25, out.width='65%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/multi_tasking.png", error = FALSE)
+    knitr::include_graphics("img/multi_tasking.png", error = FALSE)
 
 ``` 
 ---
@@ -1115,7 +1121,7 @@ Don't <span style="color: red;">repeat<span/> yourself
 
 ```{r fig26, out.width='75%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/repeat_line.png", error = FALSE)
+    knitr::include_graphics("img/repeat_line.png", error = FALSE)
 
 ``` 
 ---
@@ -1129,7 +1135,7 @@ Bad Example:
 
 ```{r fig27, out.width='85%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/bad_repeat.png", error = FALSE)
+    knitr::include_graphics("img/bad_repeat.png", error = FALSE)
 
 ``` 
 ---
@@ -1143,7 +1149,7 @@ Good Example:
 
 ```{r fig28, out.width='85%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/good_no_repeat.png", error = FALSE)
+    knitr::include_graphics("img/good_no_repeat.png", error = FALSE)
 
 ``` 
 ---
@@ -1159,7 +1165,7 @@ Avoid definition nesting
 
 ```{r fig29, out.width='85%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/nesting_function.png", error = FALSE)
+    knitr::include_graphics("img/nesting_function.png", error = FALSE)
 
 ``` 
 ---
@@ -1175,7 +1181,7 @@ Write code so it is multi-purpose and can be repurposed e.g., macro variables fo
 
 ```{r fig30, out.width='85%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/macro_driver.png", error = FALSE)
+    knitr::include_graphics("img/macro_driver.png", error = FALSE)
 
 ``` 
 ---
@@ -1227,7 +1233,7 @@ name: vc2
 
 ```{r fig31, out.width='85%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/oz_github.jpg", error = FALSE)
+    knitr::include_graphics("img/oz_github.jpg", error = FALSE)
 
 ``` 
 --
@@ -1245,7 +1251,7 @@ name: Further Reading
 
 ```{r fig32, out.width='75%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/clean_code_book.png", error = FALSE)
+    knitr::include_graphics("img/clean_code_book.png", error = FALSE)
 
 ``` 
 
@@ -1255,7 +1261,7 @@ name: Further Reading
 
 ```{r fig33, out.width='75%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/sas_book.png", error = FALSE)
+    knitr::include_graphics("img/sas_book.png", error = FALSE)
 
 ``` 
 
@@ -1267,7 +1273,7 @@ name: Further Reading
 
 ```{r fig34, out.width='75%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/advance_r.png", error = FALSE)
+    knitr::include_graphics("img/advance_r.png", error = FALSE)
 
 ``` 
 
@@ -1277,7 +1283,7 @@ name: Further Reading
 
 ```{r fig35, out.width='75%', fig.align='center', fig.pos='h', fig.cap='', echo = FALSE}
 
-    knitr::include_graphics("/img/git_book.png", error = FALSE)
+    knitr::include_graphics("img/git_book.png", error = FALSE)
 
 ``` 
 

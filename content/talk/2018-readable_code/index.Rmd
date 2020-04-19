@@ -1,0 +1,37 @@
+---
+title: Write Readable Code  
+authors: [admin]
+date: '2020-04-19T14:00:01-07:00'
+publishdate: '2018-07-22'
+event: 'Summer Intern Seminar 2018'
+event_url: '' 
+location: San Antonio, TX
+abstract: 'Simple and Practical Techniques for Better Statistical Programming'
+categories: [talk]
+tags: [R, Programming]
+subtitle: ''
+summary: 'Write readable code: Simple and Practical Techniques for Better Statistical Programming.'
+lastmod: '2020-04-19T12:23:01-07:00'
+featured: no
+image:
+  caption: ""
+  focal_point: "Smart"
+  preview_only: true
+  
+projects: []
+
+links:
+- icon: images
+  icon_pack: fas
+  name: Slides
+  url: ../../slides/readable_code.html
+  
+- icon: github
+  icon_pack: fab
+  name: source file
+  url: https://github.com/zhangou888/readable_code
+
+---
+
+{{< figure src="featured.jpg" numbered="true" alt="Write a readable code" title="Write a readable code"
+caption="" >}}

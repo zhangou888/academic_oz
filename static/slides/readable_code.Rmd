@@ -214,7 +214,7 @@ Code might be adapted or modified by others
 
 --
 
-For your **FUTURE SELF**
+For your <span style="color: red;">**FUTURE SELF**<span/>
 
 --
 

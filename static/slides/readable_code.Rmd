@@ -417,6 +417,7 @@ Commenting
 Functions/Macros
 
 -- 
+
 * Split Your Code into Short, Focused Units
 * Don’t repeat yourself
 * Avoid nesting definition 

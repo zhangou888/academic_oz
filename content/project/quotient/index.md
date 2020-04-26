@@ -30,11 +30,6 @@ links:
   name: Slides
   url: ../../slides/Quotient/Quotient_ADHD_intro_no_method.pdf
   
-- icon: github
-  icon_pack: fab
-  name: materials
-  url: ../../slides/Quotient/
-  
 ---
 
 

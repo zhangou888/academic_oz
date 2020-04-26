@@ -6,7 +6,7 @@ title: Publications
 #   2 = Compact
 #   3 = Card
 #   4 = Citation
-view: 4
+view: 1
 
 # Optional header image (relative to `static/img/` folder).
 header:
@@ -14,9 +14,13 @@ header:
   image: ""
 ---
 
+* **Zhang, O.**, Zhou, X., Bilir, K.(2020, April). Comparing norming methods performance under violation of the assumptions Paper accepted and will be presented at the annual meeting of the National Council on Measurement in Education, San Francisco, CA.
+
+* Du, J., Zhao, D., **Zhang, O.** (2018). “Impacts of Human Communication Networks on Collective Optimism Bias: A Human Subject Experiment”. Construction Management and Economics, 2018 (10), 1-17. (ISSN: 0144-6193, Impact Factor: 1.21) 
+
 * Wang, X., **Zhang, O.,** (2017, April). How much can we gain from collateral information for subscore reporting? Paper accepted and presented at the annual meeting of the National Council on Measurement in Education, San Antonio, TX.
 
-* Chen, H., **Zhang, O.,** (2015, April). Factor invariance between genders on the Wechsler Intelligence Scale for Children??Fifth Edition. Personality and Individual Differences 86 (2015), 1??-5. DOI: 10.1016/j.paid.2015.05.020.
+* Chen, H., **Zhang, O.,** (2015, April). Factor invariance between genders on the Wechsler Intelligence Scale for Children Fifth Edition. Personality and Individual Differences 86 (2015), 1??-5. DOI: 10.1016/j.paid.2015.05.020.
 
 * **Zhang, O.,** Miller, J., (2015, April). Cross-Cultural Measurement Equivalence of the WISC5. Paper accepted and presented at the annual convention of the American Psychological Association, Toronto, Ontario.
 

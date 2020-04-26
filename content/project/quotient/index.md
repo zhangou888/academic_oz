@@ -16,8 +16,8 @@ summary: Quotient ADHD Diagnosis System
 
 categories: []
 tags:
-- Software
-- Data Science
+- software
+- data science
 
 url_code: ""
 url_pdf: ""
@@ -27,7 +27,7 @@ url_video: ""
 links:
 - icon: images
   icon_pack: fas
-  name: Notes
+  name: Slides
   url: ../../slides/Quotient_ADHD_intro_no_method.pdf
   
 ---

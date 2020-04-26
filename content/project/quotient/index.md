@@ -37,9 +37,9 @@ links:
 caption="" >}}
 
 This project became one of the pioneers of the company's product digital transition. Throughout of the project development,
-I have also given a series of training and seminars to my colleagues and department leadership teams regarding the digital transition and many other related information.
+I have also given a series of training and seminars to my colleagues and the leadership team regarding the digital transition and many other related information.
 
-The materials below list a couple of selected talks about product digital transition.   
+The materials below list a couple of selected talks.   
 
 * [Psychometrics Preparation for Digital Transition](../../slides/Quotient/Psychometric_prep_for_digital_tool_transfer.pdf)
 

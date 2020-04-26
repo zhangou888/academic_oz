@@ -24,22 +24,30 @@ subtitle = ""
   [[content.filter_button]]
     name = "All"
     tag = "*"
+	
+  [[content.filter_button]]
+    name = "Data Science"
+    tag = "data science"
+
+  [[content.filter_button]]
+    name = "Statistics"
+    tag = "Statistics"
+  
+  [[content.filter_button]]
+    name = "Software"
+    tag = "software"
   
   [[content.filter_button]]
     name = "R"
     tag = "R"
-    
-  [[content.filter_button]]
-    name = "Software"
-    tag = "software"
 
   [[content.filter_button]]
+    name = "Python"
+    tag = "Python"
+
+ [[content.filter_button]]
     name = "Workshop"
     tag = "workshop"
-  
-  [[content.filter_button]]
-    name = "Course"
-    tag = "course"
     
 
 [design]

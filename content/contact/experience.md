@@ -49,7 +49,7 @@ date_format = "January 2006"
   date_end = "2017-03-24"
   description = """Lead psychometrician and team lead of the clinical assessment team working across multiple projects including the 
   [Wechsler Intelligence Scale for Children (WISC5)](https://www.pearsonassessments.com/store/usassessments/en/Store/Professional-Assessments/Cognition-%26-Neuro/Gifted-%26-Talented/Wechsler-Intelligence-Scale-for-Children-%7C-Fifth-Edition-/p/100000771.html),
-  [Test of Everyday Attention for Children (TEA-Ch2](https://www.pearsonassessments.com/store/usassessments/en/Store/Professional-Assessments/Behavior/Attention-ADHD/Test-of-Everyday-Attention-for-Children-%7C-Second-Edition/p/100001942.html), and
+  [Test of Everyday Attention for Children (TEA-Ch2)](https://www.pearsonassessments.com/store/usassessments/en/Store/Professional-Assessments/Behavior/Attention-ADHD/Test-of-Everyday-Attention-for-Children-%7C-Second-Edition/p/100001942.html), and
   [Pharmacy College Admission Test (PCAT)](https://www.pearsonassessments.com/graduate-admissions/pcat/about.html)
   
   Responsibilities include:
@@ -68,7 +68,7 @@ date_format = "January 2006"
   location = "Gainesville, Florida"
   date_start = "2008-11-01"
   date_end = "2012-08-15"
-  description = """ Research assistant for the psychometric team working on the [Dynamic Learning Maps](https://dynamiclearningmaps.org) alternate assessment, a 19-state consortium that uses DLM as their large-scale operational assessment.
+  description = """Research assistant for the psychometric team working on the [Collaborative Assessment & Program Evaluation Services](https://education.ufl.edu/capes/).
   
   Responsibilities include:
   * Worked with project director in the construction of evaluation plans and monitored evaluation process

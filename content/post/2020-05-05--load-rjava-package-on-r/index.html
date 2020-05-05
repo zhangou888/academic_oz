@@ -1,0 +1,118 @@
+---
+title: 'Load “rJava” package on R'
+author: Ou Zhang
+date: '2020-05-05'
+slug: load-rJAVA-package-on-R
+draft: no
+categories: 
+  - R
+tags:
+  - R
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-05-05T09:57:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: 'Smart'
+  preview_only: no
+projects: []
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 1
+---
+
+
+
+<p>Recently, some R users (include myself) find that they are unable to load <strong>‘rJava’</strong> package in R. This creates a big headache to the regular R user, since ‘rJava’ package is a <strong>core</strong> dependent package for most of txt processing R packages, like <strong>xlsx, tabulizer, Rwordseg</strong>, etc.).</p>
+<p>It is crucial to fix this issue and load ‘rJava’ package on R successfully. Therefore, I’ve spent some time to find a way to make it work. Here are the steps.</p>
+<div id="step-1-make-sure-your-r-version-in-the-rstudio-is-32-bit." class="section level2">
+<h2><span class="header-section-number">0.1</span> Step 1: Make sure your R version in the RStudio is 32-bit.</h2>
+<p>When the R is installed on the computer, it automatically installed 2 versions.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig1"></span>
+<img src="img/figure1.png" alt="R version" width="100%" />
+<p class="caption">
+Figure 1: R version
+</p>
+</div>
+<p>Both versions are good to use for regular R programming. However, some of the <strong>txt</strong> process packages, like Rwordseg, are only available in the 32-bit. Please set up your R in RStudio to 32-bit.</p>
+<p>Go to RStudio, click:</p>
+<p>Tools &gt; Global Options &gt; General，R version:</p>
+<div class="figure" style="text-align: center"><span id="fig:fig2"></span>
+<img src="img/figure2.png" alt="Change to 32-bit" width="100%" />
+<p class="caption">
+Figure 2: Change to 32-bit
+</p>
+</div>
+</div>
+<div id="step-2-install-or-reinstall-java-on-your-pc" class="section level2">
+<h2><span class="header-section-number">0.2</span> Step 2: Install or reinstall Java on your PC</h2>
+<p>Before install ‘rJAVA’ package, you need make sure that the java installed on your PC is the most up-to-date.</p>
+<blockquote>
+<p>Remember: <strong>Install Java JDK</strong>, not the regular JRE.</p>
+</blockquote>
+<p>You can find the download link below:</p>
+<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">JAVA jdk download</a></p>
+<div class="figure" style="text-align: center"><span id="fig:fig3"></span>
+<img src="img/figure3.png" alt="java download" width="100%" />
+<p class="caption">
+Figure 3: java download
+</p>
+</div>
+<p>Download the setup file and install it on your computer (you may need seek help from IT department, since you may not have administrator authority for your computer). If it’s your personal computer, then never mind:)</p>
+<p>Once the JDK installation process is complete, please check whether the installation is successful or not. In WIN10, follow the steps below.</p>
+<ul>
+<li>click <strong>‘Search Window’</strong> next to windows button</li>
+<li>type <strong>cmd</strong> to open command window</li>
+<li>type <strong>java -version</strong> then you’ll see the the version of JAVA displayed</li>
+</ul>
+<div class="figure" style="text-align: center"><span id="fig:fig4"></span>
+<img src="img/figure4.png" alt="java version" width="100%" />
+<p class="caption">
+Figure 4: java version
+</p>
+</div>
+</div>
+<div id="step-3-find-your-java-folder-on-your-pc-and-configure-path-on-your-pc" class="section level2">
+<h2><span class="header-section-number">0.3</span> Step 3: Find your java folder on your PC and configure path on your PC</h2>
+<p>On your computer, find the folder where your java is installed:</p>
+<div class="figure" style="text-align: center"><span id="fig:fig5"></span>
+<img src="img/figure5.png" alt="java folder" width="100%" />
+<p class="caption">
+Figure 5: java folder
+</p>
+</div>
+<p>Configure path on your PC:
+click ‘Search Window’ next to windows button, then type <strong>cmd</strong>.</p>
+<p>Look for “rundll32.exe sysdm.cpl,EditEnvironmentVariables”</p>
+<p>(see below).</p>
+<div class="figure" style="text-align: center"><span id="fig:fig6"></span>
+<img src="img/figure6.png" alt="rundll32.exe" width="100%" />
+<p class="caption">
+Figure 6: rundll32.exe
+</p>
+</div>
+<p>Open a window, then add new User Variable-“JAVA_HOME” and put the Java path in the text dialog box (i.e., ‘C:Files (x86)1.8.0_161’, see below).</p>
+<div class="figure" style="text-align: center"><span id="fig:fig7"></span>
+<img src="img/figure7.png" alt="new user variable" width="100%" />
+<p class="caption">
+Figure 7: new user variable
+</p>
+</div>
+</div>
+<div id="step-4-configure-java_home-path-on-your-rstudio" class="section level2">
+<h2><span class="header-section-number">0.4</span> Step 4: Configure JAVA_HOME path on your RStudio</h2>
+<p>See the code block below.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig8"></span>
+<img src="img/figure8.png" alt="R code" width="100%" />
+<p class="caption">
+Figure 8: R code
+</p>
+</div>
+<p>You can also find the code below.</p>
+<p><a href="../../R_code/Configure_JAVA_environment_for_rJava_package.R">R code</a></p>
+</div>

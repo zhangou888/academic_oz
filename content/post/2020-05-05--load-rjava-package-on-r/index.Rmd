@@ -1,0 +1,155 @@
+---
+title: 'Load “rJava” package on R'
+author: Ou Zhang
+date: '2020-05-05'
+slug: load-rJAVA-package-on-R
+draft: no
+categories: 
+  - R
+tags:
+  - R
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-05-05T09:57:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: 'Smart'
+  preview_only: no
+projects: []
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 1
+---
+
+```{r set-global-options, echo = FALSE}
+knitr::opts_chunk$set(eval = TRUE, 
+                      echo = FALSE, 
+                      cache = FALSE,
+                      include = TRUE,
+                      collapse = FALSE,
+                      dependson = NULL,
+                      engine = "R", # Chunks will always have R code, unless noted
+                      error = TRUE,
+                      # root.dir = "C:/Users/uzhanou/Documents/R/markdown/Serena/",
+                      fig.path = "figure/",  # Set the figure options
+                      fig.align = "center", 
+                      fig.width = 6,
+                      fig.height = 6)
+```
+
+```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE}
+## Step 2: load required packages 
+packages <- c("tidyverse", "knitr")
+packages <- lapply(packages, FUN = function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x)
+    library(x, character.only = TRUE)
+  }  
+})
+
+```
+
+Recently, some R users (include myself) find that they are unable to load **‘rJava’** package in R. This creates a big headache to the regular R user, since ‘rJava’ package is a **core** dependent package for most of txt processing R packages, like **xlsx, tabulizer, Rwordseg**, etc.).  
+
+It is crucial to fix this issue and load ‘rJava’ package on R successfully. Therefore, I’ve spent some time to find a way to make it work. Here are the steps. 
+
+## Step 1: Make sure your R version in the RStudio is 32-bit. 
+
+When the R is installed on the computer, it automatically installed 2 versions.
+
+```{r fig1, out.width='100%', fig.align='center', fig.pos='h', fig.cap='R version',echo = FALSE}
+
+    knitr::include_graphics("img/figure1.png", error = FALSE)
+
+```
+
+Both versions are good to use for regular R programming. However, some of the **txt** process packages, like Rwordseg, are only available in the 32-bit. Please set up your R in RStudio to 32-bit. 
+
+Go to RStudio, click: 
+
+Tools > Global Options > General，R version:
+
+```{r fig2, out.width='100%', fig.align='center', fig.pos='h', fig.cap='Change to 32-bit',echo = FALSE}
+
+    knitr::include_graphics("img/figure2.png", error = FALSE)
+
+```
+## Step 2: Install or reinstall Java on your PC 
+
+Before install 'rJAVA' package, you need make sure that the java installed on your PC is the most up-to-date. 
+
+> Remember: **Install Java JDK**, not the regular JRE.
+
+You can find the download link below: 
+
+[JAVA jdk download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+
+```{r fig3, out.width='100%', fig.align='center', fig.pos='h', fig.cap='java download',echo = FALSE}
+
+    knitr::include_graphics("img/figure3.png", error = FALSE)
+
+```
+Download the setup file and install it on your computer (you may need seek help from IT department, since you may not have administrator authority for your computer). If it's your personal computer, then never mind:)
+
+Once the JDK installation process is complete, please check whether the installation is successful or not. In WIN10, follow the steps below.
+
+  * click **‘Search Window’** next to windows button
+  * type **cmd** to open command window
+  * type **java -version** then you'll see the the version of JAVA displayed
+
+```{r fig4, out.width='100%', fig.align='center', fig.pos='h', fig.cap='java version',echo = FALSE}
+
+    knitr::include_graphics("img/figure4.png", error = FALSE)
+
+``` 
+  
+## Step 3: Find your java folder on your PC and configure path on your PC
+
+On your computer, find the folder where your java is installed:  
+
+```{r fig5, out.width='100%', fig.align='center', fig.pos='h', fig.cap='java folder',echo = FALSE}
+
+    knitr::include_graphics("img/figure5.png", error = FALSE)
+
+``` 
+
+Configure path on your PC: 
+click ‘Search Window’ next to windows button, then type **cmd**.
+
+Look for "rundll32.exe sysdm.cpl,EditEnvironmentVariables"
+
+(see below).
+
+```{r fig6, out.width='100%', fig.align='center', fig.pos='h', fig.cap='rundll32.exe',echo = FALSE}
+
+    knitr::include_graphics("img/figure6.png", error = FALSE)
+
+``` 
+
+Open a window, then add new User Variable-“JAVA_HOME” and put the Java path in the text dialog box (i.e., ‘C:\Program Files (x86)\Java\jdk1.8.0_161\jre’, see below).
+
+
+```{r fig7, out.width='100%', fig.align='center', fig.pos='h', fig.cap='new user variable',echo = FALSE}
+
+    knitr::include_graphics("img/figure7.png", error = FALSE)
+
+``` 
+## Step 4: Configure JAVA_HOME path on your RStudio  
+
+See the code block below.
+
+
+```{r fig8, out.width='100%', fig.align='center', fig.pos='h', fig.cap='R code',echo = FALSE}
+
+    knitr::include_graphics("img/figure8.png", error = FALSE)
+
+``` 
+
+You can also find the code below.
+
+[R code](../../R_code/Configure_JAVA_environment_for_rJava_package.R)

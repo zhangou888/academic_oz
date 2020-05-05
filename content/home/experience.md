@@ -35,7 +35,7 @@ date_format = "Jan 2006"
   * Create and maintain SAS modules and R packages
   * Oversee development and execution of programming needs for scoring and reporting
   * Develop and maintain statistical methodologies for the psychometrics framework
-  * program and implement reproducible report system for multiple projects 
+  * Program and implement reproducible report system for multiple projects 
   * Prepare research projects for presenation to national conferences and technical advisory committee
   
 """

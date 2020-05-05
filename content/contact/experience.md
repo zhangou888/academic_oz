@@ -27,7 +27,7 @@ date_format = "January 2006"
   description = """Member of the Pearson psychometric team working across multiple projects including the 
   [NY Regents](https://www.regents.nysed.gov/), 
   [The Partnership for Assessment of Readiness for College and Careers (PARCC)](https://en.wikipedia.org/wiki/PARCC),
-  [The Arizona English Language Learner Assessment (AZELLA)](https://www.azed.gov/assessment/azella/), and [National Board for Professional Teaching Standards](https://www.nbpts.org/).
+  [The Arizona English Language Learner Assessment (AZELLA)](https://www.azed.gov/assessment/azella/), and [National Board for Professional Teaching Standards (NBPTS)](https://www.nbpts.org/), etc.
   
   Responsibilities include:
   

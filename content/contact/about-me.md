@@ -48,12 +48,12 @@ subtitle = ""
 +++
 
 
-I am originally from Chengdu, China and am a CDUTer from [Chendu University of Technology](https://www.cdut.edu.cn/). 
+I am originally from Chengdu, China and was graduated from [Chendu University of Technology](https://www.cdut.edu.cn/). 
 
 After college, I studied psychology, psychometrics, and quantitative methods, receiving my MEd. from [Boston College](https://www.bc.edu/) (2007), and Ph.D. from [University of Florida](https://www.uf.edu/) (2012). 
 
 I am now a data scientist and psychometrician at [Pearson Psychometrics Service](https://www.pearson.com/). 
-Prior to that, I was an psychometrician II and team lead at [Pearson Clinical Assessment](https://www.pearsonassessments.com/professional-assessments.html), and research fellow at [Assessment and Program Evaluation Services, University of Florida](https://education.ufl.edu/capes/).
+Prior to that, I was the psychometrician II and team lead at [Pearson Clinical Assessment](https://www.pearsonassessments.com/professional-assessments.html), and research fellow at [Assessment and Program Evaluation Services, University of Florida](https://education.ufl.edu/capes/).
 
 <p align="center">
 	<img src="wisc5_int.jpg" class="center-block" alt="One assessment project I led is published" style="width:60%;height:30%;">

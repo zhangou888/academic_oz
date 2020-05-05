@@ -56,6 +56,9 @@ social:
 - icon: github
   icon_pack: fab
   link: https://github.com/zhangou888
+- icon: stack-exchange
+  icon_pack: fab
+  link: https://stackoverflow.com/users/11401573/ou-zhang
 - icon: linkedin-in
   icon_pack: fab
   link: https://www.linkedin.com/in/zhangou/

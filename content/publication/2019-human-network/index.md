@@ -27,9 +27,6 @@ publication_short = ""
 # Abstract and optional shortened version.
 abstract = "AbstractCapital projects are critical to the world’s economy. Despite the advancement of prediction techniques, capital projects still suffer from overly optimistic plans, i.e. tight budgets and schedules. This article focuses on understanding this issue from the perspective of optimism bias, i.e. a psychological bias toward the inclination to be overly optimistic about the chance of success. We hypothesize that human communication network topologies are strong predictors of harmful optimism bias at the group level in project planning. A human-subject experiment was performed to test group optimism bias levels under different communication network topologies. We recruited 103 subjects to estimate the cost of an artificial power plant project. The communication networks were manipulated to reflect different topologies. The subjects’ estimates were compared to a Monte Carlo simulation result based on real historical data to quantify the level of optimism bias at the group level. Preliminary results find that certain human communication network topology leads to more realistic estimates, possibly due to a process of updating individual judgement based on peers’ judgements. The findings of this study are expected to urge further theoretical investigations into the development of simple yet effective decision support systems to reduce decision-making bias in capital project planning. "
 
-# Is this a selected publication? (true/false)
-featured = true
-
 # Projects (optional).
 #   Associate this publication with one or more of your projects.
 #   Simply enter your project's folder or file name without extension.
@@ -65,7 +62,7 @@ doi = "10.1080/01446193.2018.1508848"
 math = true
 
 # Is this a featured publication? (true/false)
-featured = false
+featured = true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder. 

@@ -27,9 +27,6 @@ publication_short = ""
 # Abstract and optional shortened version.
 abstract = "Different norming methods provide different precision levels norm estimates, under different conditions of particular sample size, violations of normality and homoscedasticity. The quality of the norms was estimated with multiple indexes such as polynomial curve fit, overall statistics, IPR, score distributions. Norming method performance differences were illustrated under different conditions to establish a solid common understanding of selecting norming methods."
 
-# Is this a featured publication? (true/false)
-featured = true
-
 # Projects (optional).
 #   Associate this publication with one or more of your projects.
 #   Simply enter your project's folder or file name without extension.
@@ -65,7 +62,7 @@ doi = ""
 math = true
 
 # Is this a featured publication? (true/false)
-featured = false
+featured = true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder. 

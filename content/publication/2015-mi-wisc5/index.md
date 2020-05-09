@@ -28,7 +28,7 @@ publication_short = ""
 abstract = "This study investigated the factorial invariance of the Wechsler Intelligence Scale for Children-Fifth Edition (WISC-V) between samples of male and female children. A higher-order 5-factor model was tested on a nationally-representative sample of 2200 children aged 6 to 16 years. The results demonstrated full factorial invariance between genders. The WISC-V subtests demonstrate the same underlying theoretical latent constructs, the same strength of relationships among factors and subtests, the same validity of each first-order factor, and the same communalities, regardless of the gender, thus supporting the same interpretive approach and meaningful comparisons of the WISC-V between male and female children. "
 
 # Is this a selected publication? (true/false)
-selected = false
+featured = true
 
 # Projects (optional).
 #   Associate this publication with one or more of your projects.

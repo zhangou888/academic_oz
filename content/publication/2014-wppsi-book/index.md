@@ -27,8 +27,8 @@ publication_short = ""
 # Abstract and optional shortened version.
 abstract = ""
 
-# Is this a selected publication? (true/false)
-selected = true
+# Is this a featured publication? (true/false)
+featured = true
 
 # Projects (optional).
 #   Associate this publication with one or more of your projects.

@@ -23,7 +23,7 @@ image:
 projects: []
 output:
   blogdown::html_page:
-    toc: TRUE
+    toc: false
     number_sections: yes
     toc_depth: 3
 ---
@@ -44,7 +44,7 @@ knitr::opts_chunk$set(eval = TRUE,
                       fig.height = 6)
 ```
 
-```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE}
+```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE，cache=TRUE}
 ## Step 2: load required packages 
 packages <- c("tidyverse","rmarkdown","knitr")
 packages <- lapply(packages, FUN = function(x) {
@@ -74,7 +74,7 @@ Therefore, data cleaning or data wrangling is utmost important for any data anal
 
 In the early 2010s, [Hadley Wickham](http://hadley.nz/) invented one of the most important R package series - [Tidyverse](https://www.tidyverse.org/).
 
-```{r fig1, out.width='10%', fig.align='center', fig.pos='h', fig.cap='Tidyverse',echo = FALSE}
+```{r fig1, out.width='20%', fig.align='center', fig.pos='h', fig.cap='Tidyverse',echo = FALSE}
 
     knitr::include_graphics("img/tidyverse.png", error = FALSE)
 
@@ -82,7 +82,7 @@ In the early 2010s, [Hadley Wickham](http://hadley.nz/) invented one of the most
 
 The **tidyverse** is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. It mainly focuses on the data wrangling steps including data import/export, data format conversion, data wrangling or data tidying. The ideal data analysis process, or the standard process explained by Hadley looks like the flow chart below.
 
-```{r fig2, out.width='50%', fig.align='center', fig.pos='h', fig.cap='data analysis flow',echo = FALSE}
+```{r fig2, out.width='60%', fig.align='center', fig.pos='h', fig.cap='data analysis flow',echo = FALSE}
 
     knitr::include_graphics("img/r4ds_data-science.png", error = FALSE)
 
@@ -90,14 +90,14 @@ The **tidyverse** is an opinionated collection of R packages designed for data s
 
 The idea of data tidying is the **first step** and standard way to structure datasets for later data analysis. 
 
-On internet, you can easily googled tons of information and websites introducing this R-package collection. However, most of the introductions, only spend one or two paragraphs to depict the definition of **Tidy data** then move on to the command line examples and description of relevant package applications. Only Hadley own [R for Data Science](https://r4ds.had.co.nz) book, gives an entire chapter to give a detailed story about **Tidy data**. Because of its importance, Hadley published a paper, only introducing the definition of **Tidy data**.
+Nowadays, you can easily googled a large volumes of information and webpages introducing this R-package collection. However, most of the introductions, only spend one or two paragraphs to depict the definition of **Tidy data** then move on to the command line examples and description of relevant package applications. Only Hadley own [R for Data Science](https://r4ds.had.co.nz) book, gives an entire chapter to give a detailed story about **Tidy data**. Because of its importance, Hadley published a paper, only introducing the definition of **Tidy data**.
 
 You can find the paper from this link: [Tidy data](https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf).
 
 The paper itself claims the above definitions are [**Codd 3rd normal form**](https://en.wikipedia.org/wiki/Third_normal_form).
 
 
-As a data scientist, personally I think the Tidy data is more than just great. It is not just an idea, but it provides a comprehensive **“philosophy of data”** in terms of data handling, and data science. For that reason, I would like to write a bit on the meaning and history of the phrase **tidy data** as my first ever blog series of Tidyverse introduction.    
+As a data scientist, personally I think the Tidy data is more than just great. It is not just an idea, but it provides a comprehensive **“philosophy of data”** in terms of data handling, and data science. For that reason, I would like to write a bit on the meaning and history of the phrase **tidy data** as my first ever blog series of **Tidyverse** introduction.    
 
 # What is Tidy data？
 
@@ -112,7 +112,7 @@ There are three rules which make a dataset tidy:
 <!-- * Each value must have its own cell -->
 
 
-```{r fig3, out.width='50%', fig.align='center', fig.pos='h', fig.cap='data analysis flow',echo = FALSE}
+```{r fig3, out.width='75%', fig.align='center', fig.pos='h', fig.cap='data analysis flow',echo = FALSE}
 
     knitr::include_graphics("img/tidy_data.png", error = FALSE)
 
@@ -158,13 +158,13 @@ While starting data analysis, data scientists should ask themselves a big questi
 
 This question is: 
 
-> Is such a data set **tidy**? 
+> Is this data set **tidy**? 
 
 Let's look at a couple of data structures and ask yourself this question.
 
 ## Example 1:
 
-```{r fig5, out.width='40%', fig.align='center', fig.pos='h', fig.cap='data 1',echo = FALSE}
+```{r fig5, out.width='70%', fig.align='center', fig.pos='h', fig.cap='data 1',echo = FALSE}
 
     knitr::include_graphics("img/data1.png", error = FALSE)
 
@@ -177,7 +177,7 @@ The short answer is **No, it's not tidy data**. This is because variable 2 to 4 
 
 Let's look at the 2nd data example. 
 
-```{r fig6, out.width='40%', fig.align='center', fig.pos='h', fig.cap='data 2',echo = FALSE}
+```{r fig6, out.width='70%', fig.align='center', fig.pos='h', fig.cap='data 2',echo = FALSE}
 
     knitr::include_graphics("img/data2.png", error = FALSE)
 
@@ -190,7 +190,7 @@ The answer is **Yes, it is tidy data**. And you can tell that the data structure
 
 Let's look at the 3rd data example to reinforce the tidy data idea. 
 
-```{r fig7, out.width='40%', fig.align='center', fig.pos='h', fig.cap='data 3',echo = FALSE}
+```{r fig7, out.width='70%', fig.align='center', fig.pos='h', fig.cap='data 3',echo = FALSE}
 
     knitr::include_graphics("img/data3.png", error = FALSE)
 
@@ -239,7 +239,7 @@ data 5 only includes the population variable, and the case variable is missing i
 # Traditional measurement testing dataset
 As psychometricians, the data we usually encounter is the traditional measurement testing data. In order to fit the data into the traditional IRT or CTT software (i.e., WINSTEPS), the data structures are either item score matrix, 
 
-```{r fig8, out.width='30%', fig.align='center', fig.pos='h', fig.cap='measurement data type 1-item score',echo = FALSE}
+```{r fig8, out.width='60%', fig.align='center', fig.pos='h', fig.cap='measurement data type 1-item score',echo = FALSE}
 
     knitr::include_graphics("img/measure_data1.JPG", error = FALSE)
 
@@ -247,7 +247,7 @@ As psychometricians, the data we usually encounter is the traditional measuremen
 
 or item response matrix,
 
-```{r fig9, out.width='30%', fig.align='center', fig.pos='h', fig.cap='measurement data type 1-item responses',echo = FALSE}
+```{r fig9, out.width='60%', fig.align='center', fig.pos='h', fig.cap='measurement data type 1-item responses',echo = FALSE}
 
     knitr::include_graphics("img/measure_data2.JPG", error = FALSE)
 ```

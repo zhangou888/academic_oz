@@ -147,15 +147,55 @@ Figure 4.3: data 3
 <div id="code-examples" class="section level2">
 <h2><span class="header-section-number">4.4</span> Code Examples</h2>
 <p>So, you’ve seen some data examples and let’s run some dynamic codes as tidy data examples. The code below display the same data with 4 different structures. One dataset (tidy data structure) is much easier to work with in R than others.</p>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;table1&#39; not found</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   country      year  cases population
+##   &lt;fct&gt;       &lt;int&gt;  &lt;int&gt;      &lt;int&gt;
+## 1 Afghanistan  1999    745   19987071
+## 2 Afghanistan  2000   2666   20595360
+## 3 Brazil       1999  37737  172006362
+## 4 Brazil       2000  80488  174504898
+## 5 China        1999 212258 1272915272
+## 6 China        2000 213766 1280428583</code></pre>
 <p>Data 1 is tidy data structure. This is because each variable has its own column (i.e., country, year, cases, and population). And each observation has its own row. Finally, each value has its own cell.</p>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;table2&#39; not found</code></pre>
+<pre><code>## # A tibble: 12 x 4
+##    country      year key             value
+##    &lt;fct&gt;       &lt;int&gt; &lt;fct&gt;           &lt;int&gt;
+##  1 Afghanistan  1999 cases             745
+##  2 Afghanistan  1999 population   19987071
+##  3 Afghanistan  2000 cases            2666
+##  4 Afghanistan  2000 population   20595360
+##  5 Brazil       1999 cases           37737
+##  6 Brazil       1999 population  172006362
+##  7 Brazil       2000 cases           80488
+##  8 Brazil       2000 population  174504898
+##  9 China        1999 cases          212258
+## 10 China        1999 population 1272915272
+## 11 China        2000 cases          213766
+## 12 China        2000 population 1280428583</code></pre>
 <p>Data 2 intermingles the values of population and cases in the same column-value. So, data 2 is not tidy data.</p>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;table3&#39; not found</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   country      year rate             
+##   &lt;fct&gt;       &lt;int&gt; &lt;chr&gt;            
+## 1 Afghanistan  1999 745/19987071     
+## 2 Afghanistan  2000 2666/20595360    
+## 3 Brazil       1999 37737/172006362  
+## 4 Brazil       2000 80488/174504898  
+## 5 China        1999 212258/1272915272
+## 6 China        2000 213766/1280428583</code></pre>
 <p>The case and population variables in data 3 are in the same column.</p>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;table4&#39; not found</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   country     `1999` `2000`
+##   &lt;fct&gt;        &lt;int&gt;  &lt;int&gt;
+## 1 Afghanistan    745   2666
+## 2 Brazil       37737  80488
+## 3 China       212258 213766</code></pre>
 <p>data 4 only includes the case variable and the population variable is missing.</p>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;table5&#39; not found</code></pre>
+<pre><code>## # A tibble: 3 x 3
+##   country         `1999`     `2000`
+##   &lt;fct&gt;            &lt;int&gt;      &lt;int&gt;
+## 1 Afghanistan   19987071   20595360
+## 2 Brazil       172006362  174504898
+## 3 China       1272915272 1280428583</code></pre>
 <p>data 5 only includes the population variable, and the case variable is missing in the dataset.</p>
 </div>
 </div>

@@ -44,7 +44,7 @@ knitr::opts_chunk$set(eval = TRUE,
                       fig.height = 6)
 ```
 
-```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE，cache=TRUE}
+```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE}
 ## Step 2: load required packages 
 packages <- c("tidyverse","rmarkdown","knitr")
 packages <- lapply(packages, FUN = function(x) {

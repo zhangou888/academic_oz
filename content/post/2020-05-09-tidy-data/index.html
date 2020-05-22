@@ -31,7 +31,7 @@ output:
 
 
 <p>In an ideal world, a data analysis process is as simple as-<code>read in data, select a suitable model to fit in data, obtain statistical estimates, and finally, interpret the analysis results</code>. Sounds simple and straight foward, isn’t it?</p>
-<p>But, in reality, it’s often not that simple!Data is always messy and often times we need to clean our data before we can make any sense of it. Moreover, some researchers found that more than <code>80%</code> of data analysis is actually spent on data preparation or data manipulation (Dasu &amp; Johnson, 2003), so that the data is transformed int a usable format before you even think about analysis.</p>
+<p>But, in reality, it’s often not that simple!Data is always messy and often times we need to clean our data before we can make any sense of it. Moreover, some researchers found that more than <code>80%</code> of data analysis is actually spent on data preparation or data manipulation (Dasu &amp; Johnson, 2003), so that the data is transformed into a usable format before you even think about analysis.</p>
 <p>Therefore, data cleaning or data wrangling is utmost important for any data analysis or data science project.</p>
 <p>In the early 2010s, <a href="http://hadley.nz/">Hadley Wickham</a> invented one of the most important R package series - <a href="https://www.tidyverse.org/">Tidyverse</a>.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig1"></span>
@@ -40,7 +40,7 @@ output:
 Figure 0.1: Tidyverse
 </p>
 </div>
-<p>The <code>tidyverse</code> is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. It mainly focuses on the data wrangling steps including data import/export, data format conversion, data wrangling or data tidying. The ideal data analysis process, or the standard process explained by Hadley looks like the flow chart below.</p>
+<p>The <code>tidyverse</code> is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. It mainly focuses on the data wrangling steps including data import/export, data format conversion, data wrangling or data tidying. The ideal data analysis process, or the standard process explained by Hadley. The workflow looks like the chart below.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig2"></span>
 <img src="img/r4ds_data-science.png" alt="data analysis flow" width="70%" />
 <p class="caption">
@@ -48,10 +48,10 @@ Figure 0.2: data analysis flow
 </p>
 </div>
 <p>The idea of data tidying is the <code>first step</code> and standard way to structure datasets for later data analysis.</p>
-<p>On internet, you can easily googled tons of information and websites introducing this R-package collection. However, most of the introductions, only spend one or two paragraphs to depict the definition of <code>Tidy data</code> then move on to the command line examples and description of relevant package applications. Only Hadley own <a href="https://r4ds.had.co.nz">R for Data Science</a> book, gives an entire chapter to give a detailed story about <code>Tidy data</code>. Because of its importance, Hadley published a paper, only introducing the definition of <code>Tidy data</code>.</p>
+<p>On internet, you can easily googled tons of information and websites introducing this R-package collection. However, most of the introductions, only spend one or two paragraphs to depict the definition of <code>Tidy data</code>. Then they move on to the command line examples and description of relevant package applications. Only Hadley’s own <a href="https://r4ds.had.co.nz">R for Data Science</a> book, spent an entire chapter to give a detailed story about <code>Tidy data</code>. Because of its importance, Hadley published a paper, solely introducing the definition of <code>Tidy data</code>.</p>
 <p>You can find the paper from this link: <a href="https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf">Tidy data</a>.</p>
-<p>The paper itself claims the above definitions are <a href="https://en.wikipedia.org/wiki/Third_normal_form"><strong>Codd 3rd normal form</strong></a>.</p>
-<p>As a data scientist, personally I think the Tidy data is more than just great. It is not just an idea, but it provides a comprehensive <code>“philosophy of data”</code> in terms of data handling, and data science. For that reason, I would like to write a bit on the meaning and history of the phrase <code>tidy data</code> as my first ever blog series of <code>Tidyverse</code> introduction.</p>
+<p>The paper itself claims the Tidy data definition matches <a href="https://en.wikipedia.org/wiki/Third_normal_form"><strong>Codd 3rd normal form</strong></a>.</p>
+<p>As a data scientist, personally I think the Tidy data is <strong>more than just great</strong>. It is not just an idea, but provides a comprehensive <code>“philosophy of data”</code> in terms of data wrangling, and data science. For that reason, I would like to write a bit on the definition and history of the phrase <code>tidy data</code> as my first blog series of <code>Tidyverse</code> introduction.</p>
 <div id="what-is-tidy-data" class="section level1">
 <h1><span class="header-section-number">1</span> What is Tidy data？</h1>
 <p>The first question is-What is tidy data?</p>
@@ -77,7 +77,7 @@ Figure 1.1: data analysis flow
 </div>
 <div id="why-is-it-important" class="section level1">
 <h1><span class="header-section-number">2</span> Why is it important?</h1>
-<p>So, the 2nd question is-why is this Tidy data structure important?</p>
+<p>The 2nd question is-why is this Tidy data structure important?</p>
 <p>The short answer is in three folds.</p>
 <ul>
 <li>Organizing datasets as tidy data makes data cleaning efforts easier</li>
@@ -94,7 +94,7 @@ Figure 2.1: Tools for Tidy data
 </div>
 <div id="fixed-variable-vs.-measured-variable" class="section level1">
 <h1><span class="header-section-number">3</span> Fixed variable vs. Measured variable</h1>
-<p>In general, two types of varaibles exist in the tidy data structure, fixed variable and measured variable.</p>
+<p>In general, two types of variables exist in the tidy data structure, fixed variable and measured variable.</p>
 <ul>
 <li><p><code>Fixed variable</code> - Fixed variables describe the experimental design and are known in advance.</p></li>
 <li><p><code>Measured variable</code> - Measured variables are what we actually measured in the study.</p></li>
@@ -103,7 +103,7 @@ Figure 2.1: Tools for Tidy data
 </div>
 <div id="is-such-a-data-set-tidy" class="section level1">
 <h1><span class="header-section-number">4</span> Is such a data set <strong>tidy</strong>?</h1>
-<p>While starting data analysis, data scientists should ask themselves a big question before moving on to the real data analysis.</p>
+<p>While starting data analysis, data scientists should ask themselves this question before moving on to the real data analysis.</p>
 <p>This question is:</p>
 <blockquote>
 <p>Is this data set <strong>tidy</strong>?</p>
@@ -118,7 +118,7 @@ Figure 4.1: data 1
 </p>
 </div>
 <p>So, is this data structure a tidy data?</p>
-<p>The short answer is <code>No, it's not tidy data</code>. This is because variable 2 to 4 (column 2-4) are all stock price. And according to tidy data rule No. 1-<em>Each variable must have its own column</em>. All three variables should be transform into a single variable to store stock price values and create a new variable to indicate stock names.</p>
+<p>The short answer is <code>No, it's not tidy data</code>. This is because variable 2 to 4 (column 2-4) are all stock price. And according to tidy data rule No. 1- <em>Each variable must have its own column</em>. All three variables should be transform into a single variable to store stock price values and create a new variable to indicate stock names.</p>
 </div>
 <div id="example-2" class="section level2">
 <h2><span class="header-section-number">4.2</span> Example 2:</h2>
@@ -156,7 +156,7 @@ Figure 4.3: data 3
 ## 4 Brazil       2000  80488  174504898
 ## 5 China        1999 212258 1272915272
 ## 6 China        2000 213766 1280428583</code></pre>
-<p>Data 1 is tidy data structure. This is because each variable has its own column (i.e., country, year, cases, and population). And each observation has its own row. Finally, each value has its own cell.</p>
+<p>Data 1 is tidy data structure, because each variable has its own column (i.e., country, year, cases, and population). And each observation has its own row. Finally, each value has its own cell.</p>
 <pre><code>## # A tibble: 12 x 4
 ##    country      year key             value
 ##    &lt;fct&gt;       &lt;int&gt; &lt;fct&gt;           &lt;int&gt;
@@ -201,7 +201,7 @@ Figure 4.3: data 3
 </div>
 <div id="traditional-measurement-testing-dataset" class="section level1">
 <h1><span class="header-section-number">5</span> Traditional measurement testing dataset</h1>
-<p>As psychometricians, the data we usually encounter is the traditional measurement testing data. In order to fit the data into the traditional IRT or CTT software (i.e., WINSTEPS), the data structures are either item score matrix,</p>
+<p>As a psychometrician, the data we usually encounter is the traditional measurement testing data. In order to fit the data into the traditional IRT or CTT software (i.e., WINSTEPS), the data structures are either item score matrix,</p>
 <div class="figure" style="text-align: center"><span id="fig:fig8"></span>
 <img src="img/measure_data1.JPG" alt="measurement data type 1-item score" width="60%" />
 <p class="caption">
@@ -218,5 +218,5 @@ Figure 5.2: measurement data type 1-item responses
 <p>These 2 data structures are <code>NOT</code> tidy data.</p>
 <p>Is this a big problem for psychometrics using tidy data structure?</p>
 <p>The answer is <code>NO</code>.</p>
-<p>For the psychometrics, we can still apply tidy data structure in our works, because psychometrician or data scientist could always develop a standard data conversion module to transform the standard tidy data structure to the special data format customized for the traditional testing statistics software usage.</p>
+<p>For the psychometrics, we can apply tidy data structure in our works, because psychometrician or data scientist could always develop a standard data conversion module to transform the standard tidy data structure to the special data format customized for the traditional testing statistics software usage.</p>
 </div>

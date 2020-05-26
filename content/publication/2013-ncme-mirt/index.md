@@ -27,8 +27,6 @@ publication_short = ""
 # Abstract and optional shortened version.
 abstract = ""
 
-# Is this a selected publication? (true/false)
-selected = true
 
 # Projects (optional).
 #   Associate this publication with one or more of your projects.
@@ -65,7 +63,7 @@ doi = ""
 math = true
 
 # Is this a featured publication? (true/false)
-featured = false
+featured = true
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder. 

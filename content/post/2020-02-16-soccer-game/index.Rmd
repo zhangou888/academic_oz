@@ -1,0 +1,46 @@
+---
+title: soccer game 
+author: Ou Zhang
+date: '2020-02-16'
+slug: soccer-game
+draft: no
+output:
+  blogdown::html_page:
+    toc: yes
+    fig_width: 6
+    dev: svg
+---
+
+Today is Sunday 2-16-2020.
+ 
+This morning Alex and I went to a soccer game to cheer up my teammate and experience the true soccer game after weeks of his soccer training from a local soccer training institute-Soccer Shots. 
+
+Unfortunately, I was injured a week before, hitting by a 300-pound guy with full speed on my chest. 
+So, I couldn't dress-up and play today. But **our team won 4:1.** in a beautiful way! 
+Alex really enjoyed watching the game and played soccer with his Daddy on the sideline. 
+
+
+```{r fig1, out.width='50%', fig.align='center', fig.pos='h', fig.cap='Alex and I playing soccer',echo = FALSE}
+
+    knitr::include_graphics("/img/post/play_soccer/Alex_me_play.jpg", error = FALSE)
+
+```
+
+Alex and I had a great time this morning. We kicked soccer ball back and forth. Alex made a couple of good shots. 
+I am so proud of him.
+
+
+```{r fig2, out.width='35%', fig.align='center', fig.pos='h', fig.cap='Alex is kicking',echo = FALSE}
+
+    knitr::include_graphics("/img/post/play_soccer/Alex1.jpg", error = FALSE)
+```
+
+Alex really enjoy playing soccer! I wish he improves his skill fast and becomes a good soccer athelete like his daddy.
+
+```{r fig3, out.width='35%', fig.align='center', fig.pos='h', fig.cap='Alex loves play soccer',echo = FALSE}
+
+    knitr::include_graphics("/img/post/play_soccer/Alex2.jpg", error = FALSE)
+
+```
+
+

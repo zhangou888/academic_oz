@@ -59,15 +59,15 @@ packages <- lapply(packages, FUN = function(x) {
 
 ```
 
-Recently, a colleague of mine asked me to review a state assessment tech report for him. One section-"Parallel Analysis" caught my eyes.  
+Recently, my colleague asked me to review a state assessment tech report. In the tech report, a section-"Parallel Analysis" really caught my eyes.  
 
-Although I have done many times parallel analysis in the past, it is always a good memory refreshing opportunity.  
+I have done parallel analysis multiple times in the past. However, I have never thought about this topic in a systematical way. It is always a good memory refreshing opportunity.  
 
-Then, I just started searching materials online and create some source code in both `SAS` and `R`.  
+Therefore, I take this tech report reviewing opportunity to dig down the parallel analysis. The first thing I did is searching materials on internet and creating some source code in both `SAS` and `R`. Fortunately, there are a lot of information online. After 2 hours searching and reading, I've filtered some introductions and materials I thought might be useful for me and you for the possible parallel analysis in the future.
 
-So, before I start sharing materials, we need to know what is parallel analysis and how are we going to use it in our analysis. 
+So, before I start sharing materials, let me give you a brief introduction about what is parallel analysis. And how are we going to use it in our analysis. 
 
-## WHAT IS PARALLEL ANALYSIS
+# WHAT IS PARALLEL ANALYSIS
 
 When we operate factor analysis, the first decision that we will face in our factor analysis is the decision as to the number of factors that we will need to extract, in order to achieve the most parsimonious (but still interpretatable) factor structure.  
 
@@ -79,7 +79,8 @@ Sometimes this scree test is a legitimately helpful tool for making factor reten
 
 Parallel analysis (introduced by Horn, 1965) is a technique designed to help take some of the subjectivity out of interpreting the scree plot. It is a simulation-based method, and the logic is pretty straightforward:
 
-## METHODOLOGY
+# METHODOLOGY  
+
 Let `N` represent the number of observations in the dataset, and `p` represent the number of variables. In general, parallel analysis is completed as follows:  
 
 1. Calculate the `p x p` sample correlation matrix from the `N x p` sample dataset. Create a scree plot by plotting the eigenvalues of the sample correlation matrix against their position from largest to smallest (`1, 2,…,p`) and connecting the points with straight lines
@@ -105,13 +106,13 @@ You can find his paper [here](https://github.com/zhangou888/parallel_analysis/bl
 I've also reformatted and modified his macro code and it can be download via this [link](https://github.com/zhangou888/parallel_analysis/blob/master/sas/parallel_analysis_macro.sas).
 
 
-## PARALLEL ANALYSIS IN R
+# PARALLEL ANALYSIS IN R
 
 Various R-packages include functions that can conduct parallel analysis. Among all of them, 2 packages are worthwhile to be introduced- `paran`(Alexis Dinno, 2015), and `psych` (William Revelle, 2017).
 
 You can find some parallel analysis R code example below.
 
-### paran package example
+## paran package example
 
 The key option in the `paran` function is its centile option. 
 By default, the centile option is set as $50%$. However, the traditional centile is usually set as $95%$ or $99%$.
@@ -131,7 +132,7 @@ paran(USArrests, iterations=5000, centile=95)
 
 ```
 
-### psych package example
+## psych package example
 
 The 2nd parallel analysis example is from a factor anlaysis tutorial document by Rachael Smyth and Andrew Johnson. 
 

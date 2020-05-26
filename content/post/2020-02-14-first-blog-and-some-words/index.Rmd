@@ -13,15 +13,15 @@ output:
 
 This is the first blog I created after I put my personal website online. This is the second time I've built my personal website. Last time, when I built my website, I was still in graduate school fighting for my dissertation. 
 
-It seems like a Déjà vu, but two different websites have totally different purposes. 
+It seems like a Déjà vu, but two different websites serve to totally two different purposes. 
 My first website was mainly used for advertising and job hunting. But the purpose to build the second website is so different, since I've already had a great job and enjoyed what I have been doing. 
 
-The main idea to build a personal website again is inspired by three smart persons.
+The main idea to build a personal website again is inspired by three smart people.
 
-These 3 smart persons either gave an interesting talk in the conference I've attended or influences my research and programming study a lot in the past years. They are [Yihui Xie](https://yihui.org/en/), [Keith McNulty](https://drkeithmcnulty.com/), and [David Robinson](http://varianceexplained.org/). 
+These 3 smart people either gave an interesting talk in the conference I've attended or influences my research and programming study a lot in the past years. They are [Yihui Xie](https://yihui.org/en/), [Keith McNulty](https://drkeithmcnulty.com/), and [David Robinson](http://varianceexplained.org/). 
 
 Therefore, my first blog post is dedicated to thank them for their help and inspiration. 
-I also wish you who read my blog to be benefited from them too. Here are some brief introduction about three smart people who influence me to build my website most.
+I also wish you who read my blog to be benefited from them too. Here are some brief introduction about them who influence me to build my website most.
 
 # Yihui Xie  
 
@@ -32,7 +32,9 @@ I also wish you who read my blog to be benefited from them too. Here are some br
 
 ```
 
-Yihui Xie is a software engineer working at RStudio, PBC. He is a well-known celebrity in the R community and a mainstream power of the R innovation since 2010s. I have learned a lot from his R-package: knitr, Rmarkdown, Tinytex, bookdown, blogdown, xaringan. 
+Yihui Xie is a software engineer working at RStudio, PBC. He is a well-known celebrity in the R community and a mainstream power of the R innovation since 2010s. I have learned a lot from his R-package: knitr, Rmarkdown, Tinytex, bookdown, blogdown, xaringan.
+
+You can easily tell his influence to me from this website: 
 
 * This website is created by blogdown
 * Most of my slides are created by xaringan and Rmarkdown
@@ -40,7 +42,7 @@ Yihui Xie is a software engineer working at RStudio, PBC. He is a well-known cel
 
 I have also learned his fun personality, his casual life, and interesting things about his son from his [blog](https://yihui.org/en/). Yihui loves writing and this really inspires me to build a webiste of mine so that I can post interesting things, share things I've learned, ink important things in my life so that I won't forget in the future.
 
-I was fortunate that I met Yihui in person at RStudio:conf2019. I have to admit that smart people have natural Chrisma.  
+I was fortunate that I met Yihui in person at RStudio:conf 2019. I have to admit that smart people always have natural Charisma.  
 
 # Keith McNulty
 
@@ -51,7 +53,7 @@ I was fortunate that I met Yihui in person at RStudio:conf2019. I have to admit 
 
 ```
 
-I've admitted that I have never met Keith in person. But this fact has never stopped me to receive inspirations from him. Keith is my linkedin connection and somehow I've learned a lot from my friends and colleagues. 
+I've admitted that I have never met Keith in person. But this has never stopped me to receive inspirations from him. Keith is my linkedin connection and somehow I've learned a lot from my friends and colleagues. 
 
 Keith or Dr. McNulty is the global director, People Analytics and Measurement at McKinsey & Company. You may not know him but you definitely know where he works for, right?
 

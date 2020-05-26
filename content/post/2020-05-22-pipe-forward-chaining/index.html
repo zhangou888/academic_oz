@@ -1,0 +1,195 @@
+---
+title: 'Introducing Tidyverse-Part 2: %>%, the Forward Chaining'
+author: Ou Zhang
+date: '2020-05-22'
+slug: 
+draft: no
+categories: 
+  - R
+  - Data science
+tags:
+  - R
+  - Data Science
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-05-22T23:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: 'Smart'
+  preview_only: no
+projects: []
+output:
+  blogdown::html_page:
+    toc: false
+    number_sections: yes
+    toc_depth: 3
+---
+
+
+
+<div class="figure" style="text-align: center"><span id="fig:fig1"></span>
+<img src="img/pipe.PNG" alt="Pipe Operator" width="40%" />
+<p class="caption">
+Figure 0.1: Pipe Operator
+</p>
+</div>
+<p>Instead of introducing <code>tidyr</code> and <code>dplyr</code> packages-two most essential R packages for data wrangling, I would like to insert a side topic that I think it’s worth to mention for R programming efficiency as my 2nd <code>Tidyverse</code> blog <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. To me, this important programming command completely changes my view of programming and reshapes my programming habit since I used it. This magic command is <code>%&gt;%</code>, a.k.a: the <code>pipe operator</code>.</p>
+<blockquote>
+<p>** The hot key for <code>%&gt;%</code> in RStudio is <code>Ctrl</code> + <code>Shift</code> + <code>M</code>.**</p>
+</blockquote>
+<p><code>%&gt;%</code> comes from the <code>magrittr</code> package that allow you to express a sequence of multiple operations. The <code>magrittr</code> package was created by <a href="https://twitter.com/stefanbache">Stefan Milton Bache</a> and, in Stefan’s words, has two primary aims: “<strong>to decrease development time and to improve readability and maintainability of code.</strong>” It can greatly simplify your code and make your operations more intuitive.</p>
+<div id="backward-chaining---the-traditional-program-way" class="section level1">
+<h1><span class="header-section-number">1</span> Backward Chaining - the traditional program way</h1>
+<p>Before <code>%&gt;%</code> was invented, most of the programming logic flows including R program is like this:</p>
+<blockquote>
+<p>results &lt;- operation(object)</p>
+</blockquote>
+<p>Bascially, the result is the output assigning from the right side after operation command operating the object. The object, most often, is the dataset.</p>
+<p>The logic flow is from <code>right</code> to <code>left</code> and is called <code>backward chaining</code>. Because of this <code>backward chaining</code> feature, there are multiple ways for the traditional programming.</p>
+<p>Let us refresh how we create statistical program in a traditional way.</p>
+<div id="traditional-programming-way-1-intermediate-steps" class="section level2">
+<h2><span class="header-section-number">1.1</span> Traditional programming way 1: Intermediate steps</h2>
+<p>The first and simplest way is to save each step as a new object:</p>
+<pre class="r"><code>     a &lt;- filter(data, variable == numeric_value)
+     b &lt;- summarise(a, Total = sum(variable))
+     c &lt;- arrange(b, desc(Total))</code></pre>
+<p>So, in order to obtain the final output - <strong>c</strong>, the intermediate output - <strong>a</strong> and <strong>b</strong> are created step by step. The main downside of this approach is that it forces you to name each intermediate element. That leads to two problems:</p>
+<ol style="list-style-type: decimal">
+<li><p>The code is cluttered with unimportant names</p></li>
+<li><p>You have to carefully increment the suffix on each line (i.e., temp1, temp2, temp3, etc.)</p></li>
+</ol>
+<p>Whenever I write code like this, I invariably <strong>use the wrong number on one line and then spend hours scratching my head</strong> and trying to figure out what went wrong with my code if the code structure is complex. Sometimes, I even need to write down all the intermediate output names on paper so that I can keep tracking the program logic flow.</p>
+</div>
+<div id="traditional-programming-way-2-overwrite-the-original" class="section level2">
+<h2><span class="header-section-number">1.2</span> Traditional programming way 2: Overwrite the original</h2>
+<p>The second way is to overwrite the original object at each step:</p>
+<pre class="r"><code>     a &lt;- filter(data, variable == numeric_value)
+     a &lt;- summarise(a, Total = sum(variable))
+     a &lt;- arrange(b, desc(Total))</code></pre>
+<p>This is less typing (and less thinking), so you’re less likely to make mistakes. In the example, after each step, the <code>old</code> result - a is replaced by the <code>new</code> result - a. It sounds straigtforward right? However, there are two major problems:</p>
+<ol style="list-style-type: decimal">
+<li><p>Debugging is painful: if you make a mistake you’ll need to re-run the complete pipeline from the beginning.</p></li>
+<li><p>The repetition of the object being transformed (I’ve written a three times!) obscures what’s changing on each line. And what’s worse, you really can’t tell what <code>a</code> looks like inside without clicking-in the object.</p></li>
+</ol>
+</div>
+<div id="traditional-programming-way-3-function-composition-or-nested-structure" class="section level2">
+<h2><span class="header-section-number">1.3</span> Traditional programming way 3: Function composition or Nested Structure</h2>
+<p>The third way is to abandon assignment and just string the function calls together. This is also called <strong>nested option</strong>. This apprach strings all the function calls together into a single object and ignore assigning it anywhere.</p>
+<pre class="r"><code>    # Example 1: 
+    arrange(
+            summarize(
+                filter(data, variable == numeric_value),
+                Total = sum(variable)
+            ),
+        desc(Total)
+    )
+
+
+   # Example 2: 
+    arrange(summarize(filter(data, variable == numeric_value),Total = sum(variable)),desc(Total))</code></pre>
+<p>I have seen a lot of experienced programmer doing this with or without changing lines. They may think this is efficient, since it includes all the functions they need to do analysis, but also keep everything in one line or so.</p>
+<p>However, this nested option pattern gives me the most headache. Programmers like me (not very smart, not very good at processing speed), have the most hard time to deal with this nested option. The biggest disadvantage is that you have to</p>
+<ul>
+<li>read from <strong>inside-out</strong>,</li>
+<li>from <strong>right-to-left</strong>, and that</li>
+<li>the arguments end up spread far apart (evocatively called the <code>dagwood sandwhich problem</code>).</li>
+</ul>
+<p>In short, this code is hard for a human to consume.</p>
+</div>
+</div>
+<div id="forward-chaining---the-way" class="section level1">
+<h1><span class="header-section-number">2</span> Forward Chaining - the %&gt;% way</h1>
+<div id="basic-process" class="section level2">
+<h2><span class="header-section-number">2.1</span> Basic <code>%&gt;%</code> process</h2>
+<p>In general, <code>%&gt;%</code> take the output from one function and feed it to the first argument of the next function. Let’s see how <code>%&gt;%</code> operates the commands in the example.</p>
+<pre class="r"><code># pipe way
+data %&gt;%
+  filter(variable == &quot;value&quot;) %&gt;%
+  summarise(Total = sum(variable)) %&gt;%
+  arrange(desc(Total))</code></pre>
+<p>If you’ve never seen <code>%&gt;%</code> before, you’ll have no idea what this code does. But the logic is so intuitive and straightforward.</p>
+<p>You can read this as you would read normal prose (we read the <code>%&gt;%</code> as <code>“and then”</code>):</p>
+<blockquote>
+<p>"<code>take data</code> <strong>and then</strong> <code>filter</code> <strong>and then</strong> <code>summarize</code> **and then* <code>arrange</code>."</p>
+</blockquote>
+<p><code>%&gt;%</code> forward a value, or the result of an expression, into the next function call/expression. This is also called <code>forward chaining</code>.</p>
+<pre class="r"><code>object %&gt;% operation() -&gt; result</code></pre>
+<p>This process is so efficient in that it doesn’t save unncessary objects (as in intermediate option) and performs as effectively (as both overwrite option and nested option) but makes your code more readable in the process.</p>
+<p>Here is another example to explain the ‘pipe’ to newbies…</p>
+<div class="figure" style="text-align: center"><span id="fig:fig2"></span>
+<img src="img/pipe_example.png" alt="simple pipe example" width="100%" />
+<p class="caption">
+Figure 2.1: simple pipe example
+</p>
+</div>
+</div>
+<div id="extract-intermediate-output-in-process-for-qc" class="section level2">
+<h2><span class="header-section-number">2.2</span> Extract intermediate output in <code>%&gt;%</code> process for QC</h2>
+<p>So, you’ve watched basic <code>%&gt;%</code> process from last section. Are you convinced to use pipe? It sounds promising, right? But data scientists, like me, always want to check the intermediate results to ensure calculation at each step is accurate and in line with what I expect. How could we do this intermediate result check in the <code>%&gt;%</code> process?</p>
+<p>Here is what you could do. You first include the initial <code>data</code> and <code>all intermediate steps</code> you want to run, then click <code>run</code>, the result saved in the R console is the intermedate result you would like to investigate (see the example below).</p>
+<div class="figure" style="text-align: center"><span id="fig:fig3"></span>
+<img src="img/intermediate.png" alt="Check intermediate result" width="100%" />
+<p class="caption">
+Figure 2.2: Check intermediate result
+</p>
+</div>
+</div>
+<div id="functions-in-chain-not-the-first-argument" class="section level2">
+<h2><span class="header-section-number">2.3</span> Functions in %&gt;% chain not the first argument</h2>
+<p>When using the <code>%&gt;%</code> operator the default is the argument that you are forwarding will go in as the <strong>first argument</strong> of the function that follows the <code>%&gt;%</code>. However, in some functions the argument you are forwarding does not go into the default first position. In these cases, you place <strong>“.”</strong> to signal which argument you want the forwarded expression to go to.</p>
+<pre class="r"><code>data %&gt;%
+        filter(carb &gt; 1) %&gt;%
+        lm(mpg ~ cyl + hp, data = .) %&gt;%
+        summary()</code></pre>
+</div>
+<div id="when-to-use-the" class="section level2">
+<h2><span class="header-section-number">2.4</span> When to use the %&gt;%</h2>
+<p>Now, you’ve read a lot of good things about <code>%&gt;%</code>. You may ask when should I use this operator. Here are some suggestion from <a href="https://twitter.com/hrbrmstr?s=20">Bob Rudis</a> speech-“Writing Readable Code with Pipes” at rstudio::conf 2017.</p>
+<ul>
+<li>the chain should be <code>&gt; 1</code></li>
+<li>a pipe group should be designed to accomplish a unified task</li>
+<li>it’s OK to change object class/type/mode</li>
+<li>be data-source aware</li>
+<li>Pipe operations should be “atomic”</li>
+<li>pipe (briefly) in pipe</li>
+<li>Don’t be reticent to create new verbs</li>
+<li>keep them short</li>
+</ul>
+<p>In addition, <a href="https://twitter.com/hrbrmstr?s=20">Bob Rudis</a>’s speech also connects super Mario with pipe. If you are interested, you can find his talk from the link below. I highly recommend you to watch this talk. It’s so <strong>fun</strong>!</p>
+<p><a href="https://rstudio.com/resources/rstudioconf-2017/writing-readable-code-with-pipes/">Writing Readable Code with Pipes</a> (Bob Rudis,rstudio::conf 2017)</p>
+</div>
+<div id="when-not-to-use-the" class="section level2">
+<h2><span class="header-section-number">2.5</span> When not to use the %&gt;%</h2>
+<p>So, the <code>%&gt;%</code> is a powerful tool, but it’s not the universal tool, and it doesn’t solve every problem! Here are some situations that you should reach for another tool:</p>
+<ul>
+<li><p>Your pipes are longer than (say) <code>10</code> steps. In that case, create intermediate objects with meaningful names. That will make debugging easier, because you can more easily check the intermediate results, and it makes it easier to understand your code, because the variable names can help communicate intent.</p></li>
+<li><p>You have <code>multiple inputs or outputs</code>. If there isn’t one primary object being transformed, but two or more objects being combined together, don’t use the pipe.</p></li>
+<li><p>You are starting to think about a directed graph with a complex dependency structure. <code>%&gt;%</code> are fundamentally linear and expressing complex relationships with them will typically yield confusing code.</p></li>
+</ul>
+</div>
+</div>
+<div id="additional-pipe-operators" class="section level1">
+<h1><span class="header-section-number">3</span> Additional Pipe Operators</h1>
+<p><code>magrittr</code> also offers some alternative pipe operators, Such as:</p>
+<ul>
+<li><code>%&gt;%</code> : pipe a value forward into an expression or function call</li>
+<li><code>%&lt;&gt;%</code>: result assigned to left hand side object instead of returning it</li>
+<li><code>%$%</code> : expose names within left hand side objects to right hand side expressions</li>
+<li><code>%T&gt;%</code></li>
+</ul>
+<p>Some functions, such as plotting functions, will cause the string of piped arguments to terminate. The tee (%T&gt;%)</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1><span class="header-section-number">4</span> Conclusion</h1>
+<p>Finally, I got convinced that the pipe operator is one (if not THE) most important innovation introduced to the R ecosystem. I will use it as much as possible.</p>
+<p>How about you?</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>The basic <code>%&gt;%</code> pipe is automatically imported as part of the <code>tidyverse</code> library. If you wish to use any of the extra tools from <code>magrittr</code> as demonstrated in R for Data Science, you need to explicitly load <code>magrittr</code>.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>

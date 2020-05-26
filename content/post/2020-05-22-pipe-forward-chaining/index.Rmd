@@ -74,7 +74,7 @@ library(rcfss)
 
 Instead of introducing `tidyr` and `dplyr` packages-two most essential R packages for data wrangling, I would like to insert a side topic that I think it's worth to mention for R programming efficiency as my 2nd `Tidyverse` blog ^[The basic `%>%` pipe is automatically imported as part of the `tidyverse` library. If you wish to use any of the extra tools from `magrittr` as demonstrated in R for Data Science, you need to explicitly load `magrittr`.]. To me, this important programming command completely changes my view of programming and reshapes my programming habit since I used it. This magic command is `%>%`, a.k.a: the `pipe operator`.
 
-> ** The hot key for `%>%` in RStudio is `Ctrl` + `Shift` + `M`.**
+>  The hot key for `%>%` in RStudio is `Ctrl` + `Shift` + `M`.
 
 `%>%` comes from the `magrittr` package that allow you to express a sequence of multiple operations. The `magrittr` package was created by [Stefan Milton Bache](https://twitter.com/stefanbache) and, in Stefan’s words, has two primary aims: “__to decrease development time and to improve readability and maintainability of code.__” It can greatly simplify your code and make your operations more intuitive. 
 
@@ -257,12 +257,11 @@ So, the ` %>% ` is a powerful tool, but it’s not the universal tool, and it do
 # Additional Pipe Operators
 `magrittr` also offers some alternative pipe operators, Such as:
 
-* `%>%` : pipe a value forward into an expression or function call
 * `%<>%`: result assigned to left hand side object instead of returning it
 * `%$%` : expose names within left hand side objects to right hand side expressions
-* `%T>%`
+* `%T>%`: allows you to continue piping functions that normally cause termination
 
-Some functions, such as plotting functions, will cause the string of piped arguments to terminate. The tee (%T>%)
+Since they are not as popular as ` %>% `, I will discuss them in a separate blog.
 
 # Conclusion
 

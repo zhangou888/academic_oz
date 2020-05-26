@@ -38,7 +38,7 @@ Figure 0.1: Pipe Operator
 </div>
 <p>Instead of introducing <code>tidyr</code> and <code>dplyr</code> packages-two most essential R packages for data wrangling, I would like to insert a side topic that I think it’s worth to mention for R programming efficiency as my 2nd <code>Tidyverse</code> blog <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. To me, this important programming command completely changes my view of programming and reshapes my programming habit since I used it. This magic command is <code>%&gt;%</code>, a.k.a: the <code>pipe operator</code>.</p>
 <blockquote>
-<p>** The hot key for <code>%&gt;%</code> in RStudio is <code>Ctrl</code> + <code>Shift</code> + <code>M</code>.**</p>
+<p>The hot key for <code>%&gt;%</code> in RStudio is <code>Ctrl</code> + <code>Shift</code> + <code>M</code>.</p>
 </blockquote>
 <p><code>%&gt;%</code> comes from the <code>magrittr</code> package that allow you to express a sequence of multiple operations. The <code>magrittr</code> package was created by <a href="https://twitter.com/stefanbache">Stefan Milton Bache</a> and, in Stefan’s words, has two primary aims: “<strong>to decrease development time and to improve readability and maintainability of code.</strong>” It can greatly simplify your code and make your operations more intuitive.</p>
 <div id="backward-chaining---the-traditional-program-way" class="section level1">
@@ -175,12 +175,11 @@ Figure 2.2: Check intermediate result
 <h1><span class="header-section-number">3</span> Additional Pipe Operators</h1>
 <p><code>magrittr</code> also offers some alternative pipe operators, Such as:</p>
 <ul>
-<li><code>%&gt;%</code> : pipe a value forward into an expression or function call</li>
 <li><code>%&lt;&gt;%</code>: result assigned to left hand side object instead of returning it</li>
 <li><code>%$%</code> : expose names within left hand side objects to right hand side expressions</li>
-<li><code>%T&gt;%</code></li>
+<li><code>%T&gt;%</code>: allows you to continue piping functions that normally cause termination</li>
 </ul>
-<p>Some functions, such as plotting functions, will cause the string of piped arguments to terminate. The tee (%T&gt;%)</p>
+<p>Since they are not as popular as <code>%&gt;%</code>, I will discuss them in a separate blog.</p>
 </div>
 <div id="conclusion" class="section level1">
 <h1><span class="header-section-number">4</span> Conclusion</h1>

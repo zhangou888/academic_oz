@@ -53,31 +53,31 @@ I am originally from Chengdu, China and was graduated from [Chendu University of
 After college, I studied psychology, psychometrics, and quantitative methods, receiving my MEd. from [Boston College](https://www.bc.edu/) (2007), and Ph.D. from [University of Florida](https://www.uf.edu/) (2012). 
 
 I am now a data scientist and psychometrician at [Pearson Psychometrics Service](https://www.pearson.com/). 
-Prior to that, I was the psychometrician II and team lead at [Pearson Clinical Assessment](https://www.pearsonassessments.com/professional-assessments.html), and research fellow at [Assessment and Program Evaluation Services, University of Florida](https://education.ufl.edu/capes/).
+Prior to that, I was the psychometrician II and team lead at [Pearson Clinical Assessment](https://www.pearsonassessments.com/professional-assessments.html), and the research fellow at [Assessment and Program Evaluation Services, University of Florida](https://education.ufl.edu/capes/).
 
 <p align="center">
 	<img src="wisc5_int.jpg" class="center-block" alt="One assessment project I led is published" style="width:60%;height:30%;">
 </p>
 
-My [research](https://www.github.com/zhangou888) mainly focuses on data science, psychometrics (i.e., MIRT, equating, norming), statistical modeling, and testing development.
+My [research](https://www.github.com/zhangou888) mainly focuses on data science (i.e., Machine learning, statistical modeling, and NLP), psychometrics (i.e., MIRT, equating, norming), measurement, survey design, and testing development.
 
-I have written numerous scientific [publications](/publication) on psychometrics, test equating, norming and have presented my research at over 10 international conferences.
+I have written numerous scientific [publications](/publication) on psychometrics, test equating, norming, and have presented my research at over 10 international conferences.
 
 <p align="center">
 	<img src="ncme_2011.JPG" class="center-block" alt="NCME 2011 Poster" style="width:60%;height:30%;">
 </p>
 
-While at UF, I became an enthusiastic coder including R, Python, and SAS, both in the lab as a research fellow and in the classroom as a teaching assistant. 
-I developed a passion for programming and data science, and during my tenure at Pearson I developed and gave talks on multiple 
+While at UF, I became an enthusiastic programmer including R, Python, and SAS, both in the lab as a research fellow and in the classroom as a teaching assistant. I have developed a passion for programming and data science, and during my tenure at Pearson I developed and gave talks on multiple 
 [training seminars](/categories/talks/).
 
-You can follow my current work for [My projects on GitHub](https://github.com/zhangou888). 
+if you are interested in my works, you can follow [My projects on GitHub](https://github.com/zhangou888). 
 
-In my free time, I love watching and participating in all types of sports–football, basketball, baseball, soccer, swimming, etc. 
+In my free time, I love watching sport games and participating in all types of sports–football, basketball, baseball, soccer, swimming, etc. 
 
 <p align="center">
 	<img align="center" src="soccer.jpg" class="center-block" alt="Play soccer 2020" style="width:60%;height:35%;">. 
 </p>
+
 Thank you so much for reading.
 
 

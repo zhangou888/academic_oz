@@ -77,7 +77,7 @@ date_format = "Jan 2006"
   * Compiled, cleaned, and analyzed quantitative/qualitative survey data for further analysis
   * Performed Portfolio Management campaign tracking and analysis
   * Developed& wrote summary reports of data analysis for multiple stakeholder audiencesand program staff
-  * Created R script to score technology enhanced items 
+  * Created R scripts to score technology enhanced items 
 """
 
 +++

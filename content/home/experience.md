@@ -36,7 +36,7 @@ date_format = "Jan 2006"
   * Oversee development and execution of programming needs for scoring and reporting
   * Develop and maintain statistical methodologies for the psychometrics framework
   * Program and implement reproducible report system for multiple projects 
-  * Prepare research projects for presenation to national conferences and technical advisory committee
+  * Prepare research projects for presentation to national conferences and technical advisory committee
   
 """
 
@@ -74,7 +74,7 @@ date_format = "Jan 2006"
   * Worked with project director in the construction of evaluation plans and monitored evaluation process
   * Assisted in establishing, monitoring, evaluating, developing and implementing strategies for project evaluation
   * Designed and developed online survey instruments through qualtrics for NSF program evaluation
-  * Compiled, cleaned, and analyzed quantitative/qualitative survey data for furthe analysis
+  * Compiled, cleaned, and analyzed quantitative/qualitative survey data for further analysis
   * Performed Portfolio Management campaign tracking and analysis
   * Developed& wrote summary reports of data analysis for multiple stakeholder audiencesand program staff
   * Created R script to score technology enhanced items 

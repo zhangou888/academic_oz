@@ -1,5 +1,5 @@
 ---
-title: Measurement Invariance: A Theoretical Framework in CFA  
+title: Measurement Invariance-A Theoretical Framework in CFA  
 authors: [admin]
 date: '2020-05-29T14:00:01-07:00'
 publishdate: '2014-09-21'
@@ -23,8 +23,8 @@ projects: []
 links:
 - icon: images
   icon_pack: fas
-  name: Theory Framework
-  url: ../../slides/MI/readable_code.html
+  name: Theory Slides
+  url: ../../slides/MI/MI.html
   
 - icon: github
   icon_pack: fab

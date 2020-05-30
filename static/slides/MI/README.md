@@ -1,6 +1,3 @@
-# readable_code
+# Measurment Invariance
  
-This repo stores all the materials of a presentation I gave in the 2014 Fall.
-
-The purpose of this presentation is to introduce the measurement invariance framework in CFA.   
-
+2014 Psychometrics Conference Talk-Measurement Invariance

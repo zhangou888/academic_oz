@@ -76,7 +76,7 @@ Instead of introducing `tidyr` and `dplyr` packages-two most essential R package
 
 >  The hot key for `%>%` in RStudio is `Ctrl` + `Shift` + `M`.
 
-`%>%` comes from the `magrittr` package that allow you to express a sequence of multiple operations. The `magrittr` package was created by [Stefan Milton Bache](https://twitter.com/stefanbache) and, in Stefan’s words, has two primary aims: “__to decrease development time and to improve readability and maintainability of code.__” It can greatly simplify your code and make your operations more intuitive. 
+`%>%` comes from the `magrittr` package that allows you to express a sequence of multiple operations. The `magrittr` package was created by [Stefan Milton Bache](https://twitter.com/stefanbache) and, in Stefan’s words, has two primary aims: “__to decrease development time and to improve readability and maintainability of code.__” It can greatly simplify your code and make your operations more intuitive. 
 
 
 # Backward Chaining - the traditional program way  
@@ -85,11 +85,11 @@ Before `%>%` was invented, most of the programming logic flows including R progr
 
 > results <- operation(object)
 
-Bascially, the result is the output assigning from the right side after operation command operating the object. The object, most often, is the dataset. 
+Basically, the result is the output assigning from the right side after operation command operating the object. The object, most often, is the dataset. 
 
 The logic flow is from `right` to `left` and is called `backward chaining`. Because of this `backward chaining` feature, there are multiple ways for the traditional programming.   
 
-Let us refresh how we create statistical program in a traditional way.   
+Let us refresh how we create a statistical program in a traditional way.   
 
 ## Traditional programming way 1: Intermediate steps  
 The first and simplest way is to save each step as a new object:
@@ -122,11 +122,11 @@ The second way is to overwrite the original object at each step:
 
 ```
 
-This is less typing (and less thinking), so you’re less likely to make mistakes. In the example, after each step, the `old` result - a is replaced by the `new` result - a. It sounds straigtforward right? However, there are two major problems:
+This is less typing (and less thinking), so you’re less likely to make mistakes. In the example, after each step, the `old` result - a is replaced by the `new` result - a. It sounds straightforward right? However, there are two major problems:
 
 1. Debugging is painful: if you make a mistake you’ll need to re-run the complete pipeline from the beginning.  
 
-2. The repetition of the object being transformed (I’ve written a three times!) obscures what’s changing on each line. And what's worse, you really can't tell what `a` looks like inside without clicking-in the object. 
+2. The repetition of the object being transformed (I’ve written a three times!) obscures what’s changing on each line. And what's worse, you really can't tell what the `a` object looks like inside without clicking-in the object. 
 
 
 ## Traditional programming way 3: Function composition or Nested Structure  
@@ -149,9 +149,9 @@ The third way is to abandon assignment and just string the function calls togeth
     arrange(summarize(filter(data, variable == numeric_value),Total = sum(variable)),desc(Total))
 ```
 
-I have seen a lot of experienced programmer doing this with or without changing lines. They may think this is efficient, since it includes all the functions they need to do analysis, but also keep everything in one line or so. 
+I have seen a lot of experienced programmers doing this with or without changing lines. They may think this is efficient, since it includes all the functions they need to do analysis, but also keep everything in one line or so. 
 
-However, this nested option pattern gives me the most headache. Programmers like me (not very smart, not very good at processing speed), have the most hard time to deal with this nested option. The biggest disadvantage is that you have to 
+However, this nested option pattern gives me the most headache. Programmers like me (not very smart, not very good at processing speed), have the hardest time to deal with this nested option. The biggest disadvantage is that you have to 
 
  * read from **inside-out**, 
  * from **right-to-left**, and that 
@@ -203,9 +203,9 @@ Here is another example to explain the 'pipe' to newbies...
 
 ## Extract intermediate output in ` %>% ` process for QC
 
-So, you've watched basic ` %>% ` process from last section. Are you convinced to use pipe? It sounds promising, right? But data scientists, like me, always want to check the intermediate results to ensure calculation at each step is accurate and in line with what I expect. How could we do this intermediate result check in the ` %>% ` process?
+So, you've watched basic ` %>% ` process from the last section. Are you convinced to use pipe? It sounds promising, right? But data scientists, like me, always want to check the intermediate results to ensure calculation at each step is accurate and in line with what I expect. How could we do this intermediate result check in the ` %>% ` process?
 
-Here is what you could do. You first include the initial `data` and `all intermediate steps` you want to run, then click `run`, the result saved in the R console is the intermedate result you would like to investigate (see the example below).  
+Here is what you could do. You first include the initial `data` and `all intermediate steps` you want to run, then click `run`, the result saved in the R console is the intermediate result you would like to investigate (see the example below).  
 
 ```{r fig3, out.width='100%', fig.align='center', fig.pos='h', fig.cap='Check intermediate result',echo = FALSE}
 
@@ -228,7 +228,7 @@ data %>%
 
 ## When to use the %>%
 
-Now, you've read a lot of good things about ` %>% `. You may ask when should I use this operator. Here are some suggestion from [Bob Rudis](https://twitter.com/hrbrmstr?s=20) speech-"Writing Readable Code with Pipes" at rstudio::conf 2017. 
+Now, you've read a lot of good things about ` %>% `. You may ask when should I use this operator. Here are some suggestions from [Bob Rudis](https://twitter.com/hrbrmstr?s=20) speech-"Writing Readable Code with Pipes" at rstudio::conf 2017. 
 
 * the chain should be `> 1`
 * a pipe group should be designed to accomplish a unified task

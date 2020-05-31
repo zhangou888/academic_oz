@@ -30,7 +30,7 @@ output:
 
 
 
-<p>In an ideal world, a data analysis process is as simple as-<code>read in data, select a suitable model to fit in data, obtain statistical estimates, and finally, interpret the analysis results</code>. Sounds simple and straight foward, isn’t it?</p>
+<p>In an ideal world, a data analysis process is as simple as-<code>read in data, select a suitable model to fit in data, obtain statistical estimates, and finally, interpret the analysis results</code>. Sounds simple and straight forward, isn’t it?</p>
 <p>But, in reality, it’s often not that simple!Data is always messy and often times we need to clean our data before we can make any sense of it. Moreover, some researchers found that more than <code>80%</code> of data analysis is actually spent on data preparation or data manipulation (Dasu &amp; Johnson, 2003), so that the data is transformed into a usable format before you even think about analysis.</p>
 <p>Therefore, data cleaning or data wrangling is utmost important for any data analysis or data science project.</p>
 <p>In the early 2010s, <a href="http://hadley.nz/">Hadley Wickham</a> invented one of the most important R package series - <a href="https://www.tidyverse.org/">Tidyverse</a>.</p>
@@ -48,7 +48,7 @@ Figure 0.2: data analysis flow
 </p>
 </div>
 <p>The idea of data tidying is the <code>first step</code> and standard way to structure datasets for later data analysis.</p>
-<p>On internet, you can easily googled tons of information and websites introducing this R-package collection. However, most of the introductions, only spend one or two paragraphs to depict the definition of <code>Tidy data</code>. Then they move on to the command line examples and description of relevant package applications. Only Hadley’s own <a href="https://r4ds.had.co.nz">R for Data Science</a> book, spent an entire chapter to give a detailed story about <code>Tidy data</code>. Because of its importance, Hadley published a paper, solely introducing the definition of <code>Tidy data</code>.</p>
+<p>On the internet, you can easily google tons of information and websites introducing this R-package collection. However, most of the introductions, only spend one or two paragraphs to depict the definition of <code>Tidy data</code>. Then they move on to the command line examples and description of relevant package applications. Only Hadley’s own <a href="https://r4ds.had.co.nz">R for Data Science</a> book, spent an entire chapter to give a detailed story about <code>Tidy data</code>. Because of its importance, Hadley published a paper, solely introducing the definition of <code>Tidy data</code>.</p>
 <p>You can find the paper from this link: <a href="https://www.jstatsoft.org/index.php/jss/article/view/v059i10/v59i10.pdf">Tidy data</a>.</p>
 <p>The paper itself claims the Tidy data definition matches <a href="https://en.wikipedia.org/wiki/Third_normal_form"><strong>Codd 3rd normal form</strong></a>.</p>
 <p>As a data scientist, personally I think the Tidy data is <strong>more than just great</strong>. It is not just an idea, but provides a comprehensive <code>“philosophy of data”</code> in terms of data wrangling, and data science. For that reason, I would like to write a bit on the definition and history of the phrase <code>tidy data</code> as my first blog series of <code>Tidyverse</code> introduction.</p>
@@ -118,7 +118,7 @@ Figure 4.1: data 1
 </p>
 </div>
 <p>So, is this data structure a tidy data?</p>
-<p>The short answer is <code>No, it's not tidy data</code>. This is because variable 2 to 4 (column 2-4) are all stock price. And according to tidy data rule No. 1- <em>Each variable must have its own column</em>. All three variables should be transform into a single variable to store stock price values and create a new variable to indicate stock names.</p>
+<p>The short answer is <code>No, it's not tidy data</code>. This is because variable 2 to 4 (column 2-4) are all stock price. And according to tidy data rule No. 1- <em>Each variable must have its own column</em>. All three variables should be transformed into a single variable to store stock price values and create a new variable to indicate stock names.</p>
 </div>
 <div id="example-2" class="section level2">
 <h2><span class="header-section-number">4.2</span> Example 2:</h2>

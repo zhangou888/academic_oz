@@ -1,0 +1,40 @@
+---
+title: R & RStudio Introduction 
+authors: [admin]
+date: '2012-10-02T14:00:01-07:00'
+publishdate: '2012-10-02'
+event: 'Psychometrics conf::2012'
+event_url: '' 
+location: San Antonio, TX
+abstract: 'A brief introduction of the R and RStudio'
+categories: [talk]
+tags: [Psychometrics, Other]
+subtitle: ''
+summary: 'A brief introduction of the R and RStudio'
+lastmod: '2020-06-07T12:13:01-07:00'
+featured: no
+image:
+  caption: ""
+  focal_point: "Smart"
+  preview_only: false
+  
+projects: []
+
+links:
+- icon: images
+  icon_pack: fas
+  name: Slides
+  url: ../../slides/R_intro/MIRT intro_OZ_2012.pdf
+
+- icon: images
+  icon_pack: fab
+  name: Source
+  url: https://github.com/zhangou888/R_intro_2012/
+
+  
+- icon: github
+  icon_pack: fab
+  name: R code
+  url: https://github.com/zhangou888/R_intro_2012/blob/master/Intro_R_OZ.R
+
+---

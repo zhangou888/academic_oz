@@ -1,0 +1,35 @@
+---
+title: Multi-dimensional Item Response Theory 
+authors: [admin]
+date: '2012-10-03T14:00:01-07:00'
+publishdate: '2012-10-03'
+event: 'Psychometrics conf::2012'
+event_url: '' 
+location: San Antonio, TX
+abstract: 'A brief introduction of the Multi-dimensional Item Response Theory'
+categories: [talk]
+tags: [Psychometrics, Other]
+subtitle: ''
+summary: 'A brief introduction of the Multi-dimensional Item Response Theory'
+lastmod: '2020-06-07T12:23:01-07:00'
+featured: no
+image:
+  caption: ""
+  focal_point: "Smart"
+  preview_only: false
+  
+projects: []
+
+links:
+- icon: images
+  icon_pack: fas
+  name: Slides
+  url: ../../slides/MIRT/MIRT intro_OZ_2012.pdf
+
+  
+- icon: github
+  icon_pack: fab
+  name: source file
+  url: https://github.com/zhangou888/mirt_2012
+
+---

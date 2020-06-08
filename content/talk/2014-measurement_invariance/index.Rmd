@@ -1,7 +1,7 @@
 ---
 title: Measurement Invariance-A Theoretical Framework in CFA  
 authors: [admin]
-date: '2020-05-29T14:00:01-07:00'
+date: '2014-09-21T14:00:01-07:00'
 publishdate: '2014-09-21'
 event: 'Psychometrics conf::2014'
 event_url: '' 

@@ -31,6 +31,11 @@ links:
   name: SAS Slides
   url: ../../slides/MI/MI_SAS.html
   
+- icon: images
+  icon_pack: fas
+  name: APA 2013 Slides
+  url: ../../slides/MI/APA_2013_WPPSI_ME.ppt
+  
 - icon: github
   icon_pack: fab
   name: source file

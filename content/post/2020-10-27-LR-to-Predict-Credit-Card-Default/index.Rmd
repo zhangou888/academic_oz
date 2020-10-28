@@ -1,0 +1,315 @@
+---
+title: 'Utilizing a Logistic Regression Model to Predict Credit Card Default'
+author: Ou Zhang
+date: '2020-10-27'
+slug: logistic-regression-model-predict-credit-card-default
+draft: no
+categories: 
+  - Statistics
+  - Finance
+  - R
+tags:
+  - Statistics
+  - Finance
+  - R
+  - Other
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-10-27T23:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: 'Smart'
+  preview_only: no
+projects: []
+output: 
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 1
+    mathjax: local
+    self_contained: false
+---
+
+```{r set-global-options, echo = FALSE}
+knitr::opts_chunk$set(eval = TRUE, 
+                      echo = TRUE, 
+                      cache = FALSE,
+                      include = TRUE,
+                      collapse = FALSE,
+                      dependson = NULL,
+                      engine = "R", # Chunks will always have R code, unless noted
+                      error = TRUE,
+                      # root.dir = "C:/Users/uzhanou/Documents/R/markdown/Serena/",
+                      fig.path = "figure/",  # Set the figure options
+                      fig.align = "center", 
+                      fig.width = 6,
+                      fig.height = 6)
+```
+
+```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE}
+## Step 2: load required packages 
+packages <- c("boot","dplyr","ggvis","tidyverse",
+              "ggplot2","psychTools","ISLR")
+packages <- lapply(packages, FUN = function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x)
+    library(x, character.only = TRUE)
+  }  
+})
+library("knitr")
+
+```
+Logistic regression model is widely used for group classification. In education or social science, it has been used to classify students/individuals to different groups. 
+
+In the finance industry, logistic regression model is also quite useful to identify/classify individual's group status (i.e. Y) according his/her other features (i.e., Xs parameters).
+
+This post originally came from James Hilton Jr. who used 'Default' data from the book <An Introduction to Statistical Learning: With Applications in R> and corresponding R-package-"[ISLR](https://cran.r-project.org/web/packages/ISLR/index.html)".
+
+All I am doing for this post is to understand how the logistic regression model is being used in the finance industry. It seems fun to me to see the same model is used by simply switching different **X** and **Y**.
+
+You can find his original post [here](https://rstudio-pubs-static.s3.amazonaws.com/124689_053566cefb744fa4bb4f35011f5b5e0f.html).
+
+
+So, without further ado, let's begin. 
+
+# Data
+
+The `Default` data set resides in the `ISLR` package of the R programming language. It contains selected variables and data for 10,000 credit card users.
+
+Some of the variables present in the default data set are:
+
+ - student - A binary factor containing whether or not a given credit card holder is a student.
+
+ - income - The gross annual income for a given credit card holder.
+
+ - balance - The total credit card balance for a given credit card holder.
+
+ - default - A binary factor containing whether or not a given user has defaulted on his/her credit card.
+
+The goal of this investigation is **to fit a model such that the relevant predictors of credit card default are elucidated given these variables**. You can find the data structure from below section.
+
+```{r data_check}
+
+head(Default)
+
+```
+
+
+# Income, Balance & Default
+
+So, the key variables in the `Default` data are **income**, **balance**, and credit card default (**default**).
+
+The Key question is-"Is there a relationship between income, balance, and student status such that one, two, or all of these might be used to predict credit card default?" 
+
+For the illustration purpose, first, the necessary packages and data are loaded to R.
+
+```{r load_package}
+
+library(ISLR)
+library(dplyr)
+library(ggvis)
+library(boot)
+
+```
+
+Then, a scatterplot and a box-plot are created by `ggplot2` to find the potential relationship between variables. 
+
+From the scatter plot, it seem to suggest that there is a relationship between `credit card balance` and `default`, while `income` is not related. This relationship is further confirmed by the boxplot below between `credit card baland` and `default`.
+
+
+```{r scatterplot credit_balance_default, echo = TRUE, eval = TRUE}
+
+# Basic scatter plot
+ggplot(Default, aes(x=balance, y=income, shape=default, color=default)) + geom_point()
+
+
+```
+
+
+```{r boxplot credit_balance_default, echo = TRUE, eval = TRUE}
+
+ggplot(Default) + aes(x = default, y = balance, color=default) +
+  geom_boxplot(outlier.colour="red", outlier.shape=2,
+                outlier.size=1) 
+
+```
+
+# Model Selection
+
+Based on above plots, it suggests that `credit card balance`, but not `income`, is a **useful predictor** of default status. However, to be thorough in the investigation we will begin by fitting all parameters to a model of logistic form. 
+
+The logistic regression model is selected to fit in the credit card data because it is: 
+
+  1. highly interpretable 
+  2. the model does well when the number of parameters is low compared to N observations 
+  3. relatively quick operating time in R and 
+  4. fits the binary (default/non default) nature of the problem well.
+
+You can find the model equation below. 
+<div>
+$$p(X)=\frac{e^{\beta_0}+\beta_1X_1+...+\beta_pX_p}{1+e^{\beta_0}+\beta_1X_1+...+\beta_pX_p}$$
+</div>
+
+This model yields the following coefficients and model information.
+
+```{r glm_model}
+
+glm(default~balance + student + income, family = "binomial", data = Default)
+
+```
+
+
+# Diagnosis
+
+An **ANOVA** test using Chi-Squared and the summary statistic p-values suggests that both balance and student status are useful for predicting default rates. (i.e both the Chi-Squared and p-values are statistically significant.)
+
+```{r diagnosis}
+
+my_logit <- glm(default~balance + student + income, family = "binomial", data = Default)
+anova(my_logit, test = "Chisq")
+
+summary(my_logit)
+
+```
+
+# Noteworthy
+
+In the process of doing our diligence on the model, an interesting confound presented itself. 
+When fitting the student status parameter against default, the coefficent for our model is a positive value, implying that student status increases default. When fitting all parameters in our model, the value becomes negative, implying that student status reduces the probability of default. 
+
+How can this be?
+
+```{r noteworthy}
+
+# single x model
+my_logit2 <- glm(default~student, family= "binomial", data = Default)
+summary(my_logit2)$coef
+
+# complex model
+summary(my_logit)$coef
+
+```
+
+Looking at the plot below, the data suggests that balance and student status are correlated. Therefore, it might be appropriate to offer the following interpretation: students tend to have higher balances than non-students, so even though a given student has a lesser probability of default than a non student, (for a fixed balance) because students tend to carry higher balances overall, students tend to have higher, overall default rates.
+
+
+```{r boxplot credit_balance_student, echo = TRUE, eval = TRUE}
+
+ggplot(Default) + aes(x = student, y = balance, color=student) +
+  geom_boxplot(outlier.colour="red", outlier.shape=2,
+                outlier.size=1) 
+
+```
+
+
+# Model Cross Validation
+
+Just as important as it is to choose a model that fits the parameters correctly, it is even more so to test the predictive power of the chosen model. To do so, I chose to perform: 1) validation set verification and 2) K-fold cross-validation set with 3, 5, and 10 folds. The results of the validation set are below:
+
+
+```{r cross_validation}
+set.seed(1)
+
+# Create a sample of 5000 observations
+train <- sample(10000,5000)
+
+# Defaultx is a subset of the Default data that does not include the training data that we will fit the model on 
+Defaultx <- Default[-train,]
+
+# Fit the logistic model using the training data.  
+glm.fit <- glm(default~ balance + student, data = Default, family = binomial, subset = train)
+
+# Use the logistic model to fit the same logistic model, but use the test data.  
+glm.probs <- predict(glm.fit, Defaultx, type = "response")
+
+# Make a vector that contains 5000 no responses.   
+glm.pred <- rep("No", 5000)
+
+# Replace the no reponsees in the glm.pred vector where the probability is greater than 50% with "Yes"
+glm.pred[glm.probs > .5] = "Yes"
+
+# Create a vector that contains the defaults from the testing data set, Defaultx
+defaultVector <- Defaultx$default 
+
+
+# Calculate the mean of the values where the predicted value from the training equals the held out set.  
+mean(glm.pred == defaultVector)
+
+```
+
+Using the technique above we can see that ~97.14% of the observations in the test set were classified correctly using the logistic model training set. As this is just one of a variety of validation methods, for technical completeness, below we also implement a K-Fold cross validation set:
+
+```{r K-Fold_cross_validation}
+
+# Seed the random number generator 
+set.seed(2)
+
+# Fit a logistic model using default and income values
+glm.fit1 <- glm(default~balance + student, data = Default, family = binomial)
+
+# Create a vector with three blank values
+cv.error <- rep(0,3)
+
+
+# Store the results of each K  validation set into cv.error.  Use K= {3,5,10} 
+cv.error[1] <- cv.glm(Default, glm.fit1, K=3)$delta[1]
+cv.error[2] <- cv.glm(Default, glm.fit1, K=5)$delta[1]
+cv.error[3] <- cv.glm(Default, glm.fit1, K=10)$delta[1]
+
+1- mean(cv.error) 
+
+```
+
+We interpret the value of (1-mean(error)) to be the average of the correctly validated observations of the data set using the K-Folds technique. The results of this are also promising! We can see that again approximately 97% of values were correctly classified using our method.
+
+# Parameter Selection
+
+To reinforce our selection of balance and student status (while excluding income) I fit a cross validation model on all parameters including income. If our methods are correct, adding the income parameter should increase the test error and reduce the correct qualification % of our model.
+
+
+
+```{r add_parameter}
+
+# Set up the random number generator so that others can repeat results
+set.seed(1)
+
+# Create a sample of 5000 observations
+train <- sample(10000,5000)
+
+# Defaultx is a subset of the Default data that does not include the training data that
+# we will fit the model on 
+Defaultx <- Default[-train,]
+
+# Fit the logistic model using the training data.  
+glm.fit <- glm(default~income + balance + student, data = Default, family = binomial, subset = train)
+
+# Use the logistic model to fit the same logistic model, but use the test data.  
+glm.probs <- predict(glm.fit, Defaultx, type = "response")
+
+# Make a vector that contains 5000 no responses.   
+glm.pred <- rep("No", 5000)
+
+# Replace the no reponsees in the glm.pred vector where the probability is greater than 50% with "Yes"
+glm.pred[glm.probs > .5] = "Yes"
+
+# Create a vector that contains the defaults from the testing data set, Defaultx
+defaultVector <- Defaultx$default 
+
+
+# Calculate the mean of the values where the predicted value from the training equals the held out set.  
+mean(glm.pred == defaultVector)
+
+```
+
+As predicted, fitting the model and including the income parameter increased the test error in the validation set and reduces the probability of the correct classification.
+
+
+
+
+
+
+
+

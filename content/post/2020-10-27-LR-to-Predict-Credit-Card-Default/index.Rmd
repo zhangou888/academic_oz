@@ -29,7 +29,7 @@ output:
     toc: yes
     number_sections: yes
     toc_depth: 1
-    mathjax: local
+    # mathjax: local
     self_contained: false
 ---
 

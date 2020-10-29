@@ -1,36 +1,32 @@
 ---
-title: 'Utilizing a Logistic Regression Model to Predict Credit Card Default'
+title: Utilizing a Logistic Regression Model to Predict Credit Card Default
 author: Ou Zhang
 date: '2020-10-27'
+categories:
+  - Finance
+  - R
+  - Statistics
+tags:
+  - Finance
+  - Other
+  - R
+  - Statistics
 slug: logistic-regression-model-predict-credit-card-default
 draft: no
-categories: 
-  - Statistics
-  - Finance
-  - R
-tags:
-  - Statistics
-  - Finance
-  - R
-  - Other
-subtitle: ''
-summary: ''
-authors: []
 lastmod: '2020-10-27T23:53:01-05:00'
 featured: no
 disable_jquery: no
 image:
   caption: ''
-  focal_point: 'Smart'
+  focal_point: Smart
   preview_only: no
-projects: []
-output: 
+output:
   blogdown::html_page:
     toc: yes
     number_sections: yes
     toc_depth: 1
-    # mathjax: local
-    self_contained: false
+    self_contained: no
+
 ---
 
 ```{r set-global-options, echo = FALSE}
@@ -62,13 +58,15 @@ packages <- lapply(packages, FUN = function(x) {
 library("knitr")
 
 ```
-Logistic regression model is widely used for group classification. In education or social science, it has been used to classify students/individuals to different groups. 
+Logistic regression model is widely used for group classification. In education or social science, it has been used to classify students/individuals to different groups.  
 
 In the finance industry, logistic regression model is also quite useful to identify/classify individual's group status (i.e. Y) according his/her other features (i.e., Xs parameters).
 
-This post originally came from James Hilton Jr. who used 'Default' data from the book <An Introduction to Statistical Learning: With Applications in R> and corresponding R-package-"[ISLR](https://cran.r-project.org/web/packages/ISLR/index.html)".
+I've recently got in touch with some Statistics with other fields, besides the education industry I am in.
 
-All I am doing for this post is to understand how the logistic regression model is being used in the finance industry. It seems fun to me to see the same model is used by simply switching different **X** and **Y**.
+This post originally came from James Hilton Jr. who used 'Default' data from the book `<An Introduction to Statistical Learning: With Applications in R>` and corresponding R-package-"[ISLR](https://cran.r-project.org/web/packages/ISLR/index.html)".
+
+All I am doing here in this post is trying to understand every single piece of how the logistic regression model is used to the financial question. It seems fun to me to see the same model is used but **Xs** and **Ys** are given to different meaning.
 
 You can find his original post [here](https://rstudio-pubs-static.s3.amazonaws.com/124689_053566cefb744fa4bb4f35011f5b5e0f.html).
 
@@ -76,18 +74,17 @@ You can find his original post [here](https://rstudio-pubs-static.s3.amazonaws.c
 So, without further ado, let's begin. 
 
 # Data
+The data I used for analysis is called - `Default`.
 
-The `Default` data set resides in the `ISLR` package of the R programming language. It contains selected variables and data for 10,000 credit card users.
+The `Default` data set resides in the `ISLR` package of the R programming language. It contains selected variables and data for 10,000 credit card users.Some of the variables present in the default data set are:
 
-Some of the variables present in the default data set are:
+ - **student** - A binary factor containing whether or not a given credit card holder is a student.
 
- - student - A binary factor containing whether or not a given credit card holder is a student.
+ - **income** - The gross annual income for a given credit card holder.
 
- - income - The gross annual income for a given credit card holder.
+ - **balance** - The total credit card balance for a given credit card holder.
 
- - balance - The total credit card balance for a given credit card holder.
-
- - default - A binary factor containing whether or not a given user has defaulted on his/her credit card.
+ - **default** - A binary factor containing whether or not a given user has defaulted on his/her credit card.
 
 The goal of this investigation is **to fit a model such that the relevant predictors of credit card default are elucidated given these variables**. You can find the data structure from below section.
 
@@ -97,14 +94,14 @@ head(Default)
 
 ```
 
-
 # Income, Balance & Default
 
-So, the key variables in the `Default` data are **income**, **balance**, and credit card default (**default**).
+What variables we use for the analysis? 
+So, in the `Default`data, the key variables are **income**, **balance**, and credit card default (**default**).
 
-The Key question is-"Is there a relationship between income, balance, and student status such that one, two, or all of these might be used to predict credit card default?" 
+The Key question is-`"Is there a relationship between income, balance, and student status such that one, two, or all of these might be used to predict credit card default?"`
 
-For the illustration purpose, first, the necessary packages and data are loaded to R.
+For the illustration purpose, first, the necessary packages and data are loaded to R (I've already loaded all the necessary packages at the beginning of the file).
 
 ```{r load_package}
 
@@ -164,7 +161,7 @@ glm(default~balance + student + income, family = "binomial", data = Default)
 
 # Diagnosis
 
-An **ANOVA** test using Chi-Squared and the summary statistic p-values suggests that both balance and student status are useful for predicting default rates. (i.e both the Chi-Squared and p-values are statistically significant.)
+An **ANOVA** test using **Chi-Squared** and the summary statistic p-values suggests that both balance and student status are useful for predicting default rates. (i.e both the Chi-Squared and p-values are statistically significant.)
 
 ```{r diagnosis}
 
@@ -175,10 +172,11 @@ summary(my_logit)
 
 ```
 
-# Noteworthy
+# Interesting Points
 
-In the process of doing our diligence on the model, an interesting confound presented itself. 
-When fitting the student status parameter against default, the coefficent for our model is a positive value, implying that student status increases default. When fitting all parameters in our model, the value becomes negative, implying that student status reduces the probability of default. 
+In the process of modeling, an interesting point presented itself: 
+
+> When fitting the student status parameter against default, the coefficent for our model is a positive value, implying that student status increases default. When fitting all parameters in our model, the value becomes negative, implying that student status reduces the probability of default. 
 
 How can this be?
 
@@ -193,7 +191,7 @@ summary(my_logit)$coef
 
 ```
 
-Looking at the plot below, the data suggests that balance and student status are correlated. Therefore, it might be appropriate to offer the following interpretation: students tend to have higher balances than non-students, so even though a given student has a lesser probability of default than a non student, (for a fixed balance) because students tend to carry higher balances overall, students tend to have higher, overall default rates.
+Looking at the plot below, the data suggests that `balance` and `student status` are correlated. Therefore, it might be appropriate to offer the following interpretation: **students tend to have higher balances than non-students**, so even though a given student has a lesser probability of default than a non student, (for a fixed balance) because students tend to carry higher balances overall, students tend to have higher, overall default rates.
 
 
 ```{r boxplot credit_balance_student, echo = TRUE, eval = TRUE}
@@ -205,9 +203,14 @@ ggplot(Default) + aes(x = student, y = balance, color=student) +
 ```
 
 
-# Model Cross Validation
+# Model Cross-Validation
 
-Just as important as it is to choose a model that fits the parameters correctly, it is even more so to test the predictive power of the chosen model. To do so, I chose to perform: 1) validation set verification and 2) K-fold cross-validation set with 3, 5, and 10 folds. The results of the validation set are below:
+Just as important as it is to choose a model that fits the parameters correctly, it is even more so to test the predictive power of the chosen model. To do so, I chose to perform: 
+
+  1. validation set verification and 
+  2. K-fold cross-validation set with 3, 5, and 10 folds. 
+
+The results of the validation set are below:
 
 
 ```{r cross_validation}
@@ -228,19 +231,18 @@ glm.probs <- predict(glm.fit, Defaultx, type = "response")
 # Make a vector that contains 5000 no responses.   
 glm.pred <- rep("No", 5000)
 
-# Replace the no reponsees in the glm.pred vector where the probability is greater than 50% with "Yes"
+# Replace the no reponses in the glm.pred vector where the probability is greater than 50% with "Yes"
 glm.pred[glm.probs > .5] = "Yes"
 
 # Create a vector that contains the defaults from the testing data set, Defaultx
 defaultVector <- Defaultx$default 
-
 
 # Calculate the mean of the values where the predicted value from the training equals the held out set.  
 mean(glm.pred == defaultVector)
 
 ```
 
-Using the technique above we can see that ~97.14% of the observations in the test set were classified correctly using the logistic model training set. As this is just one of a variety of validation methods, for technical completeness, below we also implement a K-Fold cross validation set:
+Using the technique above, we can see that `97.40%` of the observations in the test set were classified correctly using the logistic model training set. As this is just one of a variety of validation methods, for technical completeness, below we also implement a K-Fold cross validation set:
 
 ```{r K-Fold_cross_validation}
 

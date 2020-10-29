@@ -311,3 +311,8 @@ iframe {
 .dark a:hover {
 	color: #fff;
 }
+
+code .MathJax {
+  color: black;
+  background-color: white;
+}

@@ -64,9 +64,9 @@ In the finance industry, logistic regression model is also quite useful to ident
 
 I've recently got in touch with some Statistics with other fields, besides the education industry I am in.
 
-This post originally came from James Hilton Jr. who used 'Default' data from the book `<An Introduction to Statistical Learning: With Applications in R>` and corresponding R-package-"[ISLR](https://cran.r-project.org/web/packages/ISLR/index.html)".
+This post originally came from James Hilton Jr. who used 'Default' data (The brief introduction of the 'Default' data is in the next section.) from the book `<An Introduction to Statistical Learning: With Applications in R>` and corresponding R-package-"[ISLR](https://cran.r-project.org/web/packages/ISLR/index.html)". 
 
-All I am doing here in this post is trying to understand every single piece of how the logistic regression model is used to the financial question. It seems fun to me to see the same model is used but **Xs** and **Ys** are given to different meaning.
+All I am doing here in this post is trying to understand every single piece of how  Logistic regression model is used in the finance industry. It seems fun to me to see the same model is used but **Xs** and **Ys** are given to different meaning.
 
 You can find his original post [here](https://rstudio-pubs-static.s3.amazonaws.com/124689_053566cefb744fa4bb4f35011f5b5e0f.html).
 
@@ -74,6 +74,7 @@ You can find his original post [here](https://rstudio-pubs-static.s3.amazonaws.c
 So, without further ado, let's begin. 
 
 # Data
+
 The data I used for analysis is called - `Default`.
 
 The `Default` data set resides in the `ISLR` package of the R programming language. It contains selected variables and data for 10,000 credit card users.Some of the variables present in the default data set are:
@@ -92,16 +93,18 @@ The goal of this investigation is **to fit a model such that the relevant predic
 
 head(Default)
 
+str(Default)
+
 ```
 
 # Income, Balance & Default
 
-What variables we use for the analysis? 
+What variables we are going to use for this analysis? 
 So, in the `Default`data, the key variables are **income**, **balance**, and credit card default (**default**).
 
 The Key question is-`"Is there a relationship between income, balance, and student status such that one, two, or all of these might be used to predict credit card default?"`
 
-For the illustration purpose, first, the necessary packages and data are loaded to R (I've already loaded all the necessary packages at the beginning of the file).
+First, the necessary packages and data are loaded to R, for the illustration purpose. (I've already loaded all the necessary packages at the beginning of the file).
 
 ```{r load_package}
 
@@ -112,9 +115,9 @@ library(boot)
 
 ```
 
-Then, a scatterplot and a box-plot are created by `ggplot2` to find the potential relationship between variables. 
+Then, a Scatterplot and a box-plot are plotted to investigate the potential relationship between variables. 
 
-From the scatter plot, it seem to suggest that there is a relationship between `credit card balance` and `default`, while `income` is not related. This relationship is further confirmed by the boxplot below between `credit card baland` and `default`.
+From the scatter plot shown below, it seem to suggest that there is a relationship between `credit card balance` and `default`, while `income` is not related. This relationship is further confirmed by the boxplot figure below between `credit card baland` and `default`.
 
 
 ```{r scatterplot credit_balance_default, echo = TRUE, eval = TRUE}
@@ -213,17 +216,25 @@ Just as important as it is to choose a model that fits the parameters correctly,
 The results of the validation set are below:
 
 
-```{r cross_validation}
+```{r cross_validation1}
 set.seed(1)
 
 # Create a sample of 5000 observations
 train <- sample(10000,5000)
+```
 
-# Defaultx is a subset of the Default data that does not include the training data that we will fit the model on 
+A new dataset is generated-**Defaultx**. `DeFaultx` is a subset of the Default data that does not include the training data that we will fit the model on. Then, we fit the logistic model to this .
+```{r cross_validation2}
+
+# Generate Defaultx (test data)
 Defaultx <- Default[-train,]
 
+
 # Fit the logistic model using the training data.  
+# Be aware of the subset option (subset=train).
 glm.fit <- glm(default~ balance + student, data = Default, family = binomial, subset = train)
+
+(glm.fit) # Check the degrees of Freedom (4997)
 
 # Use the logistic model to fit the same logistic model, but use the test data.  
 glm.probs <- predict(glm.fit, Defaultx, type = "response")
@@ -231,18 +242,21 @@ glm.probs <- predict(glm.fit, Defaultx, type = "response")
 # Make a vector that contains 5000 no responses.   
 glm.pred <- rep("No", 5000)
 
-# Replace the no reponses in the glm.pred vector where the probability is greater than 50% with "Yes"
+# Replace the "no reponses" in the glm.pred vector where the probability is greater than 50% with "Yes"
 glm.pred[glm.probs > .5] = "Yes"
 
 # Create a vector that contains the defaults from the testing data set, Defaultx
 defaultVector <- Defaultx$default 
 
 # Calculate the mean of the values where the predicted value from the training equals the held out set.  
-mean(glm.pred == defaultVector)
+mean_df <- mean(glm.pred == defaultVector)
+
+pct_df <- paste(100*mean_df,"%",sep="")
+
 
 ```
 
-Using the technique above, we can see that `97.40%` of the observations in the test set were classified correctly using the logistic model training set. As this is just one of a variety of validation methods, for technical completeness, below we also implement a K-Fold cross validation set:
+Using the technique above, we can see that `r pct_df` of the observations in the test set were classified correctly using the logistic model training set. As this is just one of a variety of validation methods, for technical completeness, below we also implement a K-Fold cross validation set:
 
 ```{r K-Fold_cross_validation}
 
@@ -255,21 +269,22 @@ glm.fit1 <- glm(default~balance + student, data = Default, family = binomial)
 # Create a vector with three blank values
 cv.error <- rep(0,3)
 
-
 # Store the results of each K  validation set into cv.error.  Use K= {3,5,10} 
 cv.error[1] <- cv.glm(Default, glm.fit1, K=3)$delta[1]
 cv.error[2] <- cv.glm(Default, glm.fit1, K=5)$delta[1]
 cv.error[3] <- cv.glm(Default, glm.fit1, K=10)$delta[1]
 
-1- mean(cv.error) 
+mean_df2 <- 1 - mean(cv.error)
+
+pct_df2 <- paste(100*mean_df2,"%",sep="")
 
 ```
 
-We interpret the value of (1-mean(error)) to be the average of the correctly validated observations of the data set using the K-Folds technique. The results of this are also promising! We can see that again approximately 97% of values were correctly classified using our method.
+We interpret the value of (1-mean(error)) to be the average of the correctly validated observations of the data set using the K-Folds technique. The results of this are also promising! We can see that again approximately `r pct_df2` of values were correctly classified using our method.
 
 # Parameter Selection
 
-To reinforce our selection of balance and student status (while excluding income) I fit a cross validation model on all parameters including income. If our methods are correct, adding the income parameter should increase the test error and reduce the correct qualification % of our model.
+To reinforce the selection of `balance` and `student status` (while excluding `income`), we fit a cross-validation model on all parameters including `income`. If the method we selected is correct, adding the income parameter should **increase** the test error and **reduce** the correct qualification % of our model.
 
 
 
@@ -286,7 +301,8 @@ train <- sample(10000,5000)
 Defaultx <- Default[-train,]
 
 # Fit the logistic model using the training data.  
-glm.fit <- glm(default~income + balance + student, data = Default, family = binomial, subset = train)
+glm.fit <- glm(default~income + balance + student, data = Default, 
+               family = binomial, subset = train)
 
 # Use the logistic model to fit the same logistic model, but use the test data.  
 glm.probs <- predict(glm.fit, Defaultx, type = "response")
@@ -305,8 +321,9 @@ defaultVector <- Defaultx$default
 mean(glm.pred == defaultVector)
 
 ```
+# Conclusion
 
-As predicted, fitting the model and including the income parameter increased the test error in the validation set and reduces the probability of the correct classification.
+As predicted, fitting the logistic regression model and including the `income` parameter increased the test error in the validation set and reduces the probability of the correct classification.
 
 
 

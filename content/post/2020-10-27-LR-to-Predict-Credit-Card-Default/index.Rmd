@@ -276,7 +276,7 @@ cv.error[3] <- cv.glm(Default, glm.fit1, K=10)$delta[1]
 
 mean_df2 <- 1 - mean(cv.error)
 
-pct_df2 <- paste(100*mean_df2,"%",sep="")
+pct_df2 <- paste(100*round(mean_df2,digits=4),"%",sep="")
 
 ```
 

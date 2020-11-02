@@ -1,5 +1,36 @@
-<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
+---
+title: Utilizing a Logistic Regression Model to Predict Credit Card Default
+author: Ou Zhang
+date: '2020-10-27'
+categories:
+  - Finance
+  - R
+  - Statistics
+tags:
+  - Finance
+  - Other
+  - R
+  - Statistics
+slug: logistic-regression-model-predict-credit-card-default
+draft: no
+lastmod: '2020-10-27T23:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: Smart
+  preview_only: no
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 1
+    self_contained: no
+
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -235,8 +266,8 @@ cv.error[3] &lt;- cv.glm(Default, glm.fit1, K=10)$delta[1]
 
 mean_df2 &lt;- 1 - mean(cv.error)
 
-pct_df2 &lt;- paste(100*mean_df2,&quot;%&quot;,sep=&quot;&quot;)</code></pre>
-<p>We interpret the value of (1-mean(error)) to be the average of the correctly validated observations of the data set using the K-Folds technique. The results of this are also promising! We can see that again approximately 97.8605856256475% of values were correctly classified using our method.</p>
+pct_df2 &lt;- paste(100*round(mean_df2,digits=4),&quot;%&quot;,sep=&quot;&quot;)</code></pre>
+<p>We interpret the value of (1-mean(error)) to be the average of the correctly validated observations of the data set using the K-Folds technique. The results of this are also promising! We can see that again approximately 97.86% of values were correctly classified using our method.</p>
 </div>
 <div id="parameter-selection" class="section level1">
 <h1><span class="header-section-number">7</span> Parameter Selection</h1>

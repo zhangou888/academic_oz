@@ -55,6 +55,13 @@ packages <- lapply(packages, FUN = function(x) {
 
 ```
 
+
+```{r fig1, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
+
+    knitr::include_graphics("figure/outlier.gif", error = FALSE)
+
+```
+
 4 years ago (Yes, back to 2016), I was asked by a director of assessment department from a very famous IT company about **outliers**. Basically, she asked two questions: 
 
    1. What are outliers?

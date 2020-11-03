@@ -1,0 +1,136 @@
+---
+title: Outliers-Part 2:Finding Outliers in a univariated way
+author: Ou Zhang
+date: '2020-11-03'
+categories:
+  - R
+  - Statistics
+tags:
+  - R
+  - Statistics
+slug: outliers-part-2
+draft: no
+lastmod: '2020-11-03T23:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: Smart
+  preview_only: no
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 1
+    self_contained: no
+
+---
+
+```{r set-global-options, echo = FALSE}
+knitr::opts_chunk$set(eval = TRUE, 
+                      echo = TRUE, 
+                      cache = FALSE,
+                      include = TRUE,
+                      collapse = FALSE,
+                      dependson = NULL,
+                      engine = "R", # Chunks will always have R code, unless noted
+                      error = TRUE,
+                      # root.dir = "C:/Users/uzhanou/Documents/R/markdown/Serena/",
+                      fig.path = "figure/",  # Set the figure options
+                      fig.align = "center", 
+                      fig.width = 6,
+                      fig.height = 6)
+```
+
+```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE}
+## Step 2: load required packages 
+packages <- c("tidyverse","mlbench","ggplot2","mice","Hmisc","DMwR",
+              "rpart","mice","outliers", "knitr","EnvStats","mvoutlier")
+packages <- lapply(packages, FUN = function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x)
+    library(x, character.only = TRUE)
+  }  
+})
+
+```
+
+5 Ways to Find Outliers in Your Data
+
+Finding outliers depends on subject-area knowledge and an understanding of the data collection process. While there is no solid mathematical definition, there are guidelines and statistical tests you can use to find outlier candidates.
+
+Outliers are a simple concept—they are values that are notably different from other data points, and they can cause problems in statistical procedures.
+
+Method 1: Sorting Your Datasheet to Find Outliers
+
+Sorting your datasheet is a simple but effective way to highlight unusual values. Simply sort your data sheet for each variable and then look for unusually high or low values.
+
+Method 2: Graphing Your Data to Identify Outliers
+
+Boxplots, histograms, and scatterplots can highlight outliers.
+
+univariate outliers: Boxplot (interquartile method with fence), histograms
+Bivariate/multivariate outliers: scatterplots
+
+The scatterplot with regression line shows how most of the points follow the fitted line for the model. However, the circled point does not fit the model well.
+
+This type of outlier can be a problem in regression analysis. Given the multifaceted nature of multivariate regression, there are numerous types of outliers in that realm. 
+
+Method 3: Using Z-scores to Detect Outliers
+
+Z-scores can quantify the unusualness of an observation when your data follow the normal distribution. Z-scores are the number of standard deviations above and below the mean that each value falls.
+
+The further away an observation’s Z-score is from zero, the more unusual it is. A standard cut-off value for finding outliers are Z-scores of +/-3 or further from zero.  
+
+However, if your data don’t follow the normal distribution, this approach might not be accurate.
+
+Note that Z-scores can be misleading with small datasets because the maximum Z-score is limited to (n−1) / √ n.*
+
+Also, note that the outlier’s presence throws off the Z-scores because it inflates the mean and standard deviation as we saw earlier. Notice how all the Z-scores are negative except the outlier’s value. If we calculated Z-scores without the outlier, they’d be different! Be aware that if your dataset contains outliers, Z-values are biased such that they appear to be less extreme (i.e., closer to zero).
+
+
+Method 4: Using the Interquartile Range to Create Outlier Fences
+
+You can use the interquartile range (IQR), several quartile values, and an adjustment factor to calculate boundaries for what constitutes minor and major outliers. Minor and major denote the unusualness of the outlier relative to the overall distribution of values. Major outliers are more extreme. Analysts also refer to these categorizations as mild and extreme outliers.
+
+The IQR is the middle 50% of the dataset. It’s the range of values between the third quartile and the first quartile (Q3 – Q1). We can take the IQR, Q1, and Q3 values to calculate the following outlier fences for our dataset: lower outer, lower inner, upper inner, and upper outer. These fences determine whether data points are outliers and whether they are mild or extreme.
+Values that fall inside the two inner fences are not outliers.
+
+To calculate the outlier fences, do the following:
+
+1.	Take your IQR and multiply it by 1.5 and 3. We’ll use these values to obtain the inner and outer fences. For our example, the IQR equals 0.222. Consequently, 0.222 * 1.5 = 0.333 and 0.222 * 3 = 0.666. We’ll use 0.333 and 0.666 in the following steps.
+
+2.	Calculate the inner and outer lower fences. Take the Q1 value and subtract the two values from step 1. The two results are the lower inner and outer outlier fences. For our example, Q1 is 1.714. So, the lower inner fence = 1.714 – 0.333 = 1.381 and the lower outer fence = 1.714 – 0.666 = 1.048.
+
+3.	Calculate the inner and outer upper fences. Take the Q3 value and add the two values from step 1. The two results are the upper inner and upper outlier fences. For our example, Q3 is 1.936. So, the upper inner fence = 1.936 + 0.333 = 2.269 and the upper outer fence = 1.936 + 0.666 = 2.602.
+
+The IQR method is helpful because it uses percentiles, which do not depend on a specific distribution. Additionally, percentiles are relatively robust to the presence of outliers compared to the other quantitative methods.
+
+
+Method 5: Finding Outliers with Hypothesis Tests
+
+You can use hypothesis tests to find outliers. Many outlier tests exist, but I’ll focus on one to illustrate how they work. In this post, I demonstrate Grubbs’ test, which tests the following hypotheses:
+o	Null: All values in the sample were drawn from a single population that follows the same normal distribution.
+o	Alternative: One value in the sample was not drawn from the same normally distributed population as the other values.
+If the p-value for this test is less than your significance level, you can reject the null and conclude that one of the values is an outlier. The analysis identifies the value in question.
+
+If you use Grubbs’ test and find an outlier, don’t remove that outlier and perform the analysis again. That process can cause you to remove values that are not outliers.
+Challenges of Using Outlier Hypothesis Tests: Masking and Swamping
+When performing an outlier test, you either need to choose a procedure based on the number of outliers or specify the number of outliers for a test. Grubbs’ test checks for only one outlier. However, other procedures, such as the Tietjen-Moore Test, require you to specify the number of outliers. That’s hard to do correctly! After all, you’re performing the test to find outliers! Masking and swamping are two problems that can occur when you specify the incorrect number of outliers in a dataset.
+
+ - Masking occurs when you specify too few outliers. The additional outliers that exist can affect the test so that it detects no outliers. For example, if you specify one outlier when there are two, the test can miss both outliers.
+
+ - Conversely, swamping occurs when you specify too many outliers. In this case, the test identifies too many data points as being outliers. For example, if you specify two outliers when there is only one, the test might determine that there are two outliers.
+
+
+-- To be Continued
+
+
+
+
+
+
+
+
+
+

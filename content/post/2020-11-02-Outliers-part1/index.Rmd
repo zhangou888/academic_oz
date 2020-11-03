@@ -1,0 +1,157 @@
+---
+title: Outliers-Part 1:Causes, Philosophy and General Rules
+author: Ou Zhang
+date: '2020-11-02'
+categories:
+  - R
+  - Statistics
+tags:
+  - R
+  - Statistics
+slug: outliers-part-1
+draft: no
+lastmod: '2020-11-02T23:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: Smart
+  preview_only: no
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 1
+    self_contained: no
+
+---
+
+```{r set-global-options, echo = FALSE}
+knitr::opts_chunk$set(eval = TRUE, 
+                      echo = TRUE, 
+                      cache = FALSE,
+                      include = TRUE,
+                      collapse = FALSE,
+                      dependson = NULL,
+                      engine = "R", # Chunks will always have R code, unless noted
+                      error = TRUE,
+                      # root.dir = "C:/Users/uzhanou/Documents/R/markdown/Serena/",
+                      fig.path = "figure/",  # Set the figure options
+                      fig.align = "center", 
+                      fig.width = 6,
+                      fig.height = 6)
+```
+
+```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE}
+## Step 2: load required packages 
+packages <- c("tidyverse","mlbench","ggplot2","mice","Hmisc","DMwR",
+              "rpart","mice","outliers", "knitr","EnvStats","mvoutlier")
+packages <- lapply(packages, FUN = function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x)
+    library(x, character.only = TRUE)
+  }  
+})
+
+```
+
+4 years ago (Yes, back to 2016), I was asked by a director of assessment department from a very famous IT company about **outliers**. Basically, she asked two questions: 
+
+   1. What are outliers?
+   2. How to detect them?
+
+At that moment, I can only remember what my former boss told me: _"plot a regression line, and draw an ellipse around the line. Then all the data dots outside that ellipse area are treated as outliers"_. After hearing my answer, it was a deadly silence from the other end of the phone line. And that moment becomes **one of the most embarrassing moment** in my life. 
+
+Because of this `cannot-forget-memory`, I decide to spend some time to learn everything about outliers and I won't experience that awkward moment again when someone ask me about what are outliers.
+
+# Brief Introduction
+
+**Outliers** can be very informative about the subject-area and data collection process. 
+It’s essential to understand how outliers occur and whether they might happen again as a normal part of the process or study area. 
+
+Sometimes it’s best to keep outliers in the data. They can capture valuable information that is part of your study area. Retaining these points can be hard, particularly when it reduces statistical significance! However, excluding extreme values solely due to their extremeness can distort the results by removing information about the variability inherent in the study area. You’re forcing the subject area to appear less variable than it is in reality.
+
+Unfortunately, resisting the temptation to remove outliers inappropriately can be difficult. Outliers increase the variability in your data, which decreases statistical power. 
+
+Consequently, **excluding outliers can cause your results to become statistically significant.**
+
+When considering whether to remove an outlier, you’ll need to evaluate if it appropriately reflects your target population, subject-area, research question, and research methodology.
+
+# Causes for Outliers
+
+In broad strokes, there are three causes for outliers:
+  - data entry or measurement errors, 
+  - sampling problems and unusual conditions, and 
+  - natural variation
+
+## Data Entry and Measurement Errors and Outliers
+
+Errors can occur during measurement and data entry. During data entry, typos can produce weird values. These types of errors are easy cases to understand. If you determine that an outlier value is an error, correct the value when possible. That can involve fixing the typo or possibly remeasuring the item or person. If that’s not possible, you must delete the data point because you know it’s an incorrect value.
+
+## Sampling Problems Can Cause Outliers   
+
+Inferential statistics use samples to draw conclusions about a specific population. Studies should carefully define a population, and then draw a random sample from it specifically. That’s the process by which a study can learn about a population.
+
+Unfortunately, your study might accidentally obtain an item or person that is not from the target population. There are several ways this can occur. For example, unusual events or characteristics can occur that deviate from the defined population. Perhaps the experimenter measures the item or subject under abnormal conditions. In other cases, you can accidentally collect an item that falls outside your target population, and, thus, it might have unusual characteristics.
+
+If you can establish that an item or person does not represent your target population, you can remove that data point. However, you must be able to attribute a specific cause or reason for why that sample item does not fit your target population.
+
+## Natural Variation Can Produce Outliers
+
+The previous causes of outliers are bad things. They represent different types of problems that you need to correct. However, **natural variation** can also produce outliers—and it’s not necessarily a problem.
+
+All data distributions have a spread of values. Extreme values can occur, but they have lower probabilities. 
+
+If your sample size is large enough, you’re bound to obtain unusual values. In a normal distribution, approximately `1` in `340` observations will be at least **three standard deviations (3 SDs)** away from the mean. However, random chance might include extreme values in smaller datasets. In other words, the process or population you’re studying might produce weird values naturally. There’s nothing wrong with these data points. They’re unusual, but they are a normal part of the data distribution.
+
+If the extreme value is a legitimate observation that is a natural part of the population you’re studying, **you should leave it in the dataset.** 
+
+So, in summary, if the outlier in question is:
+
+  -	A **measurement error or data entry error**, correct the error if possible. If you can’t fix it, remove that observation because you know it’s incorrect.
+
+  - **Not a part of the population you are studying** (i.e., unusual properties or conditions), you can legitimately remove the outlier.
+  
+  - A **natural part of the population you are studying**, you should not remove it.
+  
+
+# Philosophy about Finding Outliers
+
+As you saw, there are many ways to identify outliers. The philosophy is that **you must use your in-depth knowledge about all the variables when analyzing data.** Part of this knowledge is knowing what values are typical, unusual, and impossible.
+
+When you have this in-depth knowledge, it’s best to use the more straightforward, **visual methods**. 
+
+At a glance, data points that are potential outliers will pop out under your knowledgeable gaze. Consequently, I’ll often use **boxplots**, **histograms**, and old-fashioned **data sorting** These simple tools provide enough information to find unusual data points for further investigation.
+
+Typically, I don’t highly recommend **Z-scores** and **hypothesis tests** to find outliers because of their various complications. But I will introduce a couple of hypothesis tests to detect outliers in the later posts. 
+
+As you already know, using outlier tests can be challenging because they usually assume your data 1) follow the **normal distribution**, and then 2) there might be possible **masking** and **swamping**. 
+
+Additionally, the existence of outliers makes Z-scores less extreme. It’s ironic, but these methods for identifying outliers are actually sensitive to the presence of outliers! Fortunately, as long as researchers use a simple method to display unusual values, a knowledgeable analyst is likely to know which values need further investigation.
+
+In my view, the more formal statistical tests and calculations are **overkill** because they can’t definitively identify outliers. Ultimately, analysts must investigate unusual values and use their expertise to determine whether they are legitimate data points. Statistical procedures don’t know the subject matter or the data collection process and can’t make the final determination. You should not include or exclude an observation based entirely on the results of a hypothesis test or statistical measure.
+
+At this stage of the analysis, we’re only identifying potential outliers for further investigation. It’s just the first step in handling them. If we make errorrs, we want the errors on the side of investigating too many values rather than too few.
+
+
+# General Rules
+
+  - **Not all outliers are bad and some should not be deleted.** In fact, outliers can be very informative about the subject-area and data collection process. It’s important to understand how outliers occur and whether they might happen again as a normal part of the process or study area. If you could keep them (so-called outliers here) in your data, it's the best.
+  
+    - Another approach is to perform the analysis with and without these observations and discuss the differences. Comparing results in this manner is particularly useful when you’re unsure about removing an outlier and when there is substantial disagreement within a group over this question.
+
+  - When you decide to remove outliers, **document the excluded data points and explain your reasoning**. You must be able to attribute a specific cause for removing outliers. 
+
+
+
+-- To be Continued
+
+
+
+
+
+
+
+
+
+

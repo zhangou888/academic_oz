@@ -1,0 +1,425 @@
+<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#method-1-sorting-your-datasheet-to-find-outliers"><span class="toc-section-number">1</span> Method 1: Sorting Your Datasheet to Find Outliers</a></li>
+<li><a href="#method-2-graphing-your-data-to-identify-outliers"><span class="toc-section-number">2</span> Method 2: Graphing Your Data to Identify Outliers</a></li>
+<li><a href="#method-3-using-z-scores-to-detect-outliers"><span class="toc-section-number">3</span> Method 3: Using Z-scores to Detect Outliers</a></li>
+<li><a href="#method-4-using-the-interquartile-range-irq-to-create-outlier-fences"><span class="toc-section-number">4</span> Method 4: Using the Interquartile Range (IRQ) to Create Outlier Fences</a></li>
+<li><a href="#method-5-percentiles"><span class="toc-section-number">5</span> Method 5: Percentiles</a></li>
+<li><a href="#method-6-hampel-filter"><span class="toc-section-number">6</span> Method 6: Hampel filter</a></li>
+<li><a href="#method-7-finding-outliers-with-hypothesis-tests"><span class="toc-section-number">7</span> Method 7: Finding Outliers with Hypothesis Tests</a></li>
+</ul>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:fig1"></span>
+<img src="figure/tenor.gif" alt="Outliers" width="80%" />
+<p class="caption">
+Figure 0.1: Outliers
+</p>
+</div>
+<p>In this 2nd part, we are going to discuss more technical details of the outlier detection. <strong>Outliers</strong> are one of those statistical issues that everyone knows about, but most people aren’t sure how to deal with. Most parametric statistics, like <strong>means, standard deviations, and correlations</strong>, and <strong>every statistic based on these</strong>, are <em>highly sensitive</em> to outliers.</p>
+<p>Finding outliers depends on subject-area knowledge and an understanding of the data collection process. While there is no solid mathematical definition, there are guidelines and statistical tests you can use to find outlier candidates.</p>
+<p>Outlier is a simple concept:</p>
+<blockquote>
+<p><strong>they are values that are notably different from other data points, and they can cause problems in statistical procedures.</strong></p>
+</blockquote>
+<p>Removing or keeping an outlier depends on</p>
+<pre><code>(i) the context of your analysis,
+(ii) whether the tests you are going to perform on the dataset are robust to outliers or not, and
+(iii) how far is the outlier from other observations.</code></pre>
+<p>Outlier detection methods can be divided between <code>univariate methods</code> and <code>multivariate methods</code> that usually for most of the current body of research. In this post, I am going to focus on the <code>univariate methods</code> first.</p>
+<p>Generally, there are 5 different methods to detect outliers <strong>univariately</strong>.</p>
+<div id="method-1-sorting-your-datasheet-to-find-outliers" class="section level1">
+<h1><span class="header-section-number">1</span> Method 1: Sorting Your Datasheet to Find Outliers</h1>
+<p>Sorting your datasheet is a simple but <code>effective</code> way to highlight unusual values. Simply sort your data sheet for each variable and then look for unusually high or low values.</p>
+<p>See the example below.</p>
+<pre class="r"><code># Example data.
+ex1 &lt;- data.frame(id=c(1,2,3,4,5),
+                  gender=c(&quot;M&quot;,&quot;F&quot;,&quot;F&quot;,&quot;M&quot;,&quot;M&quot;),
+                  age=c(15, 20, 400, 27, 50))
+
+# sort data by age.
+arrange(ex1,age)</code></pre>
+<pre><code>##   id gender age
+## 1  1      M  15
+## 2  2      F  20
+## 3  4      M  27
+## 4  5      M  50
+## 5  3      F 400</code></pre>
+<p>As we all know, human’s age cannot be 400. So, we can easily detect that case (id=3) is an outlier. It is caused either from data-entry error or something else.</p>
+</div>
+<div id="method-2-graphing-your-data-to-identify-outliers" class="section level1">
+<h1><span class="header-section-number">2</span> Method 2: Graphing Your Data to Identify Outliers</h1>
+<p>Boxplots, histograms, and scatterplots can highlight outliers.</p>
+<ul>
+<li>univariate outliers: <code>Boxplot</code> (interquartile method with fence), <code>histograms</code></li>
+<li>Bivariate/multivariate outliers: <code>scatterplots</code></li>
+</ul>
+<p>The scatterplot with regression line shows how most of the points follow the fitted line for the model. However, the circled point does not fit the model well(<code>We will discuss this in the next post</code>).</p>
+<p>This type of outlier can be a problem in regression analysis. Given the multifaceted nature of multivariate regression, there are numerous types of outliers in that realm.</p>
+<div id="histogram" class="section level2">
+<h2><span class="header-section-number">2.1</span> Histogram</h2>
+<p>One basic way to detect outliers is to draw a histogram of the data.</p>
+<pre class="r"><code># use example data
+dat &lt;- ggplot2::mpg
+summary(dat$hwy)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   12.00   18.00   24.00   23.44   27.00   44.00</code></pre>
+<pre class="r"><code>ggplot(dat) +
+  aes(x = hwy) +
+  geom_histogram(bins = 30L, fill = &quot;#0c4c8a&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/histogram-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>From the histogram, there seems to be a couple of observations higher than all other observations (see the bar on the right side of the plot).</p>
+</div>
+<div id="boxplot" class="section level2">
+<h2><span class="header-section-number">2.2</span> Boxplot</h2>
+<p>In addition to histograms, boxplots are also useful to detect potential outliers. A boxplot helps to visualize a quantitative variable by displaying five common location summary (minimum, median, first and third quartiles and maximum) and any observation that was classified as a suspected outlier using the interquartile range (IQR) criterion (See the method 4).</p>
+<pre class="r"><code># using ggplot2:
+ggplot(dat) + aes(x = &quot;&quot;, y = hwy) +
+  geom_boxplot(fill = &quot;#0c4c8a&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="figure/boxplot-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="method-3-using-z-scores-to-detect-outliers" class="section level1">
+<h1><span class="header-section-number">3</span> Method 3: Using Z-scores to Detect Outliers</h1>
+<p>Z-scores can quantify the unusualness of an observation when your data follow the normal distribution. Z-scores are the number of standard deviations above and below the mean that each value falls.</p>
+<p>To calculate the Z-score for an observation, take the raw measurement, subtract the mean, and divide by the standard deviation. Mathematically, the formula for that process is the following:</p>
+<p><span class="math display">\[Z=\frac{X-\mu}{\sigma}\]</span></p>
+<p>The further away an observation’s Z-score is from zero, the more unusual it is. A standard cut-off value for finding outliers are Z-scores of <code>+/-3</code> or further from zero.</p>
+<p>However, <strong>if your data don’t follow the normal distribution, this approach might not be accurate.</strong></p>
+<p>Note that Z-scores can be misleading with small datasets because the maximum Z-score is limited to <span class="math inline">\(\frac{n-1}{\sqrt{n}}\)</span>.</p>
+<p>Also, note that the outlier’s presence throws off the Z-scores because it inflates the mean and standard deviation as we saw earlier. Notice how all the Z-scores are negative except the outlier’s value. If we calculated Z-scores without the outlier, they’d be different! Be aware that if your dataset contains outliers, Z-values are biased such that they appear to be less extreme (i.e., closer to zero).</p>
+</div>
+<div id="method-4-using-the-interquartile-range-irq-to-create-outlier-fences" class="section level1">
+<h1><span class="header-section-number">4</span> Method 4: Using the Interquartile Range (IRQ) to Create Outlier Fences</h1>
+<p>You can use the <code>interquartile range (IQR)</code>, several quartile values, and an adjustment factor to calculate boundaries for what constitutes minor and major outliers. Minor and major denote the unusualness of the outlier relative to the overall distribution of values. Major outliers are more extreme. Analysts also refer to these categorizations as mild and extreme outliers.</p>
+<p>The IQR is the middle <code>50%</code> of the dataset. It’s the range of values between the <strong>third quartile</strong> and the <strong>first quartile (Q3 – Q1)</strong>.</p>
+<p>We can take the IQR, Q1, and Q3 values to calculate the following outlier fences for our dataset: lower outer, lower inner, upper inner, and upper outer. These fences determine whether data points are outliers and whether they are mild or extreme.
+Values that fall inside the two inner fences are not outliers.</p>
+<p>To calculate the outlier fences, do the following:</p>
+<ol style="list-style-type: decimal">
+<li><p>Take your IQR and multiply it by <code>1.5</code> and <code>3</code>. We’ll use these values to obtain the inner and outer fences. For our example, the IQR equals 0.222. Consequently, 0.222 * 1.5 = 0.333 and 0.222 * 3 = 0.666. We’ll use 0.333 and 0.666 in the following steps.</p></li>
+<li><p>Calculate the <strong>inner</strong> and <strong>outer lower fences</strong>. Take the Q1 value and subtract the two values from step 1. The two results are the lower inner and outer outlier fences. For our example, Q1 is 1.714. So, the lower inner fence = 1.714 – 0.333 = 1.381 and the lower outer fence = 1.714 – 0.666 = 1.048.</p></li>
+<li><p>Calculate the inner and outer upper fences. Take the Q3 value and add the two values from step 1. The two results are the upper inner and upper outlier fences. For our example, Q3 is 1.936. So, the upper inner fence = 1.936 + 0.333 = 2.269 and the upper outer fence = 1.936 + 0.666 = 2.602.</p></li>
+</ol>
+<p>The IQR method is helpful because it uses percentiles, which do not depend on a specific distribution. Additionally, percentiles are relatively robust to the presence of outliers compared to the other quantitative methods.</p>
+<p>It is also possible to extract the values of the potential outliers based on the IQR criterion thanks to the <code>boxplot.stats()$out</code> function:</p>
+<pre class="r"><code>boxplot.stats(dat$hwy)$out</code></pre>
+<pre><code>## [1] 44 44 41</code></pre>
+<pre class="r"><code># Thanks to the which() function it is possible to extract the row number
+# corresponding to these outliers:
+out &lt;- boxplot.stats(dat$hwy)$out
+out_ind &lt;- which(dat$hwy %in% c(out))
+out_ind</code></pre>
+<pre><code>## [1] 213 222 223</code></pre>
+<p>With this information you can now easily go back to the specific rows in the dataset to verify them, or print all variables for these outliers. It is also possible to print the values of the outliers directly on the boxplot with the <code>mtext()</code> function:</p>
+<pre class="r"><code>dat[out_ind, ]</code></pre>
+<pre><code>## # A tibble: 3 x 11
+##   manufacturer model   displ  year   cyl trans   drv     cty   hwy fl    class  
+##   &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  
+## 1 volkswagen   jetta     1.9  1999     4 manual~ f        33    44 d     compact
+## 2 volkswagen   new be~   1.9  1999     4 manual~ f        35    44 d     subcom~
+## 3 volkswagen   new be~   1.9  1999     4 auto(l~ f        29    41 d     subcom~</code></pre>
+<pre class="r"><code>boxplot(dat$hwy,
+        ylab = &quot;hwy&quot;,
+        main = &quot;Boxplot of highway miles per gallon&quot;)
+
+# print out outlier
+mtext(paste(&quot;Outliers: &quot;, paste(out, collapse = &quot;, &quot;)))</code></pre>
+<p><img src="figure/IRQ2-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="method-5-percentiles" class="section level1">
+<h1><span class="header-section-number">5</span> Method 5: Percentiles</h1>
+<p>This method of outliers detection is based on the percentiles. With the percentiles method, all observations that lie outside the interval formed by the <code>2.5</code> and <code>97.5</code> percentiles will be considered as potential outliers. Other percentiles such as the 1 and 99, or the 5 and 95 percentiles can also be considered to construct the interval.</p>
+<p>The values of the lower and upper percentiles (and thus the lower and upper limits of the interval) can be computed with the <code>quantile()</code> function:</p>
+<pre class="r"><code>lower_bound &lt;- quantile(dat$hwy, 0.025)
+lower_bound</code></pre>
+<pre><code>## 2.5% 
+##   14</code></pre>
+<pre class="r"><code>upper_bound &lt;- quantile(dat$hwy, 0.975)
+upper_bound</code></pre>
+<pre><code>##  97.5% 
+## 35.175</code></pre>
+<p>According to this method, all observations below 14 and above <code>35.175</code> will be considered as potential outliers. The row numbers of the observations outside of the interval can then be extracted with the <code>which()</code> function:</p>
+<pre class="r"><code># So the outlier will be
+outlier_ind &lt;- which(dat$hwy &lt; lower_bound | dat$hwy &gt; upper_bound)
+outlier_ind</code></pre>
+<pre><code>##  [1]  55  60  66  70 106 107 127 197 213 222 223</code></pre>
+<p>Then their values of highway miles per gallon can be printed:</p>
+<pre class="r"><code>dat[outlier_ind, &quot;hwy&quot;]</code></pre>
+<pre><code>## # A tibble: 11 x 1
+##      hwy
+##    &lt;int&gt;
+##  1    12
+##  2    12
+##  3    12
+##  4    12
+##  5    36
+##  6    36
+##  7    12
+##  8    37
+##  9    44
+## 10    44
+## 11    41</code></pre>
+<p>Alternatively, all variables for these outliers can be printed:</p>
+<pre class="r"><code>dat[outlier_ind, ]</code></pre>
+<pre><code>## # A tibble: 11 x 11
+##    manufacturer model    displ  year   cyl trans  drv     cty   hwy fl    class 
+##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; 
+##  1 dodge        dakota ~   4.7  2008     8 auto(~ 4         9    12 e     pickup
+##  2 dodge        durango~   4.7  2008     8 auto(~ 4         9    12 e     suv   
+##  3 dodge        ram 150~   4.7  2008     8 auto(~ 4         9    12 e     pickup
+##  4 dodge        ram 150~   4.7  2008     8 manua~ 4         9    12 e     pickup
+##  5 honda        civic      1.8  2008     4 auto(~ f        25    36 r     subco~
+##  6 honda        civic      1.8  2008     4 auto(~ f        24    36 c     subco~
+##  7 jeep         grand c~   4.7  2008     8 auto(~ 4         9    12 e     suv   
+##  8 toyota       corolla    1.8  2008     4 manua~ f        28    37 r     compa~
+##  9 volkswagen   jetta      1.9  1999     4 manua~ f        33    44 d     compa~
+## 10 volkswagen   new bee~   1.9  1999     4 manua~ f        35    44 d     subco~
+## 11 volkswagen   new bee~   1.9  1999     4 auto(~ f        29    41 d     subco~</code></pre>
+<p>There are <code>11</code> potential outliers according to the percentiles method. To reduce this number, you can set the percentiles to <code>1</code> and <code>99</code>:</p>
+<pre class="r"><code>lower_bound &lt;- quantile(dat$hwy, 0.01)
+upper_bound &lt;- quantile(dat$hwy, 0.99)
+
+outlier_ind &lt;- which(dat$hwy &lt; lower_bound | dat$hwy &gt; upper_bound)
+
+# print out outlier data
+dat[outlier_ind, ]</code></pre>
+<pre><code>## # A tibble: 3 x 11
+##   manufacturer model   displ  year   cyl trans   drv     cty   hwy fl    class  
+##   &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  
+## 1 volkswagen   jetta     1.9  1999     4 manual~ f        33    44 d     compact
+## 2 volkswagen   new be~   1.9  1999     4 manual~ f        35    44 d     subcom~
+## 3 volkswagen   new be~   1.9  1999     4 auto(l~ f        29    41 d     subcom~</code></pre>
+</div>
+<div id="method-6-hampel-filter" class="section level1">
+<h1><span class="header-section-number">6</span> Method 6: Hampel filter</h1>
+<p>Another method, known as Hampel filter, consists of considering as outliers the values outside the interval(<span class="math inline">\(I\)</span>) formed by the <code>median</code>, plus or minus <code>3 median absolute deviations</code> (<span class="math inline">\(MAD\)</span>): (default as 3, could be different)</p>
+<p><span class="math display">\[I=[median-3\times MAD, median+3\times MAD]\]</span>
+where <span class="math inline">\(MAD\)</span> is the median absolute deviation and is defined as the median of the absolute deviations from the data’s median:</p>
+<p><span class="math display">\[MAD = median(|X_{i} - median(X)|)\]</span>
+For this method we first set the interval limits thanks to the <code>median()</code> and <code>mad()</code> functions:</p>
+<pre class="r"><code>median(dat$hwy)</code></pre>
+<pre><code>## [1] 24</code></pre>
+<pre class="r"><code>mad(dat$hwy)</code></pre>
+<pre><code>## [1] 7.413</code></pre>
+<pre class="r"><code>lower_bound &lt;- median(dat$hwy) - 3 * mad(dat$hwy)
+lower_bound</code></pre>
+<pre><code>## [1] 1.761</code></pre>
+<pre class="r"><code>upper_bound &lt;- median(dat$hwy) + 3 * mad(dat$hwy)
+upper_bound</code></pre>
+<pre><code>## [1] 46.239</code></pre>
+<p>According to this method, all observations below <code>1.761</code> and above <code>46.239</code> will be considered as potential outliers. The row numbers of the observations outside of the interval can then be extracted with the <code>which()</code> function:</p>
+<pre class="r"><code>outlier_ind &lt;- which(dat$hwy &lt; lower_bound | dat$hwy &gt; upper_bound)
+outlier_ind</code></pre>
+<pre><code>## integer(0)</code></pre>
+<p>According to the Hampel filter, there is no potential outlier for the <code>hwy</code> variable.</p>
+</div>
+<div id="method-7-finding-outliers-with-hypothesis-tests" class="section level1">
+<h1><span class="header-section-number">7</span> Method 7: Finding Outliers with Hypothesis Tests</h1>
+<p>You can use hypothesis tests to find outliers. Many outlier tests exist, but I’ll focus on one to illustrate how they work. In this post, 3 more formal techniques to detect outliers:</p>
+<ul>
+<li>Grubbs’s test</li>
+<li>Dixon’s test</li>
+<li>Rosner’s test</li>
+</ul>
+<p>These 3 statistical tests are part of more formal techniques of outliers detection as they all involve the computation of a test statistic that is compared to tabulated critical values (that are based on the sample size and the desired confidence level).</p>
+<p>Note that the 3 tests are appropriate only when the data (without any outliers) are <strong>approximately normally distributed</strong>. The normality assumption must thus be verified before applying these tests for outliers.</p>
+<div id="grubbs-test" class="section level2">
+<h2><span class="header-section-number">7.1</span> Grubbs’ test</h2>
+<p>The Grubbs test allows to detect whether the highest or lowest value in a dataset is an outlier.</p>
+<p>The Grubbs test detects one outlier at a time (highest or lowest value), so the null and alternative hypotheses are as follows.</p>
+<ul>
+<li><span class="math inline">\(H_{0}\)</span>: The <em>highest</em> value is <strong>not</strong> an outlier</li>
+<li><span class="math inline">\(H_{1}\)</span>: The <em>highest</em> value is an outlier.</li>
+</ul>
+<p>if we want to test the highest value, or:</p>
+<ul>
+<li><span class="math inline">\(H_{0}\)</span>: The <em>lowest</em> value is <strong>not</strong> an outlier</li>
+<li><span class="math inline">\(H_{1}\)</span>: The <em>lowest</em> value is an outlier.</li>
+</ul>
+<p>if we want to test the lowest value.</p>
+<p>If the p-value for this test is less than your significance level, you can reject the null and conclude that one of the values is an outlier. The analysis identifies the value in question.</p>
+<p>If you use Grubbs’ test and find an outlier, <strong>don’t remove that outlier and perform the analysis again</strong>. That process can cause you to remove values that are not outliers.</p>
+<p><strong>Note that the Grubbs test is not appropriate for sample size of 6 or less.</strong></p>
+<p><span class="math display">\[n\leq6\]</span>
+To perform the Grubbs test in R, we use the <code>grubbs.test(</code>) function from the <code>{outliers}</code> package:</p>
+<pre class="r"><code>library(outliers)
+test &lt;- grubbs.test(dat$hwy)
+test</code></pre>
+<pre><code>## 
+##  Grubbs test for one outlier
+## 
+## data:  dat$hwy
+## G = 3.45274, U = 0.94862, p-value = 0.05555
+## alternative hypothesis: highest value 44 is an outlier</code></pre>
+<p>If you want to do the test for the lowest value, simply add the argument <code>opposite = TRUE</code> in the <code>grubbs.test()</code> function:</p>
+<pre class="r"><code>test &lt;- grubbs.test(dat$hwy, opposite = TRUE)
+test</code></pre>
+<pre><code>## 
+##  Grubbs test for one outlier
+## 
+## data:  dat$hwy
+## G = 1.92122, U = 0.98409, p-value = 1
+## alternative hypothesis: lowest value 12 is an outlier</code></pre>
+<p>For the sake of illustration, we will now replace an observation with a more extreme value and perform the Grubbs test on this new dataset. Let’s replace the 35th row with a value of 230:</p>
+<pre class="r"><code>dat[35, &quot;hwy&quot;] &lt;- 230
+
+test &lt;- grubbs.test(dat$hwy)
+test</code></pre>
+<pre><code>## 
+##  Grubbs test for one outlier
+## 
+## data:  dat$hwy
+## G = 13.93778, U = 0.16268, p-value &lt; 2.2e-16
+## alternative hypothesis: highest value 230 is an outlier</code></pre>
+<p>The p-value is <code>&lt; 0.001</code>. At the <code>5%</code> significance level, we conclude that the highest value 230 is an outlier.</p>
+</div>
+<div id="dixons-test" class="section level2">
+<h2><span class="header-section-number">7.2</span> Dixon’s test</h2>
+<p>Similar to the Grubbs test, Dixon test is used to test whether a single low or high value is an outlier. So if more than one outliers is suspected, the test has to be performed on these suspected outliers individually.</p>
+<p>Note that- Dixon test is most useful for small sample size (usually <span class="math inline">\(n\leq25\)</span>).</p>
+<p>To perform the Dixon’s test in R, we use the <code>dixon.test()</code> function from the <code>{outliers}</code> package. However, we restrict our dataset to the <code>20</code> first observations as the Dixon test can only be done on small sample size (R will throw an error and accepts <code>only dataset of 3 to 30 observations)</code>:</p>
+<pre class="r"><code>subdat &lt;- dat[1:25, ]
+test &lt;- dixon.test(subdat$hwy)
+test</code></pre>
+<pre><code>## 
+##  Dixon test for outliers
+## 
+## data:  subdat$hwy
+## Q = 0.14286, p-value = 0.632
+## alternative hypothesis: lowest value 15 is an outlier</code></pre>
+<p>The results show that the lowest value 15 is an outlier (<em>p</em>-value = 0.007).</p>
+<p>To test for the highest value, simply add the <code>opposite = TRUE</code> argument to the <code>dixon.test()</code> function:</p>
+<pre class="r"><code>test &lt;- dixon.test(subdat$hwy, opposite = TRUE)
+test</code></pre>
+<pre><code>## 
+##  Dixon test for outliers
+## 
+## data:  subdat$hwy
+## Q = 0.14286, p-value = 0.632
+## alternative hypothesis: highest value 31 is an outlier</code></pre>
+<p>The results show that the highest value <code>31</code> is not an outlier (<em>p</em>-value = 0.858).</p>
+<p>It is a good practice to always check the results of the statistical test for outliers against the boxplot to make sure we tested all potential outliers:</p>
+<pre class="r"><code>out &lt;- boxplot.stats(subdat$hwy)$out
+boxplot(subdat$hwy,
+        ylab = &quot;hwy&quot;)
+mtext(paste(&quot;Outliers: &quot;, paste(out, collapse = &quot;, &quot;)))</code></pre>
+<p><img src="figure/dixon3-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>From the boxplot, we see that we could also apply the Dixon test on the value 20 in addition to the value 15 done previously. This can be done by finding the row number of the minimum value, excluding this row number from the dataset and then finally apply the Dixon test on this new dataset:</p>
+<pre class="r"><code># find and exclude lowest value
+remove_ind &lt;- which.min(subdat$hwy)
+subsubdat &lt;- subdat[-remove_ind, ]
+
+# Dixon test on dataset without the minimum
+test &lt;- dixon.test(subsubdat$hwy)
+test</code></pre>
+<pre><code>## 
+##  Dixon test for outliers
+## 
+## data:  subsubdat$hwy
+## Q = 0.25, p-value = 0.6961
+## alternative hypothesis: lowest value 17 is an outlier</code></pre>
+<p>The results show that the second lowest value 20 is not an outlier (<em>p</em>-value = 0.13).</p>
+</div>
+<div id="rosners-test" class="section level2">
+<h2><span class="header-section-number">7.3</span> Rosner’s test</h2>
+<p>Rosner’s test for outliers has the advantages that:</p>
+<ol style="list-style-type: decimal">
+<li>it is used to detect several outliers at once (unlike <code>Grubbs</code> and <code>Dixon test</code> which must be performed iteratively to screen for multiple outliers), and</li>
+<li>it is designed to avoid the problem of masking, where an outlier that is close in value to another outlier can go undetected.</li>
+</ol>
+<p>Unlike Dixon test, note that Rosner test is most appropriate <strong>when the sample size is large </strong> (<span class="math inline">\(n\geq20\)</span>). We therefore use the initial dataset, which includes 234 observations.</p>
+<p>To perform the Rosner test we use the <code>rosnerTest()</code> function from the <code>{EnvStats}</code> package.
+This function requires at least 2 arguments:</p>
+<ul>
+<li>the data and</li>
+<li>the number of suspected outliers <code>k</code> (with k = 3 as the default number of suspected outliers).</li>
+</ul>
+<p>For this example, we set the number of suspected outliers to be equal to 3, as suggested by the number of potential outliers outlined in the boxplot.</p>
+<pre class="r"><code>library(EnvStats)
+test &lt;- rosnerTest(dat$hwy, k = 3)
+test</code></pre>
+<pre><code>## $distribution
+## [1] &quot;Normal&quot;
+## 
+## $statistic
+##       R.1       R.2       R.3 
+## 13.937782  3.448536  3.548475 
+## 
+## $sample.size
+## [1] 234
+## 
+## $parameters
+## k 
+## 3 
+## 
+## $alpha
+## [1] 0.05
+## 
+## $crit.value
+## lambda.1 lambda.2 lambda.3 
+## 3.652091 3.650836 3.649575 
+## 
+## $n.outliers
+## [1] 1
+## 
+## $alternative
+## [1] &quot;Up to 3 observations are not\n                                 from the same Distribution.&quot;
+## 
+## $method
+## [1] &quot;Rosner&#39;s Test for Outliers&quot;
+## 
+## $data
+##   [1]  29  29  31  30  26  26  27  26  25  28  27  25  25  25  25  24  25  23
+##  [19]  20  15  20  17  17  26  23  26  25  24  19  14  15  17  27  30 230  29
+##  [37]  26  24  24  22  22  24  24  17  22  21  23  23  19  18  17  17  19  19
+##  [55]  12  17  15  17  17  12  17  16  18  15  16  12  17  17  16  12  15  16
+##  [73]  17  15  17  17  18  17  19  17  19  19  17  17  17  16  16  17  15  17
+##  [91]  26  25  26  24  21  22  23  22  20  33  32  32  29  32  34  36  36  29
+## [109]  26  27  30  31  26  26  28  26  29  28  27  24  24  24  22  19  20  17
+## [127]  12  19  18  14  15  18  18  15  17  16  18  17  19  19  17  29  27  31
+## [145]  32  27  26  26  25  25  17  17  20  18  26  26  27  28  25  25  24  27
+## [163]  25  26  23  26  26  26  26  25  27  25  27  20  20  19  17  20  17  29
+## [181]  27  31  31  26  26  28  27  29  31  31  26  26  27  30  33  35  37  35
+## [199]  15  18  20  20  22  17  19  18  20  29  26  29  29  24  44  29  26  29
+## [217]  29  29  29  23  24  44  41  29  26  28  29  29  29  28  29  26  26  26
+## 
+## $data.name
+## [1] &quot;dat$hwy&quot;
+## 
+## $bad.obs
+## [1] 0
+## 
+## $all.stats
+##   i   Mean.i      SD.i Value Obs.Num     R.i+1 lambda.i+1 Outlier
+## 1 0 24.31197 14.757587   230      35 13.937782   3.652091    TRUE
+## 2 1 23.42918  5.965086    44     213  3.448536   3.650836   FALSE
+## 3 2 23.34052  5.822073    44     222  3.548475   3.649575   FALSE
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;gofOutlier&quot;</code></pre>
+<p>The interesting results are provided in the <code>$all.stats</code> table:</p>
+<pre class="r"><code>test$all.stats</code></pre>
+<pre><code>##   i   Mean.i      SD.i Value Obs.Num     R.i+1 lambda.i+1 Outlier
+## 1 0 24.31197 14.757587   230      35 13.937782   3.652091    TRUE
+## 2 1 23.42918  5.965086    44     213  3.448536   3.650836   FALSE
+## 3 2 23.34052  5.822073    44     222  3.548475   3.649575   FALSE</code></pre>
+</div>
+<div id="challenges-of-using-outlier-hypothesis-tests-masking-and-swamping" class="section level2">
+<h2><span class="header-section-number">7.4</span> Challenges of Using Outlier Hypothesis Tests: <code>Masking</code> and <code>Swamping</code></h2>
+<p>When performing an outlier test, you either need to choose a procedure based on the number of outliers or specify the number of outliers for a test. <code>Grubbs’ test</code> checks for only one outlier. However, other procedures, such as the <code>Tietjen-Moore Test</code>, require you to specify the number of outliers. That’s hard to do correctly! After all, you’re performing the test to find outliers! Masking and swamping are two problems that can occur when you specify the incorrect number of outliers in a dataset.</p>
+<ul>
+<li><p><code>Masking</code> occurs when you specify too few outliers. The additional outliers that exist can affect the test so that it detects no outliers. For example, if you specify one outlier when there are two, the test can miss both outliers.</p></li>
+<li><p>Conversely, <code>swamping</code> occurs when you specify too many outliers. In this case, the test identifies too many data points as being outliers. For example, if you specify two outliers when there is only one, the test might determine that there are two outliers.</p></li>
+</ul>
+<p>Note: Some of the contents are originally from Jim Frost’s and Antoine Soetewey online tutorials. If you are interested in, you can find both online tutorials below.</p>
+<p><a href="https://statisticsbyjim.com/basics/outliers/#:~:text=Note%20that%20Z%2Dscores%20can,cutoff%20value%20of%20%2B%2F%2D3">Jim Frost</a></p>
+<p><a href="https://www.statsandr.com/blog/outliers-detection-in-r/">Antoine Soetewey</a></p>
+<p>– To be Continued</p>
+</div>
+</div>

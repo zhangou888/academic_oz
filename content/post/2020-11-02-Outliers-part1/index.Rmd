@@ -8,7 +8,7 @@ categories:
 tags:
   - R
   - Statistics
-slug: outliers-part-1
+slug: outliers-part1
 draft: no
 lastmod: '2020-11-02T23:53:01-05:00'
 featured: no
@@ -62,7 +62,7 @@ packages <- lapply(packages, FUN = function(x) {
 
 ```
 
-4 years ago (Yes, back to 2016), I was asked by a director of assessment department from a very famous IT company about **outliers**. Basically, she asked two questions: 
+4 years ago (Yes, back to 2016), I was asked by a director of data science department from a very famous IT company about **outliers**. Basically, she asked two questions: 
 
    1. What are outliers?
    2. How to detect them?
@@ -123,6 +123,9 @@ So, in summary, if the outlier in question is:
   
 
 # Philosophy about Finding Outliers
+
+Outlier detection methods have been suggested for numerous applications,
+such as **credit card fraud detection**, **clinical trials**, **voting irregularity analysis**,**data cleansing**, **network intrusion**, **severe weather prediction**, **geographic information systems, athlete performance analysis, and other data-mining tasks**.
 
 As you saw, there are many ways to identify outliers. The philosophy is that **you must use your in-depth knowledge about all the variables when analyzing data.** Part of this knowledge is knowing what values are typical, unusual, and impossible.
 

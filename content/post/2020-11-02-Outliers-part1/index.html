@@ -8,7 +8,7 @@ categories:
 tags:
   - R
   - Statistics
-slug: outliers-part-1
+slug: outliers-part1
 draft: no
 lastmod: '2020-11-02T23:53:01-05:00'
 featured: no
@@ -44,7 +44,7 @@ output:
 Figure 0.1: Outliers
 </p>
 </div>
-<p>4 years ago (Yes, back to 2016), I was asked by a director of assessment department from a very famous IT company about <strong>outliers</strong>. Basically, she asked two questions:</p>
+<p>4 years ago (Yes, back to 2016), I was asked by a director of data science department from a very famous IT company about <strong>outliers</strong>. Basically, she asked two questions:</p>
 <ol style="list-style-type: decimal">
 <li>What are outliers?</li>
 <li>How to detect them?</li>
@@ -92,6 +92,8 @@ It’s essential to understand how outliers occur and whether they might happen 
 </div>
 <div id="philosophy-about-finding-outliers" class="section level1">
 <h1><span class="header-section-number">3</span> Philosophy about Finding Outliers</h1>
+<p>Outlier detection methods have been suggested for numerous applications,
+such as <strong>credit card fraud detection</strong>, <strong>clinical trials</strong>, <strong>voting irregularity analysis</strong>,<strong>data cleansing</strong>, <strong>network intrusion</strong>, <strong>severe weather prediction</strong>, <strong>geographic information systems, athlete performance analysis, and other data-mining tasks</strong>.</p>
 <p>As you saw, there are many ways to identify outliers. The philosophy is that <strong>you must use your in-depth knowledge about all the variables when analyzing data.</strong> Part of this knowledge is knowing what values are typical, unusual, and impossible.</p>
 <p>When you have this in-depth knowledge, it’s best to use the more straightforward, <strong>visual methods</strong>.</p>
 <p>At a glance, data points that are potential outliers will pop out under your knowledgeable gaze. Consequently, I’ll often use <strong>boxplots</strong>, <strong>histograms</strong>, and old-fashioned <strong>data sorting</strong> These simple tools provide enough information to find unusual data points for further investigation.</p>

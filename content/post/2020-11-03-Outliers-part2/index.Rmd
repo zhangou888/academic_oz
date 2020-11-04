@@ -55,7 +55,7 @@ packages <- lapply(packages, FUN = function(x) {
 
 ```
 
-```{r fig1, out.width='100%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
+```{r fig1, out.width='75%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
 
     knitr::include_graphics("figure/tenor.gif", error = FALSE)
 

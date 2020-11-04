@@ -72,9 +72,9 @@ Outlier is a simple concept:
   
 Removing or keeping an outlier depends on
 
-    (i) the context of your analysis,
-    (ii) whether the tests you are going to perform on the dataset are robust to outliers or not, and
-    (iii) how far is the outlier from other observations.
+  (i) the context of your analysis,
+  (ii) whether the tests you are going to perform on the dataset are robust to outliers or not, and
+  (iii) how far is the outlier from other observations.
 
   
 Outlier detection methods can be divided between `univariate methods` and `multivariate methods` that usually for most of the current body of research. In this post, I am going to focus on the `univariate methods` first.

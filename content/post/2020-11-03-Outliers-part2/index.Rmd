@@ -78,8 +78,9 @@ Removing or keeping an outlier depends on
 
 In general, there are two different types of outliers- __univariate__ and __multivariate__ outliers.
 
- - A `univariate outlier` is a data point that consists of an extreme value on `one variable`.
- - A `multivariate outlier` is a combination of unusual scores on `at least two variables`. 
+ 1. A `univariate outlier` is a data point that consists of an extreme value on `one variable`.
+
+ 2. A `multivariate outlier` is a combination of unusual scores on `at least two variables`. 
 
 Because of the outlider different types, outlier detection methods can be divided between `univariate methods` and `multivariate methods` that usually for most of the current body of research. 
 

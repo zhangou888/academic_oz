@@ -113,11 +113,38 @@ summary(dat$hwy)</code></pre>
 <div id="boxplot" class="section level2">
 <h2><span class="header-section-number">2.2</span> Boxplot</h2>
 <p>In addition to histograms, boxplots are also useful to detect potential outliers. A boxplot helps to visualize a quantitative variable by displaying five common location summary (minimum, median, first and third quartiles and maximum) and any observation that was classified as a suspected outlier using the interquartile range (IQR) criterion (See the method 4).</p>
+<p><img src="figure/tukey_boxplot.png" width="80%" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># using ggplot2:
 ggplot(dat) + aes(x = &quot;&quot;, y = hwy) +
   geom_boxplot(fill = &quot;#0c4c8a&quot;) +
   theme_minimal()</code></pre>
 <p><img src="figure/boxplot-1.png" width="576" style="display: block; margin: auto;" /></p>
+<div id="adjusted-boxplot-hubert-and-vandervieren-2008" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Adjusted boxplot (Hubert and Vandervieren, 2008)</h3>
+<ol style="list-style-type: decimal">
+<li>At <strong>asymmetric distributions</strong>, boxplot may flag many <strong>regular points as outliers</strong>.</li>
+<li>The skewness-adjusted boxplot corrects for this by using a robust measure of skewness in determining the fence.</li>
+</ol>
+<pre class="r"><code>library(robustbase)
+
+adjbox_stats &lt;- adjboxStats(los)$stats
+
+ggplot(data.frame(los), aes(x = &quot;&quot;, y = los)) + 
+  stat_boxplot(geom = &quot;errorbar&quot;, width = 0.2, coef = 1.5*exp(3*mc(los))) +
+  geom_boxplot(ymin = adjbox_stats[1],
+               ymax = adjbox_stats[5],
+               middle = adjbox_stats[3],
+               upper = adjbox_stats[4],
+               lower = adjbox_stats[2],
+               outlier.shape = NA,
+               fill = &quot;lightblue&quot;,width = 0.5) +
+  geom_point(data=subset(data.frame(los),
+                         los &lt; adjbox_stats[1] | los &gt; adjbox_stats[5]),
+             col = &quot;red&quot;, size = 3, shape = 16) +
+  xlab(&quot;&quot;) + ylab(&quot;Length Of Stay (LOS)&quot;) +
+  theme(text = element_text(size = 25))</code></pre>
+<p><img src="figure/adj_boxplot-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 </div>
 <div id="method-3-using-z-scores-to-detect-outliers" class="section level1">
@@ -125,10 +152,31 @@ ggplot(dat) + aes(x = &quot;&quot;, y = hwy) +
 <p>Z-scores can quantify the unusualness of an observation when your data follow the normal distribution. Z-scores are the number of standard deviations above and below the mean that each value falls.</p>
 <p>To calculate the Z-score for an observation, take the raw measurement, subtract the mean, and divide by the standard deviation. Mathematically, the formula for that process is the following:</p>
 <p><span class="math display">\[Z=\frac{X-\mu}{\sigma}\]</span></p>
-<p>The further away an observation’s Z-score is from zero, the more unusual it is. A standard cut-off value for finding outliers are Z-scores of <code>+/-3</code> or further from zero.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig3"></span>
+<img src="figure/normal.png" alt="Normal distribution" width="80%" />
+<p class="caption">
+Figure 3.1: Normal distribution
+</p>
+</div>
+<p>The further away an observation’s Z-score is from zero, the more unusual it is. A standard cut-off value for finding outliers are Z-scores of <code>+/-3</code> or further from zero. By ‘tagging’ or removing the data points that lay beyond a given threshold we are classifying data into outliers and not outliers.</p>
+<p><img src="figure/cutoff.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>However, <strong>if your data don’t follow the normal distribution, this approach might not be accurate.</strong></p>
 <p>Note that Z-scores can be misleading with small datasets because the maximum Z-score is limited to <span class="math inline">\(\frac{n-1}{\sqrt{n}}\)</span>.</p>
 <p>Also, note that the outlier’s presence throws off the Z-scores because it inflates the mean and standard deviation as we saw earlier. Notice how all the Z-scores are negative except the outlier’s value. If we calculated Z-scores without the outlier, they’d be different! Be aware that if your dataset contains outliers, Z-values are biased such that they appear to be less extreme (i.e., closer to zero).</p>
+<div id="z-score-pros" class="section level2">
+<h2><span class="header-section-number">3.1</span> Z-Score pros:</h2>
+<ul>
+<li>It is a very effective method if you can describe the values in the feature space with a gaussian distribution. (Parametric)</li>
+<li>The implementation is very easy using pandas and scipy.stats libraries.</li>
+</ul>
+</div>
+<div id="z-score-cons" class="section level2">
+<h2><span class="header-section-number">3.2</span> Z-Score cons:</h2>
+<ul>
+<li>It is only convenient to use in a low dimensional feature space, in a small to medium sized dataset.</li>
+<li>Is not recommended when distributions can not be assumed to be parametric.</li>
+</ul>
+</div>
 </div>
 <div id="method-4-using-the-interquartile-range-irq-to-create-outlier-fences" class="section level1">
 <h1><span class="header-section-number">4</span> Method 4: Using the Interquartile Range (IRQ) to Create Outlier Fences</h1>

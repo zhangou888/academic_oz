@@ -45,7 +45,8 @@ knitr::opts_chunk$set(eval = TRUE,
 ```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE}
 ## Step 2: load required packages 
 packages <- c("tidyverse","mlbench","ggplot2","mice","Hmisc","DMwR",
-              "rpart","mice","outliers", "knitr","EnvStats","mvoutlier")
+              "rpart","mice","outliers", "knitr","EnvStats","mvoutlier",
+              "robustbase")
 packages <- lapply(packages, FUN = function(x) {
   if (!require(x, character.only = TRUE)) {
     install.packages(x)
@@ -143,7 +144,15 @@ ggplot(dat) +
 From the histogram, there seems to be a couple of observations higher than all other observations (see the bar on the right side of the plot).
 
 ## Boxplot
+
 In addition to histograms, boxplots are also useful to detect potential outliers. A boxplot helps to visualize a quantitative variable by displaying five common location summary (minimum, median, first and third quartiles and maximum) and any observation that was classified as a suspected outlier using the interquartile range (IQR) criterion (See the method 4). 
+
+
+```{r fig2, out.width='80%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
+
+    knitr::include_graphics("figure/tukey_boxplot.png", error = FALSE)
+
+```
 
 ```{r boxplot}
 
@@ -154,6 +163,36 @@ ggplot(dat) + aes(x = "", y = hwy) +
 
 ```
 
+### Adjusted boxplot (Hubert and Vandervieren, 2008)
+
+  1. At **asymmetric distributions**, boxplot may flag many **regular points as outliers**.
+  2. The skewness-adjusted boxplot corrects for this by using a robust measure of skewness in determining the fence.
+  
+```{r adj_boxplot}
+
+library(robustbase)
+
+adjbox_stats <- adjboxStats(los)$stats
+
+ggplot(data.frame(los), aes(x = "", y = los)) + 
+  stat_boxplot(geom = "errorbar", width = 0.2, coef = 1.5*exp(3*mc(los))) +
+  geom_boxplot(ymin = adjbox_stats[1],
+               ymax = adjbox_stats[5],
+               middle = adjbox_stats[3],
+               upper = adjbox_stats[4],
+               lower = adjbox_stats[2],
+               outlier.shape = NA,
+               fill = "lightblue",width = 0.5) +
+  geom_point(data=subset(data.frame(los),
+                         los < adjbox_stats[1] | los > adjbox_stats[5]),
+             col = "red", size = 3, shape = 16) +
+  xlab("") + ylab("Length Of Stay (LOS)") +
+  theme(text = element_text(size = 25))
+
+```
+
+
+
 # Method 3: Using Z-scores to Detect Outliers
 
 Z-scores can quantify the unusualness of an observation when your data follow the normal distribution. Z-scores are the number of standard deviations above and below the mean that each value falls.
@@ -162,13 +201,37 @@ To calculate the Z-score for an observation, take the raw measurement, subtract 
 
 $$Z=\frac{X-\mu}{\sigma}$$
 
-The further away an observation’s Z-score is from zero, the more unusual it is. A standard cut-off value for finding outliers are Z-scores of `+/-3` or further from zero.  
+```{r fig3, out.width='80%', fig.align='center', fig.pos='h', fig.cap='Normal distribution',echo = FALSE}
+
+    knitr::include_graphics("figure/normal.png", error = FALSE)
+
+```
+
+The further away an observation’s Z-score is from zero, the more unusual it is. A standard cut-off value for finding outliers are Z-scores of `+/-3` or further from zero. By ‘tagging’ or removing the data points that lay beyond a given threshold we are classifying data into outliers and not outliers.
+
+
+```{r fig4, out.width='80%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
+
+    knitr::include_graphics("figure/cutoff.png", error = FALSE)
+
+```
+  
 
 However, **if your data don’t follow the normal distribution, this approach might not be accurate.**
 
 Note that Z-scores can be misleading with small datasets because the maximum Z-score is limited to $\frac{n-1}{\sqrt{n}}$.
 
 Also, note that the outlier’s presence throws off the Z-scores because it inflates the mean and standard deviation as we saw earlier. Notice how all the Z-scores are negative except the outlier’s value. If we calculated Z-scores without the outlier, they’d be different! Be aware that if your dataset contains outliers, Z-values are biased such that they appear to be less extreme (i.e., closer to zero).
+
+## Z-Score pros:
+
+ - It is a very effective method if you can describe the values in the feature space with a gaussian distribution. (Parametric)
+ - The implementation is very easy using pandas and scipy.stats libraries.
+
+## Z-Score cons:
+ - It is only convenient to use in a low dimensional feature space, in a small to medium sized dataset.
+ - Is not recommended when distributions can not be assumed to be parametric.
+
 
 
 # Method 4: Using the Interquartile Range (IRQ) to Create Outlier Fences

@@ -87,9 +87,9 @@ When considering whether to remove an outlier, you’ll need to evaluate if it a
 # Causes for Outliers
 
 In broad strokes, there are three causes for outliers:
-  - data entry or measurement errors, 
+  - data entry (human errors) or measurement errors (instrument errors), 
   - sampling problems and unusual conditions, and 
-  - natural variation
+  - natural variation (not an error, novelties in data)
 
 ## Data Entry and Measurement Errors and Outliers
 
@@ -121,6 +121,28 @@ So, in summary, if the outlier in question is:
   
   - A **natural part of the population you are studying**, you should not remove it.
   
+# Types of Outliers
+
+Outliers can be of two kinds: **univariate** and **multivariate**. 
+
+  - **Univariate outliers** can be found when looking at a distribution of values in a single feature space. 
+  
+  - **Multivariate outliers** can be found in a n-dimensional space (of n-features). Looking at distributions in n-dimensional spaces can be very difficult for the human brain, that is why we need to train a model to do it for us.
+  
+Outliers can also come in different flavours, depending on the environment: `point outliers`, `contextual outliers`, or `collective outliers`. 
+
+  - **Point outliers** are single data points that lay far from the rest of the distribution. 
+
+  - **Contextual outliers** can be noise in data, such as punctuation symbols when realizing text analysis or background noise signal when doing speech recognition. 
+  
+  - **Collective outliers** can be subsets of novelties in data such as a signal that may indicate the discovery of new phenomena (As in figure B).
+  
+```{r fig2, out.width='70%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
+
+    knitr::include_graphics("figure/figureB.png", error = FALSE)
+
+```
+  
 
 # Philosophy about Finding Outliers
 
@@ -141,7 +163,7 @@ Additionally, the existence of outliers makes Z-scores less extreme. It’s iron
 
 In my view, the more formal statistical tests and calculations are **overkill** because they can’t definitively identify outliers. Ultimately, analysts must investigate unusual values and use their expertise to determine whether they are legitimate data points. Statistical procedures don’t know the subject matter or the data collection process and can’t make the final determination. You should not include or exclude an observation based entirely on the results of a hypothesis test or statistical measure.
 
-At this stage of the analysis, we’re only identifying potential outliers for further investigation. It’s just the first step in handling them. If we make errorrs, we want the errors on the side of investigating too many values rather than too few.
+At this stage of the analysis, we’re only identifying potential outliers for further investigation. It’s just the first step in handling them. If we make errors, we want the errors on the side of investigating too many values rather than too few.
 
 
 # General Rules

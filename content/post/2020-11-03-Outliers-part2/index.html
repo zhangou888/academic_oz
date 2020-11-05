@@ -1,33 +1,5 @@
----
-title: Outliers-Part 2:Finding Outliers in a univariated way
-author: Ou Zhang
-date: '2020-11-03'
-categories:
-  - R
-  - Statistics
-tags:
-  - R
-  - Statistics
-slug: outliers-part2
-draft: no
-lastmod: '2020-11-03T23:53:01-05:00'
-featured: no
-disable_jquery: no
-image:
-  caption: ''
-  focal_point: Smart
-  preview_only: no
-output:
-  blogdown::html_page:
-    toc: yes
-    number_sections: yes
-    toc_depth: 1
-    self_contained: no
-
----
-
-<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections/anchor-sections.js"></script>
+<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -59,8 +31,14 @@ Figure 0.1: Outliers
 <li>whether the tests you are going to perform on the dataset are robust to outliers or not, and</li>
 <li>how far is the outlier from other observations.</li>
 </ol>
-<p>Outlier detection methods can be divided between <code>univariate methods</code> and <code>multivariate methods</code> that usually for most of the current body of research. In this post, I am going to focus on the <code>univariate methods</code> first.</p>
-<p>Generally, there are 5 different methods to detect outliers <strong>univariately</strong>.</p>
+<p>In general, there are two different types of outliers- <strong>univariate</strong> and <strong>multivariate</strong> outliers.</p>
+<ul>
+<li>A <code>univariate outlier</code> is a data point that consists of an extreme value on <code>one variable</code>.</li>
+<li>A <code>multivariate outlier</code> is a combination of unusual scores on <code>at least two variables</code>.</li>
+</ul>
+<p>Because of the outlider different types, outlier detection methods can be divided between <code>univariate methods</code> and <code>multivariate methods</code> that usually for most of the current body of research.</p>
+<p>In this post, I am going to focus on the <code>univariate methods</code> only.</p>
+<p>Generally, there are 7 different types of methods to detect outliers <strong>univariately</strong>.</p>
 <div id="method-1-sorting-your-datasheet-to-find-outliers" class="section level1">
 <h1><span class="header-section-number">1</span> Method 1: Sorting Your Datasheet to Find Outliers</h1>
 <p>Sorting your datasheet is a simple but <code>effective</code> way to highlight unusual values. Simply sort your data sheet for each variable and then look for unusually high or low values.</p>
@@ -149,11 +127,12 @@ out_ind</code></pre>
 <p>With this information you can now easily go back to the specific rows in the dataset to verify them, or print all variables for these outliers. It is also possible to print the values of the outliers directly on the boxplot with the <code>mtext()</code> function:</p>
 <pre class="r"><code>dat[out_ind, ]</code></pre>
 <pre><code>## # A tibble: 3 x 11
-##   manufacturer model   displ  year   cyl trans   drv     cty   hwy fl    class  
-##   &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  
-## 1 volkswagen   jetta     1.9  1999     4 manual~ f        33    44 d     compact
-## 2 volkswagen   new be~   1.9  1999     4 manual~ f        35    44 d     subcom~
-## 3 volkswagen   new be~   1.9  1999     4 auto(l~ f        29    41 d     subcom~</code></pre>
+##   manufacturer model displ  year   cyl trans drv     cty   hwy
+##   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 volkswagen   jetta   1.9  1999     4 manu~ f        33    44
+## 2 volkswagen   new ~   1.9  1999     4 manu~ f        35    44
+## 3 volkswagen   new ~   1.9  1999     4 auto~ f        29    41
+## # ... with 2 more variables: fl &lt;chr&gt;, class &lt;chr&gt;</code></pre>
 <pre class="r"><code>boxplot(dat$hwy,
         ylab = &quot;hwy&quot;,
         main = &quot;Boxplot of highway miles per gallon&quot;)
@@ -198,19 +177,20 @@ outlier_ind</code></pre>
 <p>Alternatively, all variables for these outliers can be printed:</p>
 <pre class="r"><code>dat[outlier_ind, ]</code></pre>
 <pre><code>## # A tibble: 11 x 11
-##    manufacturer model    displ  year   cyl trans  drv     cty   hwy fl    class 
-##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; 
-##  1 dodge        dakota ~   4.7  2008     8 auto(~ 4         9    12 e     pickup
-##  2 dodge        durango~   4.7  2008     8 auto(~ 4         9    12 e     suv   
-##  3 dodge        ram 150~   4.7  2008     8 auto(~ 4         9    12 e     pickup
-##  4 dodge        ram 150~   4.7  2008     8 manua~ 4         9    12 e     pickup
-##  5 honda        civic      1.8  2008     4 auto(~ f        25    36 r     subco~
-##  6 honda        civic      1.8  2008     4 auto(~ f        24    36 c     subco~
-##  7 jeep         grand c~   4.7  2008     8 auto(~ 4         9    12 e     suv   
-##  8 toyota       corolla    1.8  2008     4 manua~ f        28    37 r     compa~
-##  9 volkswagen   jetta      1.9  1999     4 manua~ f        33    44 d     compa~
-## 10 volkswagen   new bee~   1.9  1999     4 manua~ f        35    44 d     subco~
-## 11 volkswagen   new bee~   1.9  1999     4 auto(~ f        29    41 d     subco~</code></pre>
+##    manufacturer model displ  year   cyl trans drv     cty   hwy
+##    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+##  1 dodge        dako~   4.7  2008     8 auto~ 4         9    12
+##  2 dodge        dura~   4.7  2008     8 auto~ 4         9    12
+##  3 dodge        ram ~   4.7  2008     8 auto~ 4         9    12
+##  4 dodge        ram ~   4.7  2008     8 manu~ 4         9    12
+##  5 honda        civic   1.8  2008     4 auto~ f        25    36
+##  6 honda        civic   1.8  2008     4 auto~ f        24    36
+##  7 jeep         gran~   4.7  2008     8 auto~ 4         9    12
+##  8 toyota       coro~   1.8  2008     4 manu~ f        28    37
+##  9 volkswagen   jetta   1.9  1999     4 manu~ f        33    44
+## 10 volkswagen   new ~   1.9  1999     4 manu~ f        35    44
+## 11 volkswagen   new ~   1.9  1999     4 auto~ f        29    41
+## # ... with 2 more variables: fl &lt;chr&gt;, class &lt;chr&gt;</code></pre>
 <p>There are <code>11</code> potential outliers according to the percentiles method. To reduce this number, you can set the percentiles to <code>1</code> and <code>99</code>:</p>
 <pre class="r"><code>lower_bound &lt;- quantile(dat$hwy, 0.01)
 upper_bound &lt;- quantile(dat$hwy, 0.99)
@@ -220,11 +200,12 @@ outlier_ind &lt;- which(dat$hwy &lt; lower_bound | dat$hwy &gt; upper_bound)
 # print out outlier data
 dat[outlier_ind, ]</code></pre>
 <pre><code>## # A tibble: 3 x 11
-##   manufacturer model   displ  year   cyl trans   drv     cty   hwy fl    class  
-##   &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  
-## 1 volkswagen   jetta     1.9  1999     4 manual~ f        33    44 d     compact
-## 2 volkswagen   new be~   1.9  1999     4 manual~ f        35    44 d     subcom~
-## 3 volkswagen   new be~   1.9  1999     4 auto(l~ f        29    41 d     subcom~</code></pre>
+##   manufacturer model displ  year   cyl trans drv     cty   hwy
+##   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt;
+## 1 volkswagen   jetta   1.9  1999     4 manu~ f        33    44
+## 2 volkswagen   new ~   1.9  1999     4 manu~ f        35    44
+## 3 volkswagen   new ~   1.9  1999     4 auto~ f        29    41
+## # ... with 2 more variables: fl &lt;chr&gt;, class &lt;chr&gt;</code></pre>
 </div>
 <div id="method-6-hampel-filter" class="section level1">
 <h1><span class="header-section-number">6</span> Method 6: Hampel filter</h1>
@@ -405,19 +386,23 @@ test</code></pre>
 ## [1] &quot;Rosner&#39;s Test for Outliers&quot;
 ## 
 ## $data
-##   [1]  29  29  31  30  26  26  27  26  25  28  27  25  25  25  25  24  25  23
-##  [19]  20  15  20  17  17  26  23  26  25  24  19  14  15  17  27  30 230  29
-##  [37]  26  24  24  22  22  24  24  17  22  21  23  23  19  18  17  17  19  19
-##  [55]  12  17  15  17  17  12  17  16  18  15  16  12  17  17  16  12  15  16
-##  [73]  17  15  17  17  18  17  19  17  19  19  17  17  17  16  16  17  15  17
-##  [91]  26  25  26  24  21  22  23  22  20  33  32  32  29  32  34  36  36  29
-## [109]  26  27  30  31  26  26  28  26  29  28  27  24  24  24  22  19  20  17
-## [127]  12  19  18  14  15  18  18  15  17  16  18  17  19  19  17  29  27  31
-## [145]  32  27  26  26  25  25  17  17  20  18  26  26  27  28  25  25  24  27
-## [163]  25  26  23  26  26  26  26  25  27  25  27  20  20  19  17  20  17  29
-## [181]  27  31  31  26  26  28  27  29  31  31  26  26  27  30  33  35  37  35
-## [199]  15  18  20  20  22  17  19  18  20  29  26  29  29  24  44  29  26  29
-## [217]  29  29  29  23  24  44  41  29  26  28  29  29  29  28  29  26  26  26
+##   [1]  29  29  31  30  26  26  27  26  25  28  27  25  25  25
+##  [15]  25  24  25  23  20  15  20  17  17  26  23  26  25  24
+##  [29]  19  14  15  17  27  30 230  29  26  24  24  22  22  24
+##  [43]  24  17  22  21  23  23  19  18  17  17  19  19  12  17
+##  [57]  15  17  17  12  17  16  18  15  16  12  17  17  16  12
+##  [71]  15  16  17  15  17  17  18  17  19  17  19  19  17  17
+##  [85]  17  16  16  17  15  17  26  25  26  24  21  22  23  22
+##  [99]  20  33  32  32  29  32  34  36  36  29  26  27  30  31
+## [113]  26  26  28  26  29  28  27  24  24  24  22  19  20  17
+## [127]  12  19  18  14  15  18  18  15  17  16  18  17  19  19
+## [141]  17  29  27  31  32  27  26  26  25  25  17  17  20  18
+## [155]  26  26  27  28  25  25  24  27  25  26  23  26  26  26
+## [169]  26  25  27  25  27  20  20  19  17  20  17  29  27  31
+## [183]  31  26  26  28  27  29  31  31  26  26  27  30  33  35
+## [197]  37  35  15  18  20  20  22  17  19  18  20  29  26  29
+## [211]  29  24  44  29  26  29  29  29  29  23  24  44  41  29
+## [225]  26  28  29  29  29  28  29  26  26  26
 ## 
 ## $data.name
 ## [1] &quot;dat$hwy&quot;
@@ -426,19 +411,27 @@ test</code></pre>
 ## [1] 0
 ## 
 ## $all.stats
-##   i   Mean.i      SD.i Value Obs.Num     R.i+1 lambda.i+1 Outlier
-## 1 0 24.31197 14.757587   230      35 13.937782   3.652091    TRUE
-## 2 1 23.42918  5.965086    44     213  3.448536   3.650836   FALSE
-## 3 2 23.34052  5.822073    44     222  3.548475   3.649575   FALSE
+##   i   Mean.i      SD.i Value Obs.Num     R.i+1 lambda.i+1
+## 1 0 24.31197 14.757587   230      35 13.937782   3.652091
+## 2 1 23.42918  5.965086    44     213  3.448536   3.650836
+## 3 2 23.34052  5.822073    44     222  3.548475   3.649575
+##   Outlier
+## 1    TRUE
+## 2   FALSE
+## 3   FALSE
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;gofOutlier&quot;</code></pre>
 <p>The interesting results are provided in the <code>$all.stats</code> table:</p>
 <pre class="r"><code>test$all.stats</code></pre>
-<pre><code>##   i   Mean.i      SD.i Value Obs.Num     R.i+1 lambda.i+1 Outlier
-## 1 0 24.31197 14.757587   230      35 13.937782   3.652091    TRUE
-## 2 1 23.42918  5.965086    44     213  3.448536   3.650836   FALSE
-## 3 2 23.34052  5.822073    44     222  3.548475   3.649575   FALSE</code></pre>
+<pre><code>##   i   Mean.i      SD.i Value Obs.Num     R.i+1 lambda.i+1
+## 1 0 24.31197 14.757587   230      35 13.937782   3.652091
+## 2 1 23.42918  5.965086    44     213  3.448536   3.650836
+## 3 2 23.34052  5.822073    44     222  3.548475   3.649575
+##   Outlier
+## 1    TRUE
+## 2   FALSE
+## 3   FALSE</code></pre>
 </div>
 <div id="challenges-of-using-outlier-hypothesis-tests-masking-and-swamping" class="section level2">
 <h2><span class="header-section-number">7.4</span> Challenges of Using Outlier Hypothesis Tests: <code>Masking</code> and <code>Swamping</code></h2>

@@ -76,8 +76,15 @@ Removing or keeping an outlier depends on
   (ii) whether the tests you are going to perform on the dataset are robust to outliers or not, and
   (iii) how far is the outlier from other observations.
 
-  
-Outlier detection methods can be divided between `univariate methods` and `multivariate methods` that usually for most of the current body of research. In this post, I am going to focus on the `univariate methods` only.
+In general, there are two different types of outliers- __univariate__ and __multivariate__ outliers.
+
+ - A `univariate outlier` is a data point that consists of an extreme value on `one variable`.
+ - A `multivariate outlier` is a combination of unusual scores on `at least two variables`. 
+
+Because of the outlider different types, outlier detection methods can be divided between `univariate methods` and `multivariate methods` that usually for most of the current body of research. 
+
+
+In this post, I am going to focus on the `univariate methods` only.
 
 Generally, there are 7 different types of methods to detect outliers **univariately**.
 

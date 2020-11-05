@@ -137,7 +137,7 @@ Outliers can also come in different flavours, depending on the environment: `poi
   
   - **Collective outliers** can be subsets of novelties in data such as a signal that may indicate the discovery of new phenomena (As in figure B).
   
-```{r fig2, out.width='70%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
+```{r fig2, out.width='60%', fig.align='center', fig.pos='h', fig.cap='',echo = FALSE}
 
     knitr::include_graphics("figure/figureB.png", error = FALSE)
 

@@ -1,33 +1,5 @@
----
-title: Outliers-Part 2:Finding Outliers in a univariated way
-author: Ou Zhang
-date: '2020-11-03'
-categories:
-  - R
-  - Statistics
-tags:
-  - R
-  - Statistics
-slug: outliers-part2
-draft: no
-lastmod: '2020-11-03T23:53:01-05:00'
-featured: no
-disable_jquery: no
-image:
-  caption: ''
-  focal_point: Smart
-  preview_only: no
-output:
-  blogdown::html_page:
-    toc: yes
-    number_sections: yes
-    toc_depth: 1
-    self_contained: no
-
----
-
-<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections/anchor-sections.js"></script>
+<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -498,8 +470,9 @@ test</code></pre>
 <h2><span class="header-section-number">7.4</span> Challenges of Using Outlier Hypothesis Tests: <code>Masking</code> and <code>Swamping</code></h2>
 <p>When performing an outlier test, you either need to choose a procedure based on the number of outliers or specify the number of outliers for a test. <code>Grubbs’ test</code> checks for only one outlier. However, other procedures, such as the <code>Tietjen-Moore Test</code>, require you to specify the number of outliers. That’s hard to do correctly! After all, you’re performing the test to find outliers! Masking and swamping are two problems that can occur when you specify the incorrect number of outliers in a dataset.</p>
 <ul>
-<li><p><code>Masking</code> occurs when you specify too few outliers. The additional outliers that exist can affect the test so that it detects no outliers. For example, if you specify one outlier when there are two, the test can miss both outliers.</p></li>
-<li><p>Conversely, <code>swamping</code> occurs when you specify too many outliers. In this case, the test identifies too many data points as being outliers. For example, if you specify two outliers when there is only one, the test might determine that there are two outliers.</p></li>
+<li><p><code>Masking</code> occurs when you specify <strong>too few</strong> outliers. It is said that one outlier masks a second outlier, if the second outlier can be considered as an outlier only by itself, but not in the presence of the first outlier. Thus, after the deletion of the first outlier the
+second instance is emerged as an outlier. The additional outliers that exist can affect the test so that it detects no outliers. For example, if you specify one outlier when there are two, the test can miss both outliers.</p></li>
+<li><p>Conversely, <code>swamping</code> occurs when you specify too many outliers. It is said that one outlier swamps a second observation, if the latter can be considered as an outlier only under the presence of the first one. In other words, after the deletion of the first outlier the second observation becomes a non-outlying observation.In this case, the test identifies too many data points as being outliers. For example, if you specify two outliers when there is only one, the test might determine that there are two outliers.</p></li>
 </ul>
 <p>Note: Some of the contents are originally from Jim Frost’s and Antoine Soetewey online tutorials. If you are interested in, you can find both online tutorials below.</p>
 <p><a href="https://statisticsbyjim.com/basics/outliers/#:~:text=Note%20that%20Z%2Dscores%20can,cutoff%20value%20of%20%2B%2F%2D3">Jim Frost</a></p>

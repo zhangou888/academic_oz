@@ -1,37 +1,9 @@
----
-title: Outliers-Part 1:Causes, Philosophy and General Rules
-author: Ou Zhang
-date: '2020-11-02'
-categories:
-  - R
-  - Statistics
-tags:
-  - R
-  - Statistics
-slug: outliers-part1
-draft: no
-lastmod: '2020-11-02T23:53:01-05:00'
-featured: no
-disable_jquery: no
-image:
-  caption: ''
-  focal_point: Smart
-  preview_only: no
-output:
-  blogdown::html_page:
-    toc: yes
-    number_sections: yes
-    toc_depth: 1
-    self_contained: no
-
----
-
-<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections/anchor-sections.js"></script>
+<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
-<li><a href="#brief-introduction"><span class="toc-section-number">1</span> Brief Introduction</a></li>
+<li><a href="#what-are-outliers"><span class="toc-section-number">1</span> What are Outliers?</a></li>
 <li><a href="#causes-for-outliers"><span class="toc-section-number">2</span> Causes for Outliers</a></li>
 <li><a href="#types-of-outliers"><span class="toc-section-number">3</span> Types of Outliers</a></li>
 <li><a href="#philosophy-about-finding-outliers"><span class="toc-section-number">4</span> Philosophy about Finding Outliers</a></li>
@@ -52,10 +24,20 @@ Figure 0.1: Outliers
 </ol>
 <p>At that moment, I can only remember what my former boss told me: <em>“plot a regression line, and draw an ellipse around the line. Then all the data dots outside that ellipse area are treated as outliers”</em>. After hearing my answer, it was a deadly silence from the other end of the phone line. And that moment becomes <strong>one of the most embarrassing moment</strong> in my life.</p>
 <p>Because of this <code>cannot-forget-memory</code>, I decide to spend some time to learn everything about outliers and I won’t experience that awkward moment again when someone ask me about what are outliers.</p>
-<div id="brief-introduction" class="section level1">
-<h1><span class="header-section-number">1</span> Brief Introduction</h1>
-<p><strong>Outliers</strong> can be very informative about the subject-area and data collection process.
-It’s essential to understand how outliers occur and whether they might happen again as a normal part of the process or study area.</p>
+<div id="what-are-outliers" class="section level1">
+<h1><span class="header-section-number">1</span> What are Outliers?</h1>
+<p>In a very general way, <code>outliers</code> are outliers with respect to <strong>“something.”</strong> The discussions I have read about outliers seem to avoid dealing with the fact that there are <code>two steps</code> in outlier detection:</p>
+<ol style="list-style-type: decimal">
+<li>Defining what it means to be an outlier and then,</li>
+<li>identifying the outliers.</li>
+</ol>
+<p>Step 2 is easy. Step 1 is <strong>hard</strong> because it means one has to <strong>commit</strong>, not because it is technically difficult.</p>
+<p><strong>Can anyone define “outlier” in an absolute manner?</strong> beyond <em>“a value that is highly unlikely given an assumed distribution.”</em></p>
+<ul>
+<li><p>What is the <code>mental model</code> behind stating that an observation is an outlier??</p></li>
+<li><p>Is there a single model for all situations? Probably not.</p></li>
+</ul>
+<p>Because of these situations, <strong>Outliers</strong> can be very informative about the subject-area and data collection process. It’s essential to understand how outliers occur and whether they might happen again as a normal part of the process or study area.</p>
 <p>Sometimes it’s best to keep outliers in the data. They can capture valuable information that is part of your study area. Retaining these points can be hard, particularly when it reduces statistical significance! However, excluding extreme values solely due to their extremeness can distort the results by removing information about the variability inherent in the study area. You’re forcing the subject area to appear less variable than it is in reality.</p>
 <p>Unfortunately, resisting the temptation to remove outliers inappropriately can be difficult. Outliers increase the variability in your data, which decreases statistical power.</p>
 <p>Consequently, <strong>excluding outliers can cause your results to become statistically significant.</strong></p>
@@ -109,12 +91,16 @@ It’s essential to understand how outliers occur and whether they might happen 
 <div id="philosophy-about-finding-outliers" class="section level1">
 <h1><span class="header-section-number">4</span> Philosophy about Finding Outliers</h1>
 <p>Outlier detection methods have been suggested for numerous applications,
-such as <strong>credit card fraud detection</strong>, <strong>clinical trials</strong>, <strong>voting irregularity analysis</strong>,<strong>data cleansing</strong>, <strong>network intrusion</strong>, <strong>severe weather prediction</strong>, <strong>geographic information systems, athlete performance analysis, and other data-mining tasks</strong>.</p>
+such as credit card fraud detection, clinical trials, voting irregularity analysis,data cleansing, network intrusion, severe weather prediction, geographic information systems, athlete performance analysis, and other data-mining tasks.</p>
 <p>As you saw, there are many ways to identify outliers. The philosophy is that <strong>you must use your in-depth knowledge about all the variables when analyzing data.</strong> Part of this knowledge is knowing what values are typical, unusual, and impossible.</p>
 <p>When you have this in-depth knowledge, it’s best to use the more straightforward, <strong>visual methods</strong>.</p>
 <p>At a glance, data points that are potential outliers will pop out under your knowledgeable gaze. Consequently, I’ll often use <strong>boxplots</strong>, <strong>histograms</strong>, and old-fashioned <strong>data sorting</strong> These simple tools provide enough information to find unusual data points for further investigation.</p>
 <p>Typically, I don’t highly recommend <strong>Z-scores</strong> and <strong>hypothesis tests</strong> to find outliers because of their various complications. But I will introduce a couple of hypothesis tests to detect outliers in the later posts.</p>
-<p>As you already know, using outlier tests can be challenging because they usually assume your data 1) follow the <strong>normal distribution</strong>, and then 2) there might be possible <strong>masking</strong> and <strong>swamping</strong>.</p>
+<p>As you already know, using outlier tests can be <strong>challenging</strong> because they usually assume your data:</p>
+<ol style="list-style-type: decimal">
+<li>follow the <strong>normal distribution</strong>, and then</li>
+<li>there might be possible <strong>masking</strong> and <strong>swamping</strong>.</li>
+</ol>
 <p>Additionally, the existence of outliers makes Z-scores less extreme. It’s ironic, but these methods for identifying outliers are actually sensitive to the presence of outliers! Fortunately, as long as researchers use a simple method to display unusual values, a knowledgeable analyst is likely to know which values need further investigation.</p>
 <p>In my view, the more formal statistical tests and calculations are <strong>overkill</strong> because they can’t definitively identify outliers. Ultimately, analysts must investigate unusual values and use their expertise to determine whether they are legitimate data points. Statistical procedures don’t know the subject matter or the data collection process and can’t make the final determination. You should not include or exclude an observation based entirely on the results of a hypothesis test or statistical measure.</p>
 <p>At this stage of the analysis, we’re only identifying potential outliers for further investigation. It’s just the first step in handling them. If we make errors, we want the errors on the side of investigating too many values rather than too few.</p>

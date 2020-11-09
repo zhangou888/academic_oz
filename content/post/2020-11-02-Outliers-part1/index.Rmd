@@ -71,10 +71,24 @@ At that moment, I can only remember what my former boss told me: _"plot a regres
 
 Because of this `cannot-forget-memory`, I decide to spend some time to learn everything about outliers and I won't experience that awkward moment again when someone ask me about what are outliers.
 
-# Brief Introduction
+# What are Outliers?
 
-**Outliers** can be very informative about the subject-area and data collection process. 
-It’s essential to understand how outliers occur and whether they might happen again as a normal part of the process or study area. 
+In a very general way, `outliers` are outliers with respect to **"something."** The discussions I have read about outliers seem to avoid dealing with the fact that there are `two steps` in outlier detection: 
+
+  1. Defining what it means to be an outlier and then,
+  2. identifying the outliers.  
+  
+Step 2 is easy. Step 1 is **hard** because it means one has to **commit**, not because it is technically difficult. 
+
+**Can anyone define "outlier" in an absolute manner?** beyond _"a value that is highly unlikely given an assumed distribution."_ 
+
+
+ - What is the `mental model` behind stating that an observation is an outlier?? 
+
+ - Is there a single model for all situations? Probably not. 
+ 
+
+Because of these situations, **Outliers** can be very informative about the subject-area and data collection process. It’s essential to understand how outliers occur and whether they might happen again as a normal part of the process or study area. 
 
 Sometimes it’s best to keep outliers in the data. They can capture valuable information that is part of your study area. Retaining these points can be hard, particularly when it reduces statistical significance! However, excluding extreme values solely due to their extremeness can distort the results by removing information about the variability inherent in the study area. You’re forcing the subject area to appear less variable than it is in reality.
 
@@ -147,7 +161,7 @@ Outliers can also come in different flavours, depending on the environment: `poi
 # Philosophy about Finding Outliers
 
 Outlier detection methods have been suggested for numerous applications,
-such as **credit card fraud detection**, **clinical trials**, **voting irregularity analysis**,**data cleansing**, **network intrusion**, **severe weather prediction**, **geographic information systems, athlete performance analysis, and other data-mining tasks**.
+such as credit card fraud detection, clinical trials, voting irregularity analysis,data cleansing, network intrusion, severe weather prediction, geographic information systems, athlete performance analysis, and other data-mining tasks.
 
 As you saw, there are many ways to identify outliers. The philosophy is that **you must use your in-depth knowledge about all the variables when analyzing data.** Part of this knowledge is knowing what values are typical, unusual, and impossible.
 
@@ -157,7 +171,10 @@ At a glance, data points that are potential outliers will pop out under your kno
 
 Typically, I don’t highly recommend **Z-scores** and **hypothesis tests** to find outliers because of their various complications. But I will introduce a couple of hypothesis tests to detect outliers in the later posts. 
 
-As you already know, using outlier tests can be challenging because they usually assume your data 1) follow the **normal distribution**, and then 2) there might be possible **masking** and **swamping**. 
+As you already know, using outlier tests can be **challenging** because they usually assume your data:
+
+  1) follow the **normal distribution**, and then 
+  2) there might be possible **masking** and **swamping**. 
 
 Additionally, the existence of outliers makes Z-scores less extreme. It’s ironic, but these methods for identifying outliers are actually sensitive to the presence of outliers! Fortunately, as long as researchers use a simple method to display unusual values, a knowledgeable analyst is likely to know which values need further investigation.
 

@@ -1,0 +1,88 @@
+---
+title: Outliers-Part 3:Outliers in Regression
+author: Ou Zhang
+date: '2020-11-09'
+categories:
+  - R
+  - Statistics
+tags:
+  - R
+  - Statistics
+slug: outliers-part3
+draft: no
+lastmod: '2020-11-03T23:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: Smart
+  preview_only: no
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 1
+    self_contained: no
+
+---
+
+```{r set-global-options, echo = FALSE}
+knitr::opts_chunk$set(eval = TRUE, 
+                      echo = TRUE, 
+                      cache = FALSE,
+                      include = TRUE,
+                      collapse = FALSE,
+                      dependson = NULL,
+                      engine = "R", # Chunks will always have R code, unless noted
+                      error = TRUE,
+                      # root.dir = "C:/Users/uzhanou/Documents/R/markdown/Serena/",
+                      fig.path = "figure/",  # Set the figure options
+                      fig.align = "center", 
+                      fig.width = 6,
+                      fig.height = 6)
+```
+
+```{r silent-packages, echo = FALSE, eval = TRUE, message=FALSE, include = FALSE}
+## Step 2: load required packages 
+packages <- c("tidyverse","mlbench","ggplot2","mice","Hmisc","DMwR",
+              "rpart","mice","outliers", "knitr","EnvStats","mvoutlier",
+              "robustbase")
+packages <- lapply(packages, FUN = function(x) {
+  if (!require(x, character.only = TRUE)) {
+    install.packages(x)
+    library(x, character.only = TRUE)
+  }  
+})
+
+```
+
+```{r fig1, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
+
+    knitr::include_graphics("figure/The-outlier-6001.gif", error = FALSE)
+
+```
+
+In the previous blog post, we've discussed the philosophy of outliers [part 1](/2020/11/02/outliers-part1/) and outlier detection univariate methods [part 2](/2020/11/03/outliers-part2/). In this 3rd post, we are going to discuss more technical details of the outlier detection in regression. 
+
+
+
+
+
+Note: Some of the contents are originally from Dagmar Blatná's and William G. Jacoby tutorials. If you are interested in, you can find both online tutorials below.
+
+[Dagmar Blatná](https://statisticsbyjim.com/basics/outliers/#:~:text=Note%20that%20Z%2Dscores%20can,cutoff%20value%20of%20%2B%2F%2D3)
+
+[William G. Jacoby](http://www.ncwebcenter.com/Data-Transformation.pdf)
+
+
+-- To be Continued
+
+
+
+
+
+
+
+
+
+

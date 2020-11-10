@@ -10,7 +10,7 @@ tags:
   - Statistics
 slug: outliers-part3
 draft: no
-lastmod: '2020-11-03T23:53:01-05:00'
+lastmod: '2020-11-09T23:53:01-05:00'
 featured: no
 disable_jquery: no
 image:
@@ -62,7 +62,7 @@ packages <- lapply(packages, FUN = function(x) {
 
 ```
 
-In the previous blog post, we've discussed the philosophy of outliers [part 1](/2020/11/02/outliers-part1/) and outlier detection univariate methods [part 2](/2020/11/03/outliers-part2/). In this 3rd post, we are going to discuss more technical details of the outlier detection in regression. 
+<!-- In the previous blog post, we've discussed the philosophy of outliers [part 1](/2020/11/02/outliers-part1/) and outlier detection univariate methods [part 2](/2020/11/03/outliers-part2/). In this 3rd post, we are going to discuss more technical details of the outlier detection in regression.  -->
 
 
 

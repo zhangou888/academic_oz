@@ -1,5 +1,33 @@
-<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
+---
+title: Outliers-Part 3:Outliers in Regression
+author: Ou Zhang
+date: '2020-11-09'
+categories:
+  - R
+  - Statistics
+tags:
+  - R
+  - Statistics
+slug: outliers-part3
+draft: no
+lastmod: '2020-11-09T23:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: Smart
+  preview_only: no
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 4
+    self_contained: no
+
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -14,10 +42,14 @@
 <li><a href="#a-scatter-plot-with-confidence-ellipse"><span class="toc-section-number">2.1.1</span> A scatter plot with Confidence Ellipse</a></li>
 </ul></li>
 <li><a href="#numerical-diagnostics"><span class="toc-section-number">2.2</span> Numerical diagnostics</a><ul>
-<li><a href="#studentized-residuals"><span class="toc-section-number">2.2.1</span> Studentized Residuals</a></li>
+<li><a href="#studentized-residuals"><span class="toc-section-number">2.2.1</span> Studentized Residuals</a><ul>
+<li><a href="#rule-of-thumb"><span class="toc-section-number">2.2.1.1</span> Rule of Thumb</a></li>
+</ul></li>
 <li><a href="#robust-distance"><span class="toc-section-number">2.2.2</span> Robust Distance</a></li>
 <li><a href="#mahalanobis-distance"><span class="toc-section-number">2.2.3</span> Mahalanobis Distance</a></li>
-<li><a href="#hat-matrix"><span class="toc-section-number">2.2.4</span> Hat Matrix</a></li>
+<li><a href="#hat-matrix"><span class="toc-section-number">2.2.4</span> Hat Matrix</a><ul>
+<li><a href="#rule-of-thumb-1"><span class="toc-section-number">2.2.4.1</span> Rule of Thumb</a></li>
+</ul></li>
 <li><a href="#cooks-distance"><span class="toc-section-number">2.2.5</span> Cook’s Distance</a></li>
 <li><a href="#dfits"><span class="toc-section-number">2.2.6</span> DFITS</a></li>
 </ul></li>

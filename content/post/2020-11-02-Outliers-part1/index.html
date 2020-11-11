@@ -1,33 +1,5 @@
----
-title: Outliers-Part 1:Causes, Philosophy and General Rules
-author: Ou Zhang
-date: '2020-11-02'
-categories:
-  - R
-  - Statistics
-tags:
-  - R
-  - Statistics
-slug: outliers-part1
-draft: no
-lastmod: '2020-11-02T23:53:01-05:00'
-featured: no
-disable_jquery: no
-image:
-  caption: ''
-  focal_point: Smart
-  preview_only: no
-output:
-  blogdown::html_page:
-    toc: yes
-    number_sections: yes
-    toc_depth: 1
-    self_contained: no
-
----
-
-<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections/anchor-sections.js"></script>
+<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -50,8 +22,7 @@ Figure 0.1: Outliers
 <li>What are outliers?</li>
 <li>How to detect them?</li>
 </ol>
-<p>At that moment, I can only remember what my former boss told me: <em>“plot a regression line, and draw an ellipse around the line. Then all the data dots outside that ellipse area are treated as outliers”</em>. After hearing my answer, it was a deadly silence from the other end of the phone line. And that moment becomes <strong>one of the most embarrassing moment</strong> in my life.</p>
-<p>Because of this <code>cannot-forget-memory</code>, I decide to spend some time to learn everything about outliers and I won’t experience that awkward moment again when someone ask me about what are outliers.</p>
+<p>Also in my daily research life, I have encountered noisy data all the time. Data clean-up and outlier detection become two of most important assignments in my work. These blog series display what I’ve learned and experiences I had in the process of outlier detection.</p>
 <div id="what-are-outliers" class="section level1">
 <h1><span class="header-section-number">1</span> What are Outliers?</h1>
 <p>In a very general way, <code>outliers</code> are outliers with respect to <strong>“something.”</strong> The discussions I have read about outliers seem to avoid dealing with the fact that there are <code>two steps</code> in outlier detection:</p>

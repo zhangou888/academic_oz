@@ -67,7 +67,7 @@ packages <- lapply(packages, FUN = function(x) {
    1. What are outliers?
    2. How to detect them?
 
-Also in my daily research life, I've encountered noisy data all the time. Data clean-up and outlier detection become two of most important assignments in my work. These blog series display what I've learned and experiences I had in the process of outlier detection.
+Also in my daily research life, I have encountered noisy data all the time. Data clean-up and outlier detection become two of most important assignments in my work. These blog series display what I've learned and experiences I had in the process of outlier detection.
 
 # What are Outliers?
 

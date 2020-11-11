@@ -56,7 +56,7 @@ packages <- lapply(packages, FUN = function(x) {
 ```
 
 
-```{r fig1, out.width='50%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
+```{r fig1, out.width='40%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
 
     knitr::include_graphics("figure/outlier.gif", error = FALSE)
 

@@ -21,7 +21,7 @@ output:
   blogdown::html_page:
     toc: yes
     number_sections: yes
-    toc_depth: 1
+    toc_depth: 3
     self_contained: no
 
 ---
@@ -56,7 +56,7 @@ packages <- lapply(packages, FUN = function(x) {
 
 ```
 
-```{r fig1, out.width='60%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
+```{r fig1, out.width='40%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
 
     knitr::include_graphics("figure/tenor.gif", error = FALSE)
 
@@ -192,7 +192,6 @@ ggplot(data.frame(los), aes(x = "", y = los)) +
 ```
 
 
-
 # Method 3: Using Z-scores to Detect Outliers
 
 Z-scores can quantify the unusualness of an observation when your data follow the normal distribution. Z-scores are the number of standard deviations above and below the mean that each value falls.
@@ -324,6 +323,43 @@ outlier_ind <- which(dat$hwy < lower_bound | dat$hwy > upper_bound)
 dat[outlier_ind, ]
 
 ```
+## scores function from {outliers} packages
+`outliers::scores` function calculates normal, t, chi-squared, IQR and MAD scores of given data. There are two aspects to the scores() function. 
+
+  1) it compute the normalized scores based on "z", "t", "chisq" etc
+  2) it finds out observations that lie beyond a given percentile based on a given score.
+  
+The example below displays the `scores` function to identify **outliers** outside the pre-defined percentile cutoffs. 
+  
+```{r scores}
+
+# generate data
+set.seed(1234)
+x = rnorm(10)
+
+# z-scores => (x-mean)/sd
+outliers::scores(x)
+
+# chi-sq scores => (x - mean(x))^2/var(x)
+outliers::scores(x, type="chisq")
+
+
+# t scores
+outliers::scores(x, type="t")
+
+# beyond 90th %ile based on chi-sq distribution (TRUE, FALSE)
+outliers::scores(x, type="chisq", prob=0.9)    
+
+# beyond 95th %ile based on chi-sq distribution (TRUE, FALSE)
+outliers::scores(x, type="chisq", prob=0.95)
+
+# beyond 95th %ile based on z-scores
+outliers::scores(x, type="z", prob=0.95)
+
+# beyond 95th %ile based on t-scores
+outliers::scores(x, type="t", prob=0.95)      
+
+```
 
 # Method 6: Hampel filter
 Another method, known as Hampel filter, consists of considering as outliers the values outside the interval($I$) formed by the `median`, plus or minus `3 median absolute deviations` ($MAD$): (default as 3, could be different)
@@ -356,7 +392,6 @@ outlier_ind
 According to the Hampel filter, there is no potential outlier for the `hwy` variable.
 
 # Method 7: Finding Outliers with Hypothesis Tests
-
 You can use hypothesis tests to find outliers. Many outlier tests exist, but I’ll focus on one to illustrate how they work. In this post, 3 more formal techniques to detect outliers:
 
  - Grubbs’s test
@@ -368,7 +403,6 @@ These 3 statistical tests are part of more formal techniques of outliers detecti
 Note that the 3 tests are appropriate only when the data (without any outliers) are **approximately normally distributed**. The normality assumption must thus be verified before applying these tests for outliers.
 
 ## Grubbs' test
-
 The Grubbs test allows to detect whether the highest or lowest value in a dataset is an outlier.
 
 The Grubbs test detects one outlier at a time (highest or lowest value), so the null and alternative hypotheses are as follows.
@@ -421,7 +455,6 @@ test
 The p-value is `< 0.001`. At the `5%` significance level, we conclude that the highest value 230 is an outlier.
 
 ## Dixon’s test
-
 Similar to the Grubbs test, Dixon test is used to test whether a single low or high value is an outlier. So if more than one outliers is suspected, the test has to be performed on these suspected outliers individually.
 
 Note that- Dixon test is most useful for small sample size (usually $n\leq25$).
@@ -468,7 +501,6 @@ test
 The results show that the second lowest value 20 is not an outlier (_p_-value = 0.13).
 
 ## Rosner’s test
-
 Rosner’s test for outliers has the advantages that:
 
   1. it is used to detect several outliers at once (unlike `Grubbs` and `Dixon test` which must be performed iteratively to screen for multiple outliers), and
@@ -497,7 +529,6 @@ test$all.stats
 ```
 
 ## Challenges of Using Outlier Hypothesis Tests: `Masking` and `Swamping`
-
 When performing an outlier test, you either need to choose a procedure based on the number of outliers or specify the number of outliers for a test. `Grubbs’ test` checks for only one outlier. However, other procedures, such as the `Tietjen-Moore Test`, require you to specify the number of outliers. That’s hard to do correctly! After all, you’re performing the test to find outliers! Masking and swamping are two problems that can occur when you specify the incorrect number of outliers in a dataset.
 
  - `Masking` occurs when you specify **too few** outliers. It is said that one outlier masks a second outlier, if the second outlier can be considered as an outlier only by itself, but not in the presence of the first outlier. Thus, after the deletion of the first outlier the

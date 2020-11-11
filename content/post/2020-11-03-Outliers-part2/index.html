@@ -4,17 +4,32 @@
 <div id="TOC">
 <ul>
 <li><a href="#method-1-sorting-your-datasheet-to-find-outliers"><span class="toc-section-number">1</span> Method 1: Sorting Your Datasheet to Find Outliers</a></li>
-<li><a href="#method-2-graphing-your-data-to-identify-outliers"><span class="toc-section-number">2</span> Method 2: Graphing Your Data to Identify Outliers</a></li>
-<li><a href="#method-3-using-z-scores-to-detect-outliers"><span class="toc-section-number">3</span> Method 3: Using Z-scores to Detect Outliers</a></li>
+<li><a href="#method-2-graphing-your-data-to-identify-outliers"><span class="toc-section-number">2</span> Method 2: Graphing Your Data to Identify Outliers</a><ul>
+<li><a href="#histogram"><span class="toc-section-number">2.1</span> Histogram</a></li>
+<li><a href="#boxplot"><span class="toc-section-number">2.2</span> Boxplot</a><ul>
+<li><a href="#adjusted-boxplot-hubert-and-vandervieren-2008"><span class="toc-section-number">2.2.1</span> Adjusted boxplot (Hubert and Vandervieren, 2008)</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#method-3-using-z-scores-to-detect-outliers"><span class="toc-section-number">3</span> Method 3: Using Z-scores to Detect Outliers</a><ul>
+<li><a href="#z-score-pros"><span class="toc-section-number">3.1</span> Z-Score pros:</a></li>
+<li><a href="#z-score-cons"><span class="toc-section-number">3.2</span> Z-Score cons:</a></li>
+</ul></li>
 <li><a href="#method-4-using-the-interquartile-range-irq-to-create-outlier-fences"><span class="toc-section-number">4</span> Method 4: Using the Interquartile Range (IRQ) to Create Outlier Fences</a></li>
-<li><a href="#method-5-percentiles"><span class="toc-section-number">5</span> Method 5: Percentiles</a></li>
+<li><a href="#method-5-percentiles"><span class="toc-section-number">5</span> Method 5: Percentiles</a><ul>
+<li><a href="#scores-function-from-outliers-packages"><span class="toc-section-number">5.1</span> scores function from {outliers} packages</a></li>
+</ul></li>
 <li><a href="#method-6-hampel-filter"><span class="toc-section-number">6</span> Method 6: Hampel filter</a></li>
-<li><a href="#method-7-finding-outliers-with-hypothesis-tests"><span class="toc-section-number">7</span> Method 7: Finding Outliers with Hypothesis Tests</a></li>
+<li><a href="#method-7-finding-outliers-with-hypothesis-tests"><span class="toc-section-number">7</span> Method 7: Finding Outliers with Hypothesis Tests</a><ul>
+<li><a href="#grubbs-test"><span class="toc-section-number">7.1</span> Grubbs’ test</a></li>
+<li><a href="#dixons-test"><span class="toc-section-number">7.2</span> Dixon’s test</a></li>
+<li><a href="#rosners-test"><span class="toc-section-number">7.3</span> Rosner’s test</a></li>
+<li><a href="#challenges-of-using-outlier-hypothesis-tests-masking-and-swamping"><span class="toc-section-number">7.4</span> Challenges of Using Outlier Hypothesis Tests: <code>Masking</code> and <code>Swamping</code></a></li>
+</ul></li>
 </ul>
 </div>
 
 <div class="figure" style="text-align: center"><span id="fig:fig1"></span>
-<img src="figure/tenor.gif" alt="Outliers" width="60%" />
+<img src="figure/tenor.gif" alt="Outliers" width="40%" />
 <p class="caption">
 Figure 0.1: Outliers
 </p>
@@ -175,11 +190,12 @@ out_ind</code></pre>
 <p>With this information you can now easily go back to the specific rows in the dataset to verify them, or print all variables for these outliers. It is also possible to print the values of the outliers directly on the boxplot with the <code>mtext()</code> function:</p>
 <pre class="r"><code>dat[out_ind, ]</code></pre>
 <pre><code>## # A tibble: 3 x 11
-##   manufacturer model   displ  year   cyl trans   drv     cty   hwy fl    class  
-##   &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  
-## 1 volkswagen   jetta     1.9  1999     4 manual~ f        33    44 d     compact
-## 2 volkswagen   new be~   1.9  1999     4 manual~ f        35    44 d     subcom~
-## 3 volkswagen   new be~   1.9  1999     4 auto(l~ f        29    41 d     subcom~</code></pre>
+##   manufacturer model displ  year   cyl trans drv     cty   hwy fl   
+##   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
+## 1 volkswagen   jetta   1.9  1999     4 manu~ f        33    44 d    
+## 2 volkswagen   new ~   1.9  1999     4 manu~ f        35    44 d    
+## 3 volkswagen   new ~   1.9  1999     4 auto~ f        29    41 d    
+## # ... with 1 more variable: class &lt;chr&gt;</code></pre>
 <pre class="r"><code>boxplot(dat$hwy,
         ylab = &quot;hwy&quot;,
         main = &quot;Boxplot of highway miles per gallon&quot;)
@@ -224,19 +240,20 @@ outlier_ind</code></pre>
 <p>Alternatively, all variables for these outliers can be printed:</p>
 <pre class="r"><code>dat[outlier_ind, ]</code></pre>
 <pre><code>## # A tibble: 11 x 11
-##    manufacturer model    displ  year   cyl trans  drv     cty   hwy fl    class 
-##    &lt;chr&gt;        &lt;chr&gt;    &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; 
-##  1 dodge        dakota ~   4.7  2008     8 auto(~ 4         9    12 e     pickup
-##  2 dodge        durango~   4.7  2008     8 auto(~ 4         9    12 e     suv   
-##  3 dodge        ram 150~   4.7  2008     8 auto(~ 4         9    12 e     pickup
-##  4 dodge        ram 150~   4.7  2008     8 manua~ 4         9    12 e     pickup
-##  5 honda        civic      1.8  2008     4 auto(~ f        25    36 r     subco~
-##  6 honda        civic      1.8  2008     4 auto(~ f        24    36 c     subco~
-##  7 jeep         grand c~   4.7  2008     8 auto(~ 4         9    12 e     suv   
-##  8 toyota       corolla    1.8  2008     4 manua~ f        28    37 r     compa~
-##  9 volkswagen   jetta      1.9  1999     4 manua~ f        33    44 d     compa~
-## 10 volkswagen   new bee~   1.9  1999     4 manua~ f        35    44 d     subco~
-## 11 volkswagen   new bee~   1.9  1999     4 auto(~ f        29    41 d     subco~</code></pre>
+##    manufacturer model displ  year   cyl trans drv     cty   hwy fl   
+##    &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
+##  1 dodge        dako~   4.7  2008     8 auto~ 4         9    12 e    
+##  2 dodge        dura~   4.7  2008     8 auto~ 4         9    12 e    
+##  3 dodge        ram ~   4.7  2008     8 auto~ 4         9    12 e    
+##  4 dodge        ram ~   4.7  2008     8 manu~ 4         9    12 e    
+##  5 honda        civic   1.8  2008     4 auto~ f        25    36 r    
+##  6 honda        civic   1.8  2008     4 auto~ f        24    36 c    
+##  7 jeep         gran~   4.7  2008     8 auto~ 4         9    12 e    
+##  8 toyota       coro~   1.8  2008     4 manu~ f        28    37 r    
+##  9 volkswagen   jetta   1.9  1999     4 manu~ f        33    44 d    
+## 10 volkswagen   new ~   1.9  1999     4 manu~ f        35    44 d    
+## 11 volkswagen   new ~   1.9  1999     4 auto~ f        29    41 d    
+## # ... with 1 more variable: class &lt;chr&gt;</code></pre>
 <p>There are <code>11</code> potential outliers according to the percentiles method. To reduce this number, you can set the percentiles to <code>1</code> and <code>99</code>:</p>
 <pre class="r"><code>lower_bound &lt;- quantile(dat$hwy, 0.01)
 upper_bound &lt;- quantile(dat$hwy, 0.99)
@@ -246,11 +263,49 @@ outlier_ind &lt;- which(dat$hwy &lt; lower_bound | dat$hwy &gt; upper_bound)
 # print out outlier data
 dat[outlier_ind, ]</code></pre>
 <pre><code>## # A tibble: 3 x 11
-##   manufacturer model   displ  year   cyl trans   drv     cty   hwy fl    class  
-##   &lt;chr&gt;        &lt;chr&gt;   &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  
-## 1 volkswagen   jetta     1.9  1999     4 manual~ f        33    44 d     compact
-## 2 volkswagen   new be~   1.9  1999     4 manual~ f        35    44 d     subcom~
-## 3 volkswagen   new be~   1.9  1999     4 auto(l~ f        29    41 d     subcom~</code></pre>
+##   manufacturer model displ  year   cyl trans drv     cty   hwy fl   
+##   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
+## 1 volkswagen   jetta   1.9  1999     4 manu~ f        33    44 d    
+## 2 volkswagen   new ~   1.9  1999     4 manu~ f        35    44 d    
+## 3 volkswagen   new ~   1.9  1999     4 auto~ f        29    41 d    
+## # ... with 1 more variable: class &lt;chr&gt;</code></pre>
+<div id="scores-function-from-outliers-packages" class="section level2">
+<h2><span class="header-section-number">5.1</span> scores function from {outliers} packages</h2>
+<p><code>outliers::scores</code> function calculates normal, t, chi-squared, IQR and MAD scores of given data. There are two aspects to the scores() function.</p>
+<ol style="list-style-type: decimal">
+<li>it compute the normalized scores based on “z”, “t”, “chisq” etc</li>
+<li>it finds out observations that lie beyond a given percentile based on a given score.</li>
+</ol>
+<p>The example below displays the <code>scores</code> function to identify <strong>outliers</strong> outside the pre-defined percentile cutoffs.</p>
+<pre class="r"><code># generate data
+set.seed(1234)
+x = rnorm(10)
+
+# z-scores =&gt; (x-mean)/sd
+outliers::scores(x)</code></pre>
+<pre><code>##  [1] -0.8273937  0.6633811  1.4738069 -1.9708424  0.8157183  0.8929749
+##  [7] -0.1923930 -0.1641660 -0.1820615 -0.5090247</code></pre>
+<pre class="r"><code># chi-sq scores =&gt; (x - mean(x))^2/var(x)
+outliers::scores(x, type=&quot;chisq&quot;)</code></pre>
+<pre><code>##  [1] 0.68458034 0.44007451 2.17210689 3.88421971 0.66539631 0.79740421
+##  [7] 0.03701507 0.02695047 0.03314640 0.25910611</code></pre>
+<pre class="r"><code># t scores
+outliers::scores(x, type=&quot;t&quot;)</code></pre>
+<pre><code>##  [1] -0.8115497  0.6413175  1.5952995 -2.4645688  0.7991765  0.8818782
+##  [7] -0.1817640 -0.1550094 -0.1719662 -0.4869741</code></pre>
+<pre class="r"><code># beyond 90th %ile based on chi-sq distribution (TRUE, FALSE)
+outliers::scores(x, type=&quot;chisq&quot;, prob=0.9)    </code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code># beyond 95th %ile based on chi-sq distribution (TRUE, FALSE)
+outliers::scores(x, type=&quot;chisq&quot;, prob=0.95)</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code># beyond 95th %ile based on z-scores
+outliers::scores(x, type=&quot;z&quot;, prob=0.95)</code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code># beyond 95th %ile based on t-scores
+outliers::scores(x, type=&quot;t&quot;, prob=0.95)      </code></pre>
+<pre><code>##  [1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+</div>
 </div>
 <div id="method-6-hampel-filter" class="section level1">
 <h1><span class="header-section-number">6</span> Method 6: Hampel filter</h1>
@@ -431,19 +486,21 @@ test</code></pre>
 ## [1] &quot;Rosner&#39;s Test for Outliers&quot;
 ## 
 ## $data
-##   [1]  29  29  31  30  26  26  27  26  25  28  27  25  25  25  25  24  25  23
-##  [19]  20  15  20  17  17  26  23  26  25  24  19  14  15  17  27  30 230  29
-##  [37]  26  24  24  22  22  24  24  17  22  21  23  23  19  18  17  17  19  19
-##  [55]  12  17  15  17  17  12  17  16  18  15  16  12  17  17  16  12  15  16
-##  [73]  17  15  17  17  18  17  19  17  19  19  17  17  17  16  16  17  15  17
-##  [91]  26  25  26  24  21  22  23  22  20  33  32  32  29  32  34  36  36  29
-## [109]  26  27  30  31  26  26  28  26  29  28  27  24  24  24  22  19  20  17
-## [127]  12  19  18  14  15  18  18  15  17  16  18  17  19  19  17  29  27  31
-## [145]  32  27  26  26  25  25  17  17  20  18  26  26  27  28  25  25  24  27
-## [163]  25  26  23  26  26  26  26  25  27  25  27  20  20  19  17  20  17  29
-## [181]  27  31  31  26  26  28  27  29  31  31  26  26  27  30  33  35  37  35
-## [199]  15  18  20  20  22  17  19  18  20  29  26  29  29  24  44  29  26  29
-## [217]  29  29  29  23  24  44  41  29  26  28  29  29  29  28  29  26  26  26
+##   [1]  29  29  31  30  26  26  27  26  25  28  27  25  25  25  25  24
+##  [17]  25  23  20  15  20  17  17  26  23  26  25  24  19  14  15  17
+##  [33]  27  30 230  29  26  24  24  22  22  24  24  17  22  21  23  23
+##  [49]  19  18  17  17  19  19  12  17  15  17  17  12  17  16  18  15
+##  [65]  16  12  17  17  16  12  15  16  17  15  17  17  18  17  19  17
+##  [81]  19  19  17  17  17  16  16  17  15  17  26  25  26  24  21  22
+##  [97]  23  22  20  33  32  32  29  32  34  36  36  29  26  27  30  31
+## [113]  26  26  28  26  29  28  27  24  24  24  22  19  20  17  12  19
+## [129]  18  14  15  18  18  15  17  16  18  17  19  19  17  29  27  31
+## [145]  32  27  26  26  25  25  17  17  20  18  26  26  27  28  25  25
+## [161]  24  27  25  26  23  26  26  26  26  25  27  25  27  20  20  19
+## [177]  17  20  17  29  27  31  31  26  26  28  27  29  31  31  26  26
+## [193]  27  30  33  35  37  35  15  18  20  20  22  17  19  18  20  29
+## [209]  26  29  29  24  44  29  26  29  29  29  29  23  24  44  41  29
+## [225]  26  28  29  29  29  28  29  26  26  26
 ## 
 ## $data.name
 ## [1] &quot;dat$hwy&quot;

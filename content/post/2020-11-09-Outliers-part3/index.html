@@ -1,15 +1,240 @@
 <link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
 
+<div id="TOC">
+<ul>
+<li><a href="#types-of-unusual-observations"><span class="toc-section-number">1</span> Types of Unusual Observations</a><ul>
+<li><a href="#regression-outliers"><span class="toc-section-number">1.1</span> Regression Outliers</a></li>
+<li><a href="#leverage"><span class="toc-section-number">1.2</span> Leverage</a></li>
+<li><a href="#influential-points"><span class="toc-section-number">1.3</span> Influential Points</a></li>
+<li><a href="#good-vs.-bad-leverage"><span class="toc-section-number">1.4</span> Good vs. Bad Leverage</a></li>
+</ul></li>
+<li><a href="#detecting-influential-observations"><span class="toc-section-number">2</span> Detecting Influential Observations</a><ul>
+<li><a href="#graphic-diagnostics"><span class="toc-section-number">2.1</span> Graphic diagnostics</a><ul>
+<li><a href="#a-scatter-plot-with-confidence-ellipse"><span class="toc-section-number">2.1.1</span> A scatter plot with Confidence Ellipse</a></li>
+</ul></li>
+<li><a href="#numerical-diagnostics"><span class="toc-section-number">2.2</span> Numerical diagnostics</a><ul>
+<li><a href="#studentized-residuals"><span class="toc-section-number">2.2.1</span> Studentized Residuals</a></li>
+<li><a href="#robust-distance"><span class="toc-section-number">2.2.2</span> Robust Distance</a></li>
+<li><a href="#mahalanobis-distance"><span class="toc-section-number">2.2.3</span> Mahalanobis Distance</a></li>
+<li><a href="#hat-matrix"><span class="toc-section-number">2.2.4</span> Hat Matrix</a></li>
+<li><a href="#cooks-distance"><span class="toc-section-number">2.2.5</span> Cook’s Distance</a></li>
+<li><a href="#dfits"><span class="toc-section-number">2.2.6</span> DFITS</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#summary"><span class="toc-section-number">3</span> Summary</a></li>
+</ul>
+</div>
 
 <div class="figure" style="text-align: center"><span id="fig:fig1"></span>
-<img src="figure/The-outlier-6001.gif" alt="Outliers" width="70%" />
+<img src="figure/The-outlier-6001.gif" alt="Outliers" width="40%" />
 <p class="caption">
-Figure 1: Outliers
+Figure 0.1: Outliers
 </p>
 </div>
-<!-- In the previous blog post, we've discussed the philosophy of outliers [part 1](/2020/11/02/outliers-part1/) and outlier detection univariate methods [part 2](/2020/11/03/outliers-part2/). In this 3rd post, we are going to discuss more technical details of the outlier detection in regression.  -->
+<p>In the previous blog post, we’ve discussed the philosophy of outliers <a href="/2020/11/02/outliers-part1/">part 1</a> and outlier detection univariate methods <a href="/2020/11/03/outliers-part2/">part 2</a>. In this 3rd post, we are going to discuss more technical details of the outlier detection in regression.</p>
+<p>A observation that is substantially different from all other ones can make a large difference in the results of regression analysis.</p>
+<p>Outliers play important role in regression. More importantly, separated points can have a strong influence on statistical models-deleting outliers from a regression model can sometimes give <strong>completely different results</strong>.</p>
+<p>Let’s see the example below. This example uses the dataset-<code>cars</code>.</p>
+<pre class="r"><code># original data
+cars1 &lt;- cars[1:30, ]
+
+# introduce outliers.
+cars_outliers &lt;- data.frame(speed=c(19,19,20,20,20),
+                            dist=c(190, 186, 210, 220, 218))
+
+cars2 &lt;- rbind(cars1, cars_outliers)  # data with outliers.
+
+# Plot of data with outliers.
+par(mfrow=c(1, 2))
+
+plot(cars2$speed, cars2$dist,
+     xlim=c(0, 28), ylim=c(0, 230),
+     main=&quot;With Outliers&quot;,
+     xlab=&quot;speed&quot;, ylab=&quot;dist&quot;,
+     pch=&quot;*&quot;, col=&quot;red&quot;, cex=2)
+
+# regression reference line
+abline(lm(dist ~ speed, data=cars2), col=&quot;blue&quot;, lwd=3, lty=2)
+
+# Plot of original data without outliers.
+# Note the change in slope (angle) of best fit line.
+plot(cars1$speed, cars1$dist,
+     xlim=c(0, 28), ylim=c(0, 230),
+     main=&quot;Outliers removed \n A much better fit!&quot;,
+     xlab=&quot;speed&quot;, ylab=&quot;dist&quot;,
+     pch=&quot;*&quot;, col=&quot;red&quot;, cex=2)
+
+abline(lm(dist ~ speed, data=cars1), col=&quot;blue&quot;, lwd=3, lty=2)</code></pre>
+<p><img src="figure/example1-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>Despite all this, as much as you’d like to, it is <strong>NOT acceptable</strong> to drop an observation just because it is an <em>outlier</em>. They can be legitimate observations and are sometimes the most interesting ones. Like what I stated in the previous posts, it’s important to investigate the nature of the outlier before deciding. Once the outliers or unusual observations are detected, the best way to start is to ask <strong>whether the outliers even make sense</strong>, especially given the other variables you’ve collected.</p>
+<div id="types-of-unusual-observations" class="section level1">
+<h1><span class="header-section-number">1</span> Types of Unusual Observations</h1>
+<div id="regression-outliers" class="section level2">
+<h2><span class="header-section-number">1.1</span> Regression Outliers</h2>
+<p>It is common practice to distinguish between two types of outliers. Outliers in the <code>response variable</code> (DV) represent model failure. Such observations are called <strong>outliers</strong>. <strong>A regression outlier is an observation that has an unusual value of the dependent variable</strong> <span class="math inline">\(Y\)</span>, <strong>conditional on its value of the independent variable</strong> <span class="math inline">\(X\)</span>. A regression outlier will have a large residual but not necessarily affect the regression slope coefficient.</p>
+<p>See the Figure (a) below. This is an example of an outliers without influence.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig2"></span>
+<img src="figure/fig_a.JPG" alt="Figure (a): Outlier without influence" width="50%" />
+<p class="caption">
+Figure 1.1: Figure (a): Outlier without influence
+</p>
+</div>
+<p>Although its Y value is unusual given its X value, it has little influence on the regression line because it is in the middle of the X-range.</p>
+</div>
+<div id="leverage" class="section level2">
+<h2><span class="header-section-number">1.2</span> Leverage</h2>
+<p>Outliers with respect to the <code>predictors</code> (IV) are called <strong>leverage points</strong>.
+An observation that has an unusual <span class="math inline">\(X\)</span> value-i.e., it is far from the mean of <span class="math inline">\(X\)</span> -has leverage on (i.e., the potential to influence) the regression line. The further away from from the mean of <span class="math inline">\(X\)</span> (<span class="math inline">\(\bar{x}\)</span>, either in a positive or negative direction), the more leverage an observation has on the regression fit. High leverage does not necessarily mean that it influences the regression coefficients.</p>
+<p>It is possible to have a high leverage and yet follow straight in line with the pattern of the rest of the data. High leverage observations can affect the regression model, too. Their response variables need not be outliers.</p>
+<p>See the Figure (b) below. This is an example of high leverage observation.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig3"></span>
+<img src="figure/fig_b.JPG" alt="Figure (b): High leverage" width="50%" />
+<p class="caption">
+Figure 1.2: Figure (b): High leverage
+</p>
+</div>
+<p>because it has a high value of X. However, because its value of Y puts it in line
+with the general pattern of the data it has <strong>no influence</strong>.</p>
+</div>
+<div id="influential-points" class="section level2">
+<h2><span class="header-section-number">1.3</span> Influential Points</h2>
+<p>High leverage points that actually influence the slope of the regression line are called <strong>influential points</strong>. Only when an observation has <strong>high leverage</strong> and is an <strong>outlier in terms of Y-value</strong> will it strongly influence
+the regression line. In other words, it must have an unusual <span class="math inline">\(X-\)</span>value
+with an unusual <span class="math inline">\(Y-\)</span>value given its <span class="math inline">\(X-\)</span>value. In such cases both the intercept and slope are affected, as the line chases the observation.</p>
+<p><span class="math display">\[Influence = Leverage \times Discrepancy\]</span>
+See the Figure (c) below. This is an example of a combination of discrepancy (unusual Y value) and high leverage (unusual X value) observation.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig4"></span>
+<img src="figure/fig_c.JPG" alt="Figure (c): Combination of discrepancy (unusual Y value) and leverage (unusual X value)" width="50%" />
+<p class="caption">
+Figure 1.3: Figure (c): Combination of discrepancy (unusual Y value) and leverage (unusual X value)
+</p>
+</div>
+<p>This observation results in strong influence. When this case is deleted both the slope and intercept change dramatically..</p>
+<p>In summary, outliers in regression are:</p>
+<ul>
+<li>Outliers are points that fall away from the <strong>cloud of points</strong>.</li>
+<li>Outliers that fall horizontally away from the center of the cloud are called <strong>leverage points</strong></li>
+<li>High leverage points that actually influence the slope of the regression line are called <strong>influential points</strong></li>
+<li>In order to determine if a point is influential, visualize the regression line with and without the point. Does the slope of the line change considerably? If so, then the point is influential. If not, then it’s not.</li>
+</ul>
+</div>
+<div id="good-vs.-bad-leverage" class="section level2">
+<h2><span class="header-section-number">1.4</span> Good vs. Bad Leverage</h2>
+<p>In regression it helps to make a distinction between two types of leverage points: <strong>good</strong> and <strong>bad</strong>.</p>
+<p>A <code>good leverage point</code> is a point that is unusually large or small among the X values but is not a regression outlier. That is, the point is relatively removed from the bulk of the observation but reasonably close to the line around which most of the points are centered. A good leverage point has limited effect on giving a distorted view of how majority of points are associated. Good leverage points improve the precision of the
+regression coefficients.</p>
+<p>A <code>bad leverage point</code> is a point situated **far from the regression line* around which the bulk of the points are centered. Said another way, a bad leverage point is a regression outlier that has an X value that is an outlier among X values as well (it is relatively far removed from the regression line). Bad leverage point
+has grossly effect estimate of the slope of the regression line if an estimator with a small breakdown point is used. Bad leverage points reduce the precision of the regression coefficients.</p>
+<p><strong>Leverage points do not necessarily correspond to outliers.</strong></p>
+<p>Observations whose inclusion or exclusion result in substantial changes in the fitted model (coefficients, fitted values) are said to be <strong>influential</strong>.</p>
+<p>We are mostly concerned with regression outliers, that is, cases for which (<span class="math inline">\(x_{k_{1}},...x_{k_{p}},y_{k}\)</span>) deviates from the linear relation followed by the majority of the data, taking into account both the explanatory variable and the response variable simultaneously. A leverage point is then still defined as a point (<span class="math inline">\(x_{k_{1}},...x_{k_{p}},y_{k}\)</span>) for which (<span class="math inline">\(x_{k_{1}},...x_{k_{p}}\)</span>) is outlying with respect to the (<span class="math inline">\(x_{i_{1}},...x_{i_{p}}\)</span>) in the data set.</p>
+</div>
+</div>
+<div id="detecting-influential-observations" class="section level1">
+<h1><span class="header-section-number">2</span> Detecting Influential Observations</h1>
+<p>Many numerical and graphic diagnostics for detecting outliers and influential cases on the fit have been suggested.</p>
+<div id="graphic-diagnostics" class="section level2">
+<h2><span class="header-section-number">2.1</span> Graphic diagnostics</h2>
+<p>In the simple regression model, one can make a plot of the <span class="math inline">\((x_{i},y_{i})\)</span>, which is called a scatterplot, in order to visualize the data structure. Many people will argue that regression outliers can be discovered by looking at the least squares residuals. Unfortunately, this is not true when the outliers are leverage points. If one would apply a rule like “delete the points with largest LS residuals”, then the “good” points would have to be deleted first. Often, influential points remain hidden, because they do not always show up in the usual LS residual plot.</p>
+<div id="a-scatter-plot-with-confidence-ellipse" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> A scatter plot with Confidence Ellipse</h3>
+<p>A scatter plot of <span class="math inline">\(x\)</span> versus <span class="math inline">\(y\)</span> is used to visualize the conditional distribution <span class="math inline">\(y|x\)</span>. For the simple linear regression model, by far the most effective technique for checking the assumption of the model is to make a scatterplot of <span class="math inline">\(x\)</span> versus <span class="math inline">\(Y\)</span> and residual plot of <span class="math inline">\(x\)</span> versus <span class="math inline">\(r_{i}\)</span>.</p>
+<p>Departure from linearity in the suggests the simple linear regression model is not adequate. Points in the residual plot should scatter about the line <span class="math inline">\(r=0\)</span> with the pattern. If curvature is present or if the distribution of the residuals depends on the value of x, then the simple linear model is not adequate. Usually, a confidence ellipse is drawn around the point cluster center coordinates. The rule of thumb is <span class="math inline">\(0.95\)</span>. Points outside of, say, <code>95%</code> confidence ellipse is labeled as outlier or unusual observations.</p>
+<pre class="r"><code>data(Davis)
+attach(Davis)
+
+model1 &lt;- lm(weight ~ height)
+
+# draw 95% CI ellipse
+# from library(car)
+# confidenceEllipse(weakliem.model1, levels=0.95,Scheffe=TRUE)
+car::dataEllipse(height, weight, levels=0.95, lty=1, col=1,
+                 main = &quot;Height vs. Weight&quot;,
+                 xlab=&quot;Height&quot;, ylab=&quot;Weight&quot;)
+
+# adding regression line
+abline(model1, lwd=2, lty=1, col=2)</code></pre>
+<p><img src="figure/95_ci_ellipse-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="numerical-diagnostics" class="section level2">
+<h2><span class="header-section-number">2.2</span> Numerical diagnostics</h2>
+<p>Diagnostics are certain quantities computed from the data with the purpose of pinpointing influential points, after which these outliers can be removed or corrected. When there are only one a single outlier, some of these methods work quite well by looking at the effect of deleting one point at a time.</p>
+<p>The ordinary or simple residuals (observed - predicted values) are the most commonly used measures for detecting outliers.</p>
+<div id="studentized-residuals" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Studentized Residuals</h3>
+<p>Standardized Residuals are the residuals divided by the estimates of their standard errors. They have mean 0 and standard deviation 1. The <code>studentized residuals</code> are a first means for identifying outliesrs.</p>
+<div id="rule-of-thumb" class="section level4">
+<h4><span class="header-section-number">2.2.1.1</span> Rule of Thumb</h4>
+<p>Attention should be paid to studentized residuals that exceed <code>+2</code> or <code>-2</code> and get even more concerned about residuals that exceed <span class="math inline">\(|2|\)</span> and even yet more concerned about residuals that exceed <span class="math inline">\(|3|\)</span>.</p>
+<p>Now lets look at the leverage’s to identify observations that will have potential great influence on regression coefficient estimates. Generally, a point with leverage greater than <span class="math inline">\(\frac{2k+2}{n}\)</span> should be carefully
+examined, where <span class="math inline">\(k\)</span> is the number of predictors (IV) and <span class="math inline">\(n\)</span> is the number of observations.</p>
+</div>
+</div>
+<div id="robust-distance" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Robust Distance</h3>
+<p>The <strong>robust distance</strong> is defined as</p>
+<!-- "\mathbf X is" used to obtain Bold math mode -->
+<p><span class="math display">\[RD(x_{i})=\sqrt{[x_{i} - \mathbf T(X)]^{T}\mathbf C(X)^{-1}[X_{i} - \mathbf T(X)]}\]</span>
+where <span class="math inline">\(\mathbf T(X)\)</span> and <span class="math inline">\(\mathbf C(X)\)</span> are the robust location and scatter matrix for the multivariates.</p>
+</div>
+<div id="mahalanobis-distance" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Mahalanobis Distance</h3>
+<p>One classical method to identify leverage points is inspects the use of the <code>Mahalanobis distances</code> <span class="math inline">\(MD_{i}\)</span> to find outliers <span class="math inline">\(x_{i}\)</span>:</p>
+<p><span class="math display">\[MD_{i}=\sqrt{(x_{i} -\mu)\times\mathbf C^{-1}(x_{i} -\mu)^{T}}\]</span>
+where <span class="math inline">\(\mathbf C\)</span> is the classical sample covariance matrix.</p>
+</div>
+<div id="hat-matrix" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Hat Matrix</h3>
+<p>In classical linear regression, the diagonal elements <span class="math inline">\(h_{ii}\)</span> of the <em>hat</em> matrix
+<span class="math display">\[\mathbf H = \mathbf X(\mathbf X^{T}\mathbf X)^{-1}\mathbf X^{T}\]</span>
+are used to identify leverage points. The <em>i-th</em> leverage <span class="math inline">\(h_{i} = H_{ii}\)</span> is the <em>i-th</em> diagonal element of the hat matrix <span class="math inline">\(\mathbf H\)</span>.</p>
+<p>Rousseeuw and Van Zomeren (1990) report the following monotone relationship between the <span class="math inline">\(h_{ii}\)</span> and <span class="math inline">\(MD_{i}\)</span></p>
+<p><span class="math display">\[h_{ii}=[((MD_{i})^2/(n-1))]+[1/n]\]</span>
+where <span class="math inline">\(n\)</span> is the number of observations.</p>
+<p>Multiple outliers do not necessarily have large <span class="math inline">\(MD_{i}\)</span> values because of the <strong>masking effect</strong>.</p>
+<div id="rule-of-thumb-1" class="section level4">
+<h4><span class="header-section-number">2.2.4.1</span> Rule of Thumb</h4>
+<p>Rousseeuw and Leroy (1987) suggest using <span class="math inline">\(h_{i}&gt;2p/n\)</span> and <span class="math inline">\(MD_{i}^2&gt;\chi_{p-1;0.95}^2\)</span> as benchmarks for <code>leverages</code> and <code>Mahalanobis distances</code>.</p>
+<p>Some researchers believe Hat-values exceeding about <strong>twice the average
+hat-value</strong> should be considered noteworthy</p>
+</div>
+</div>
+<div id="cooks-distance" class="section level3">
+<h3><span class="header-section-number">2.2.5</span> Cook’s Distance</h3>
+<p>The Cook’s distance is defined</p>
+<p><span class="math display">\[CD_{i}=(p\sigma^2)^{-1}(\boldsymbol{\hat{Y}_{(i)}} - \boldsymbol{\hat{Y}})^{T}(\boldsymbol{\hat{Y}_{(i)}} - \boldsymbol{\hat{Y}})\]</span>
+where <span class="math inline">\(\sigma^2\)</span> is estimator of the error variance.</p>
+<p><code>Cook's distance</code> for the <span class="math inline">\(i_{th}\)</span> observation is based on the differences between the predicted responses from the model constructed from all of the data and the predicted responses from the modelconstructed by setting the <span class="math inline">\(i_{th}\)</span> observation aside. For each observation, the sum of squared residuals is divided by <span class="math inline">\((p+1)\)</span> times the Residual Mean Square from the full model. Some analysts suggest investigating observations for which <code>Cook's distance</code> is greater than <code>0.5</code> (<span class="math inline">\(&gt;0.5\)</span>).</p>
+<p>The lowest value that Cook’s D can assume is zero (0). The conventional cut-off point is <span class="math inline">\(4/n\)</span>.</p>
+<p>Generally, when the statistics , <span class="math inline">\(CD_{i}\)</span>, <span class="math inline">\(h_{i}\)</span> and <span class="math inline">\(MD_{i}\)</span> are large, case <span class="math inline">\(i\)</span> may be an outlier or influential case.</p>
+<p><strong>Cook’s distance</strong>, <strong>leverages</strong>, and *Mahalanobis distance<strong> can be effective for finding influential cases when a </strong>single outlier** <em>exist</em>, but can fail if there are two or more outliers.</p>
+<p>Nevertheless, these numerical diagnostics combined with plots such as residuals versus fitted values and fitted values versus the response are probably the most effective techniques for detecting cases that affect the fitted values when the multiple linear regression model is a good approximation for the bulk of the data.</p>
+</div>
+<div id="dfits" class="section level3">
+<h3><span class="header-section-number">2.2.6</span> DFITS</h3>
+<p><span class="math inline">\(DFITS_{i}\)</span> is the scaled difference between the predicted responses from the model constructed from all of the data and the predicted responses from the model constructed by setting the <span class="math inline">\(i_{th}\)</span> observation aside.</p>
+<p>It is similar to Cook’s distance. Unlike Cook’s distance, it does not look at all of the predicted values with the i-th observation set aside. Some analysts suggest investigating observations for which <span class="math inline">\(|DFITS_{i}|\)</span> is greater than <span class="math inline">\(2\sqrt{(p+1)/(n−p−1)}\)</span>. Cook’s D and DFITS give similar answers.</p>
+</div>
+</div>
+</div>
+<div id="summary" class="section level1">
+<h1><span class="header-section-number">3</span> Summary</h1>
+<ul>
+<li>Small samples are especially vulnerable to outliers-there are fewer cases to counter the outlier</li>
+<li>Large samples can also be affected</li>
+<li>Even if you have many cases, and your variables have limited ranges, miscodes that could influence the regression model are still possible</li>
+<li>Unusual cases are only influential when they are both unusual in terms of their Y value given their X (outlier), and when they have an unusual X-value (leverage):
+<span class="math display">\[Influence = Leverage \times Discrepancy\]</span></li>
+<li>We can test for outliers using studentized residuals and quantile-comparison plots</li>
+<li>Leverage is assessed by exploring the hat-values</li>
+<li>Influence is assessed using DFBetas and, preferably Cook’s Ds</li>
+<li>Influence Plots (or bubble plots) are useful because they display the studentized residuals, hat-values and Cook’s distances all on the same plot</li>
+<li>Joint influence is best assessed using Added-Variable Plots (or partial-regression plots)</li>
+</ul>
 <p>Note: Some of the contents are originally from Dagmar Blatná’s and William G. Jacoby tutorials. If you are interested in, you can find both online tutorials below.</p>
 <p><a href="https://statisticsbyjim.com/basics/outliers/#:~:text=Note%20that%20Z%2Dscores%20can,cutoff%20value%20of%20%2B%2F%2D3">Dagmar Blatná</a></p>
 <p><a href="http://www.ncwebcenter.com/Data-Transformation.pdf">William G. Jacoby</a></p>
 <p>– To be Continued</p>
+</div>

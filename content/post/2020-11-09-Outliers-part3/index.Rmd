@@ -428,7 +428,7 @@ The `id.n` keyword indicates how many the most unusual observations are identifi
 
 **DFBeta** and **DFBetas** are a direct measure of the influence of an observation on regression parameter estimates. Remember that an **influential observation is one that combines discrepancy with leverage**. so, **DFBeta** examines how regression coefficients change if outliers are omitted from the model. $D_{ij}$ is often termed `$DFBeta_{ij}$` as:
 $$D_{ij} = b_{j} - b_{j(-1)}$$
-where $b_{j}$ are for all the data and the $b_{j(-1)$ are with the $i_{th}$ observation removed. These differences are usually **scaled** by (omitted) estimates of the standard error of $b_{j}$:
+where $b_{j}$ are for all the data and the $b_{j(-1)}$ are with the $i_{th}$ observation removed. These differences are usually **scaled** by (omitted) estimates of the standard error of $b_{j}$:
 
 $$d_{ij}^{*}=\frac{d_{ij}}{s_{-i}(b_{j})} $$
 The $d_{ij}$ are often termed **DFBETA** and the $d_{ij}^{*}$ are called **DFBETAS**.

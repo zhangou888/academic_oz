@@ -1,33 +1,5 @@
----
-title: Outliers-Part 3:Outliers in Regression
-author: Ou Zhang
-date: '2020-11-09'
-categories:
-  - R
-  - Statistics
-tags:
-  - R
-  - Statistics
-slug: outliers-part3
-draft: no
-lastmod: '2020-11-09T23:53:01-05:00'
-featured: no
-disable_jquery: no
-image:
-  caption: ''
-  focal_point: Smart
-  preview_only: no
-output:
-  blogdown::html_page:
-    toc: yes
-    number_sections: yes
-    toc_depth: 4
-    self_contained: no
-
----
-
-<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections/anchor-sections.js"></script>
+<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -413,7 +385,7 @@ car::influenceIndexPlot(fit1, id.n=3)</code></pre>
 <h3><span class="header-section-number">2.2.4</span> DFBeta and DFBetas</h3>
 <p><strong>DFBeta</strong> and <strong>DFBetas</strong> are a direct measure of the influence of an observation on regression parameter estimates. Remember that an <strong>influential observation is one that combines discrepancy with leverage</strong>. so, <strong>DFBeta</strong> examines how regression coefficients change if outliers are omitted from the model. <span class="math inline">\(D_{ij}\)</span> is often termed <code>$DFBeta_{ij}$</code> as:
 <span class="math display">\[D_{ij} = b_{j} - b_{j(-1)}\]</span>
-where <span class="math inline">\(b_{j}\)</span> are for all the data and the <span class="math inline">\(b_{j(-1)\)</span> are with the <span class="math inline">\(i_{th}\)</span> observation removed. These differences are usually <strong>scaled</strong> by (omitted) estimates of the standard error of <span class="math inline">\(b_{j}\)</span>:</p>
+where <span class="math inline">\(b_{j}\)</span> are for all the data and the <span class="math inline">\(b_{j(-1)}\)</span> are with the <span class="math inline">\(i_{th}\)</span> observation removed. These differences are usually <strong>scaled</strong> by (omitted) estimates of the standard error of <span class="math inline">\(b_{j}\)</span>:</p>
 <p><span class="math display">\[d_{ij}^{*}=\frac{d_{ij}}{s_{-i}(b_{j})} \]</span>
 The <span class="math inline">\(d_{ij}\)</span> are often termed <strong>DFBETA</strong> and the <span class="math inline">\(d_{ij}^{*}\)</span> are called <strong>DFBETAS</strong>.</p>
 <div id="rule-of-thumb-4" class="section level4">

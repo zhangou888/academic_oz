@@ -30,7 +30,9 @@ output:
 knitr::opts_chunk$set(eval = TRUE, 
                       echo = TRUE, 
                       cache = FALSE,
+                      warning = FALSE,
                       include = TRUE,
+                      message=FALSE,
                       collapse = FALSE,
                       dependson = NULL,
                       engine = "R", # Chunks will always have R code, unless noted
@@ -56,7 +58,7 @@ packages <- lapply(packages, FUN = function(x) {
 
 ```
 
-```{r fig1, out.width='40%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
+```{r fig1, out.width='50%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
 
     knitr::include_graphics("figure/The-outlier-6001.gif", error = FALSE)
 
@@ -116,7 +118,7 @@ It is common practice to distinguish between two types of outliers. Outliers in 
 
 See the Figure (a) below. This is an example of an outliers without influence.
 
-```{r fig2, out.width='50%', fig.align='center', fig.pos='h', fig.cap='Figure (a): Outlier without influence',echo = FALSE}
+```{r fig2, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Figure (a): Outlier without influence',echo = FALSE}
 
     knitr::include_graphics("figure/fig_a.jpg", error = FALSE)
 
@@ -132,7 +134,7 @@ It is possible to have a high leverage and yet follow straight in line with the 
 
 See the Figure (b) below. This is an example of high leverage observation.
 
-```{r fig3, out.width='50%', fig.align='center', fig.pos='h', fig.cap='Figure (b): High leverage',echo = FALSE}
+```{r fig3, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Figure (b): High leverage',echo = FALSE}
 
     knitr::include_graphics("figure/fig_b.jpg", error = FALSE)
 
@@ -140,7 +142,7 @@ See the Figure (b) below. This is an example of high leverage observation.
 because it has a high value of X. However, because its value of Y puts it in line
 with the general pattern of the data it has **no influence**.
 
-## Influential Points
+## Influential Observations
 High leverage points that actually influence the slope of the regression line are called **influential points**. Only when an observation has **high leverage** and is an **outlier in terms of Y-value** will it strongly influence
 the regression line. In other words, it must have an unusual $X-$value
 with an unusual $Y-$value given its $X-$value. In such cases both the intercept and slope are affected, as the line chases the observation.
@@ -148,7 +150,7 @@ with an unusual $Y-$value given its $X-$value. In such cases both the intercept 
  $$Influence = Leverage \times Discrepancy$$
 See the Figure (c) below. This is an example of a combination of discrepancy (unusual Y value) and high leverage (unusual X value) observation.
 
-```{r fig4, out.width='50%', fig.align='center', fig.pos='h', fig.cap='Figure (c): Combination of discrepancy (unusual Y value) and leverage (unusual X value)',echo = FALSE}
+```{r fig4, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Figure (c): Combination of discrepancy (unusual Y value) and leverage (unusual X value)',echo = FALSE}
 
     knitr::include_graphics("figure/fig_c.jpg", error = FALSE)
 
@@ -206,35 +208,68 @@ abline(model1, lwd=2, lty=1, col=2)
 
 ```
 
-## Numerical diagnostics
-Diagnostics are certain quantities computed from the data with the purpose of pinpointing influential points, after which these outliers can be removed or corrected. When there are only one a single outlier, some of these methods work quite well by looking at the effect of deleting one point at a time.
-
-The ordinary or simple residuals (observed - predicted values) are the most commonly used measures for detecting outliers. 
-
-### Studentized Residuals
-Standardized Residuals are the residuals divided by the estimates of their standard errors. They have mean 0 and standard deviation 1. The `studentized residuals` are a first means for identifying outliesrs. 
-
-
+### Quantile Comparison Plots (QQ-Plot)
+First, we could use quantile comparison plots (QQ-Plot) to compare the distribution of a single variable to the **t-distribution**, assessing whether the distribution of the variable showed a departure from normality. Similarly, we can compare the
+distribution of the **studentized residuals** from our regression model to the t-distribution.
 
 #### Rule of Thumb
-Attention should be paid to studentized residuals that exceed `+2` or `-2` and get even more concerned about residuals that exceed $|2|$ and even yet more concerned about residuals that exceed $|3|$.
+Observations that stray outside of the `95%` confidence envelope are statistically significant outliers.
 
-Now lets look at the leverage’s to identify observations that will have potential great influence on regression coefficient estimates. Generally, a point with leverage greater than $\frac{2k+2}{n}$ should be carefully
-examined, where $k$ is the number of predictors (IV) and $n$ is the number of observations.
+For illustration, R sample data (`state.x77`) is used in the plot example. This data set give us information such as **population size, average income, illiteracy rate, temperature**, and **murder rate** for 50 states in USA.
 
-### Robust Distance
+The `qqPlot` function from `{car}` is used to detect outliers. It draws theoretical quantile-comparison plots for variables and for studentized residuals from a linear model. A comparison line is drawn on the plot either through the quartiles of the two distributions, or by robust regression.
 
-The **robust distance** is defined as
 
-<!-- "\mathbf X is" used to obtain Bold math mode -->
-$$RD(x_{i})=\sqrt{[x_{i} - \mathbf T(X)]^{T}\mathbf C(X)^{-1}[X_{i} - \mathbf T(X)]}$$
-where $\mathbf T(X)$ and $\mathbf C(X)$ are the robust location and scatter matrix for the multivariates.
+```{r qqplot}
+library(car)
 
-### Mahalanobis Distance
-One classical method to identify leverage points is inspects the use of the `Mahalanobis distances` $MD_{i}$ to find outliers $x_{i}$:
+states <- as.data.frame(state.x77[,c("Murder", "Population",
+                                     "Illiteracy", "Income", "Frost")])
 
-$$MD_{i}=\sqrt{(x_{i} -\mu)\times\mathbf C^{-1}(x_{i} -\mu)^{T}}$$
-where $\mathbf C$ is the classical sample covariance matrix. 
+# fit the data into the linear regression model
+fit1 <- lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+# summary(fit)
+
+# From our regression model example, we can start
+# investigating outliers observation by using Q-Q plot.
+car::qqPlot(fit1,labels=row.names(states), id.method="identify",
+       simulate=TRUE, main="Q-Q Plot")
+
+```
+As you can observed the plot above, **Nevada** (28th observation) and **Rhode Island** (39th observation) are states that detected as potential outliers.
+
+### Added-variable plots
+Subsets of cases can jointly influence a regression line, or can offset each other’s influence. **Cook's D** can help us determine joint influence if there are relatively few influential cases. 
+
+However, Cook's D may not be impractical if there are potentially a large number of subsets to explore. Thus, `Added-variable plots` (also called `partial regression plots`) provide a more useful method of assessing joint influence.
+
+In applied statistics, a `partial regression plot` aka `Added-variable plots` attempts to show the effect of **adding another variable** to a model that already has one or more independent variables.
+
+When performing a linear regression with a single independent variable, a scatter plot of the response variable against the independent variable provides a good indication of the nature of the relationship. If there is more than one independent variable, things become more complicated. Although it can still be useful to generate scatter plots of the response variable against each of the independent variables, this does not take into account the effect of the other independent variables in the model.
+
+Added-variable plot can be easily created using the `avPlots()` function from `{car}` package.
+
+Similar to QQ-Plot example, R sample data (`state.x77`) is also used in the added-variable plot example. 
+
+```{r added-variable_plot}
+states <- as.data.frame(state.x77[,c("Murder", "Population",
+                                     "Illiteracy", "Income", "Frost")])
+
+# fit the data into the linear regression model
+fit1 <- lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+# 2. Added Variable plots
+# It can be easily created using the avPlots() function in car package.
+# From the graph below, the straight line in each plot is the actual
+# regression coefficient for that predictor variable.
+car::avPlots(fit1, ask=FALSE, id.method="identify")
+
+
+```
+We see here that cases-**Nevata** and **Alaska** have unusually high Y values given their X's. Because they are on the extreme of the X-range as well, they are most likely influencing all slopes.
+
+
+## Numerical diagnostics
+Diagnostics are certain quantities computed from the data with the purpose of pinpointing influential points, after which these outliers can be removed or corrected. When there are only one a single outlier, some of these methods work quite well by looking at the effect of deleting one point at a time.
 
 
 ### Hat Matrix
@@ -250,55 +285,298 @@ where $n$ is the number of observations.
 Multiple outliers do not necessarily have large $MD_{i}$ values because of the **masking effect**.
 
 #### Rule of Thumb
-Rousseeuw and Leroy (1987) suggest using $h_{i}>2p/n$ and $MD_{i}^2>\chi_{p-1;0.95}^2$ as benchmarks for `leverages` and `Mahalanobis distances`. 
+Rousseeuw and Leroy (1987) suggest using $h_{i}>2p/n$ as benchmarks for `leverages`. 
 
-Some researchers believe Hat-values exceeding about **twice the average
-hat-value** should be considered noteworthy
+Some researchers believe Hat-values exceeding about `twice the average hat-value` should be considered noteworthy.
+
+Hat-value can be easily calculated using the `hatvalues()` function from `{stats}` package.
+
+Similar to QQ-Plot example, R sample data (`state.x77`) is also used in the hat-value example. 
+
+```{r hat-value}
+# data states 
+states <- as.data.frame(state.x77[,c("Murder", "Population",
+                                     "Illiteracy", "Income", "Frost")])
+
+# fit the data into the linear regression model
+fit1 <- lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+
+# fit1 <- lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+# You can compute the high leverage observation by looking at the
+# ratio of number of parameters estimated in model and sample size.
+# If an observation has a ratio greater than 2-3 times the average ratio,
+# then the observation considers as high-leverage points.
+# high leverage function
+
+p <- length(coefficients(fit1)) # number of IVs + Intercept
+n <- length(fitted(fit1))       # number of observations (N)
+
+# 2-3 times average ratio as cutoff
+ratio <- p/n
+
+# display hatvalues
+hatvalues(fit1)
+
+# High leverage function. 
+highleverage <- function(fit) {
+
+  p <- length(coefficients(fit)) # number of IVs + Intercept
+  n <- length(fitted(fit))       # number of observations (N)
+  ratio <- p/n
+  # leverage ratio
+  plot(hatvalues(fit), main="Index Plot of Ratio")
+
+  # 2-3 times the average ratio as cutoff lines.
+  abline(h=c(2,3)*ratio, col="red", lty=2)
+
+  # identify high leverage points from graph.
+  graphics::identify(1:n, hatvalues(fit), names(hatvalues(fit)))
+}
+
+# run function 
+# Since the graphics::identify function is included, we will not actually run this code in the rmarkdown.
+# highleverage(fit1)
+
+```
+```{r fig5, out.width='80%', fig.align='center', fig.pos='h', fig.cap='High leverage plot example',echo = FALSE}
+
+    knitr::include_graphics("figure/high_hat_value.png", error = FALSE)
+
+```
+The graph above indicates that **Alaska** and **California** have the highest ratio. It means these two states are quite unusual if we compared their predictor values compared to other states. Here is why:
+
+- For Alaska, this state has a much higher income compared to other states, while having smaller population and lower temperature.
+
+- For California, this state has much a bigger population than other states, while having higher income and higher temperature.
+
+Both of these states are indeed quite particular compared to the other 48 states. One thing to remember that not all high-leverage observations are influential observations. It will depend if they are outliers or not.
+
+Unusual observations typically have large residuals but not necessarily so-**high leverage observations can have small residuals because they pull the line towards them**.
+
+The ordinary or simple residuals (observed - predicted values) are the most commonly used measures for detecting outliers. 
+
+### Standardized Residuals
+Standardized Residuals are the residuals divided by the estimates of their standard errors. They have mean 0 and standard deviation 1. Unusual observations typically have large residuals but not necessarily so-**high leverage observations can have small residuals because they pull the line towards them**:
+
+$$V(E_{i})=\sigma_{\epsilon}^2(1-h_{i})$$
+
+Standardized residuals provide one possible, though unsatisfactory, way of detecting outliers.
+
+$$E_{i}^{'}=\frac{E_{i}}{S_{E}\sqrt{1-h_{i}}}$$
+
+#### Rule of Thumb
+A large standardized residual ($d_{i}>3$) indicates the existence of outliers (Montgomery, D.C., et al.).
+
+However, The numerator and denominator are **not independent** in the standardized residual. Thus, $E_{i}^{'}$ does not follow a _t-distribution_: If $|E_{i}|$ is large, the standard error is also large: 
+
+$$S_{E}=\sqrt{\sum{E_{i}^2}/(n-k-1)}$$
+
+### Studentized Residuals
+If we refit the model deleting the $i_{th}$ observation we obtain an estimate of the standard deviation of the residuals $S_{E(-1)}$ (standard error of the regression) that is based on the n-1 observations. Then the studentized residuals $E_{i}^{*'}$ is calculated. It has an **independent numerator and denominator**:
+$$E_{i}^{*}=\frac{E_{i}}{S_{E(-i)}\sqrt{1-h_{i}}}$$
+Studentized residuals follow a `t-distribution` with $n−k−2$ degrees of freedom. This method is suitable when there are **several cases that might be outliers**.
+
+#### Rule of Thumb
+ - $r_{i}>3$ indicates that $e_{i}$ is an outlier, $i =1,2,…,n$
+(Montgomery, D. C., et al.).
+
+ - Also, some researchers suggested that attention should be paid to studentized residuals that exceed `+2` or `-2` and get even more concerned about residuals that exceed $|2|$. Observations that have a studentized residual outside the $\pm2$ range are considered statistically significant at the `95%` a level and even yet more concerned about residuals that exceed $|3|$.
+
+Now lets look at the leverage’s to identify observations that will have potential great influence on regression coefficient estimates. Generally, a point with leverage greater than $\frac{2k+2}{n}$ should be carefully examined, where $k$ is the number of predictors (IV) and $n$ is the number of observations.
+
+
+#### Studentized Residuals-the Bonferroni adjustment
+Since the furthest outlier are going to be selected, it is not legitimate to use a simple t-test. We would expect that $5%$ of the studentized residuals would be beyond $t_{.025}\pm2$ by chance alone. In order to fix this, we can make a **Bonferroni adjustment** to the p-value. The Bonferroni p-value for the largest outlier is:
+$p=2np$where $p$is the unadjusted p-value from a t-test with n-k-2 degrees of freedom. A special t-table is needed if you do this calculation manually, but this is done for you automatically, using the `outlierTest` function in the `{car}` package.
+
+The Bonferroni-adjusted outlier test in `{car}` tests the **largest absolute studentized residual**.
+
+```{r Bonferroni_student}
+states <- as.data.frame(state.x77[,c("Murder", "Population",
+                                     "Illiteracy", "Income", "Frost")])
+
+# fit the data into the linear regression model
+fit1 <- lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+
+# Applying outlierTest function is helping us to
+# confirm if potential outliers are indeed outliers.
+car::outlierTest(fit1)
+
+
+```
+As you can see the studentized residual and its Bonferroni's P-value, state-**Nevada** could be the potential outliers. 
+
+In `{car}` package, there isn't a single-alone function to plot studentized residual, but through function-`influencePlot` and `influenceIndexPlot`, you can incorporate all information from outlier, high-leverage, and influential observations into a single informative plot.
+
+```{r influenceIndexPlot}
+
+# id.n indicates how many most unusual observations are identified.
+car::influenceIndexPlot(fit1, id.n=3)
+
+```
+
+In this diagnostic plots, you can find 4 different plots:
+
+  - Hat-value
+  - Bonferroni's P-value
+  - Studentdized residual
+  - Cook's Distance
+
+The `id.n` keyword indicates how many most unusual observations are identified.
+
+### DFBeta and DFBetas
+
+**DFBeta** and **DFBetas** are a direct measure of the influence of an observation on regression parameter estimates. Remember that an **influential observation is one that combines discrepancy with leverage**. so, **DFBeta** examines how regression coefficients change if outliers are omitted from the model. $D_{ij}$ is often termed `$DFBeta_{ij}$` as:
+$$D_{ij} = b_{j} - b_{j(-1)}$$
+where $b_{j}$ are for all the data and the $b_{j(-1)$ are with the $i_{th}$ observation removed. These differences are usually **scaled** by (omitted) estimates of the standard error of $b_{j}$:
+
+$$d_{ij}^{*}=\frac{d_{ij}}{s_{-i}(b_{j})} $$
+The $d_{ij}$ are often termed **DFBETA** and the $d_{ij}^{*}$ are called **DFBETAS**.
+
+#### Rule of thumb
+A standard cut-off for DFBetas is: $D_{ij}^{*} = 2\times n^{-.5}$.
+
+The R function `dfbetas` from `{stats}` package is used to calculate DFBetas value.
+
+```{r dfbeta_plot}
+# data states 
+states <- as.data.frame(state.x77[,c("Murder", "Population",
+                                     "Illiteracy", "Income", "Frost")])
+
+# fit the data into the linear regression model
+fit1 <- lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+
+
+## an influential observation is one that
+#  combines discrepancy with leverage.
+fit1.dfbetas <- dfbetas(fit1)
+
+
+# c(2,3) specifies the coefficients of interests (Population and illiteracy)
+plot(fit1.dfbetas[,c(2,3)],
+     xlim = c(-2,2),ylim=c(-1,1),
+     main="DFBetas for the Population and Illiteracy coefficients")
+
+# adds the rule of thumb cut-off line
+abline(h=2/sqrt(length(states)), lty=2)
+
+```
+Then, you can identify the influential point above the cut-off line.
+
+### Robust Distance
+
+The **robust distance** is defined as
+
+<!-- "\mathbf X is" used to obtain Bold math mode -->
+$$RD(x_{i})=\sqrt{[x_{i} - \mathbf T(X)]^{T}\mathbf C(X)^{-1}[X_{i} - \mathbf T(X)]}$$
+where $\mathbf T(X)$ and $\mathbf C(X)$ are the robust location and scatter matrix for the multivariates.
+
+### Mahalanobis Distance
+One classical method to identify leverage points is inspects the use of the `Mahalanobis distances` $MD_{i}$ to find outliers $x_{i}$:
+
+$$MD_{i}=\sqrt{(x_{i} -\mu)\times\mathbf C^{-1}(x_{i} -\mu)^{T}}$$
+where $\mathbf C$ is the classical sample covariance matrix. 
+
+#### Rule of Thumb
+Rousseeuw and Leroy (1987) suggest using $MD_{i}^2>\chi_{p-1;0.95}^2$ as benchmarks for `Mahalanobis distances`. 
 
 
 ### Cook's Distance
-The Cook's distance is defined
+The Cook’s distance is essentially an F statistic for the "hypothesis" that $\beta_{j}= b_{j(−i)},j=0,1,...,k$. This is calculated using:
+$$D_{i} = \frac{E_{i}^{'2}}{k+1}\times \frac{h_{i}}{1-h_{i}}$$
+where $h_{i}$ is the hat-value for each observation and $E_{i}^{'}$ is the standardized residual.
 
-$$CD_{i}=(p\sigma^2)^{-1}(\boldsymbol{\hat{Y}_{(i)}} - \boldsymbol{\hat{Y}})^{T}(\boldsymbol{\hat{Y}_{(i)}} - \boldsymbol{\hat{Y}})$$
-where $\sigma^2$ is estimator of the error variance.
+ - The first fraction **measures discrepancy** 
+ - the second fraction **measures leverage**
 
-`Cook's distance` for the $i_{th}$ observation is based on the differences between the predicted responses from the model constructed from all of the data and the predicted responses from the modelconstructed by setting the $i_{th}$ observation aside. For each observation, the sum of squared residuals is divided by $(p+1)$ times the Residual Mean Square from the full model. Some analysts suggest investigating observations for which `Cook's distance` is greater than `0.5` ($>0.5$).   
+`Cook's distance` for the $i_{th}$ observation is based on the differences between the predicted responses from the model constructed from all of the data and the predicted responses from the model constructed by setting the $i_{th}$ observation aside. For each observation, the sum of squared residuals is divided by $(p+1)$ times the Residual Mean Square from the full model. Some analysts suggest investigating observations for which `Cook's distance` is greater than `0.5` ($>0.5$).   
 
-The lowest value that Cook's D can assume is zero (0). The conventional cut-off point is $4/n$.  
+#### Rule of Thumb
+The lowest value that Cook's D can assume is zero (0). There is no significance test for $D_{i}$ (i.e., the F value here measures only distance) but a cut-off rule of thumb is:
+$$D_{i}>\frac{4}{n-k-1}$$
+Generally, when the statistics , $CD_{i}$, $h_{i}$ and $MD_{i}$ are large, case $i$ may be an outlier or influential case. 
 
-Generally, when the statistics , $CD_{i}$, $h_{i}$ and $MD_{i}$ are large, case $i$ may be an outlier or influential case.  
+Cook's Distance can be easily calculated by `cooks.distance` function from `{stats}` package. You can also directly through `plot` function, as long as you specify the `cook.levels`.
+
+Please find the Cook's D calculation example below.
+
+```{r cookd_plot}
+states <- as.data.frame(state.x77[,c("Murder", "Population",
+                                     "Illiteracy", "Income", "Frost")])
+
+# fit the data into the linear regression model
+fit1 <- lm(Murder ~ Population + Illiteracy + Income + Frost, data=states)
+##  Influence = Leverage x Discrepancy
+# 1. Cook's distance calculation.
+fit1_cookd <- cooks.distance(fit1)
+
+cutoff <- 4/(nrow(states)-length(fit1$coefficients)-2)
+
+# plot Cook's Distance
+plot(fit1, which=4, cook.levels=cutoff)
+abline(h=cutoff, lty=2, col="red")
+
+```
+
 
 **Cook’s distance**, **leverages**, and *Mahalanobis distance** can be effective for finding influential cases when a **single outlier** _exist_, but can fail if there are two or more outliers. 
 
 Nevertheless, these numerical diagnostics combined with plots such as residuals versus fitted values and fitted values versus the response are probably the most effective techniques for detecting cases that affect the fitted values when the multiple linear regression model is a good approximation for the bulk of the data.
 
+We are going to use the same data example and linear regression model (fit1) for the Cook's distance plot. 
+
+The function `influencePlot()` from {car} package, is a very handy function to represent these unusual observation issues. This function creates a bubble plot of Studentized residuals versus hat values, with the areas of the circles representing the observations proportional to the value Cook's distance.
+
+  - Vertical reference lines are drawn at twice and three times
+  - the average hat value, horizontal reference lines at -2, 0, and 2 on the Studentized-residual scale.
+  - x-axis: Hat-value (with cutoffs)
+  - Y-axis: studentized residual
+  - size of bubble (Cook's D)
+
+```{r influencePlot}
+
+# id.n indicates how many most unusual observations are identified.
+car::influencePlot(fit1, id.n=3)
+
+```
+
 ### DFITS
 $DFITS_{i}$ is the scaled difference between the predicted responses from the model constructed from all of the data and the predicted responses from the model constructed by setting the $i_{th}$ observation aside.
 
-It is similar to Cook's distance. Unlike Cook's distance, it does not look at all of the predicted values with the i-th observation set aside. Some analysts suggest investigating observations for which $|DFITS_{i}|$ is greater than $2\sqrt{(p+1)/(n−p−1)}$. Cook's D and DFITS give similar answers.
+It is similar to Cook's distance. Unlike Cook's distance, it does not look at all of the predicted values with the i-th observation set aside. 
+
+#### Rule of Thumb
+Some analysts suggest investigating observations for which $|DFITS_{i}|$ is greater than $2\sqrt{(p+1)/(n−p−1)}$. __Cook's D__ and __DFITS__ give similar answers.
 
 
 # Summary
+
  - Small samples are especially vulnerable to outliers-there are fewer cases to counter the outlier
+ 
  - Large samples can also be affected
+ 
  - Even if you have many cases, and your variables have limited ranges, miscodes that could influence the regression model are still possible
+ 
  - Unusual cases are only influential when they are both unusual in terms of their Y value given their X (outlier), and when they have an unusual X-value (leverage):
+ 
 $$Influence = Leverage \times Discrepancy$$
+
 - We can test for outliers using studentized residuals and quantile-comparison plots
+
 - Leverage is assessed by exploring the hat-values
+
 - Influence is assessed using DFBetas and, preferably Cook’s Ds
+
 - Influence Plots (or bubble plots) are useful because they display the studentized residuals, hat-values and Cook’s distances all on the same plot
+
 - Joint influence is best assessed using Added-Variable Plots (or partial-regression plots)
  
  
- 
- 
+_Note: Some of the contents are originally from Dagmar Blatná's and William G. Jacoby tutorials. If you are interested in, you can find both online tutorials below._
 
-Note: Some of the contents are originally from Dagmar Blatná's and William G. Jacoby tutorials. If you are interested in, you can find both online tutorials below.
+_[Dagmar Blatná](https://statisticsbyjim.com/basics/outliers/#:~:text=Note%20that%20Z%2Dscores%20can,cutoff%20value%20of%20%2B%2F%2D3)_
 
-[Dagmar Blatná](https://statisticsbyjim.com/basics/outliers/#:~:text=Note%20that%20Z%2Dscores%20can,cutoff%20value%20of%20%2B%2F%2D3)
-
-[William G. Jacoby](http://www.ncwebcenter.com/Data-Transformation.pdf)
+_[William G. Jacoby](http://www.ncwebcenter.com/Data-Transformation.pdf)_
 
 
 -- To be Continued

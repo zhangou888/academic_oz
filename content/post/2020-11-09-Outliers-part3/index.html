@@ -396,7 +396,7 @@ car::outlierTest(fit1)</code></pre>
 ## Nevada 3.542929         0.00095088     0.047544</code></pre>
 <p>As you can see the studentized residual and its Bonferroni’s P-value, state-<strong>Nevada</strong> could be the potential outliers.</p>
 <p>In <code>{car}</code> package, there isn’t a single-alone function to plot studentized residual, but through function-<code>influencePlot</code> and <code>influenceIndexPlot</code>, you can incorporate all information from outlier, high-leverage, and influential observations into a single informative plot.</p>
-<pre class="r"><code># id.n indicates how many most unusual observations are identified.
+<pre class="r"><code># id.n indicates how many the most unusual observations are identified.
 car::influenceIndexPlot(fit1, id.n=3)</code></pre>
 <p><img src="figure/influenceIndexPlot-1.png" width="576" style="display: block; margin: auto;" /></p>
 <p>In this diagnostic plots, you can find 4 different plots:</p>
@@ -406,7 +406,7 @@ car::influenceIndexPlot(fit1, id.n=3)</code></pre>
 <li>Studentdized residual</li>
 <li>Cook’s Distance</li>
 </ul>
-<p>The <code>id.n</code> keyword indicates how many most unusual observations are identified.</p>
+<p>The <code>id.n</code> keyword indicates how many the most unusual observations are identified.</p>
 </div>
 </div>
 <div id="dfbeta-and-dfbetas" class="section level3">
@@ -493,7 +493,7 @@ cutoff &lt;- 4/(nrow(states)-length(fit1$coefficients)-2)
 plot(fit1, which=4, cook.levels=cutoff)
 abline(h=cutoff, lty=2, col=&quot;red&quot;)</code></pre>
 <p><img src="figure/cookd_plot-1.png" width="576" style="display: block; margin: auto;" /></p>
-<p><strong>Cook’s distance</strong>, <strong>leverages</strong>, and *Mahalanobis distance<strong> can be effective for finding influential cases when a </strong>single outlier** <em>exist</em>, but can fail if there are two or more outliers.</p>
+<p><strong>Cook’s distance</strong>, <strong>leverages</strong>, and <strong>Mahalanobis distance</strong> can be effective for finding influential cases when a <strong>single outlier</strong> <em>exist</em>, but can fail if there are two or more outliers.</p>
 <p>Nevertheless, these numerical diagnostics combined with plots such as residuals versus fitted values and fitted values versus the response are probably the most effective techniques for detecting cases that affect the fitted values when the multiple linear regression model is a good approximation for the bulk of the data.</p>
 <p>We are going to use the same data example and linear regression model (fit1) for the Cook’s distance plot.</p>
 <p>The function <code>influencePlot()</code> from {car} package, is a very handy function to represent these unusual observation issues. This function creates a bubble plot of Studentized residuals versus hat values, with the areas of the circles representing the observations proportional to the value Cook’s distance.</p>

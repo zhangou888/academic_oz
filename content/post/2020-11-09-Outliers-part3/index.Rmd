@@ -410,7 +410,7 @@ In `{car}` package, there isn't a single-alone function to plot studentized resi
 
 ```{r influenceIndexPlot}
 
-# id.n indicates how many most unusual observations are identified.
+# id.n indicates how many the most unusual observations are identified.
 car::influenceIndexPlot(fit1, id.n=3)
 
 ```
@@ -422,7 +422,7 @@ In this diagnostic plots, you can find 4 different plots:
   - Studentdized residual
   - Cook's Distance
 
-The `id.n` keyword indicates how many most unusual observations are identified.
+The `id.n` keyword indicates how many the most unusual observations are identified.
 
 ### DFBeta and DFBetas
 
@@ -519,7 +519,7 @@ abline(h=cutoff, lty=2, col="red")
 ```
 
 
-**Cook’s distance**, **leverages**, and *Mahalanobis distance** can be effective for finding influential cases when a **single outlier** _exist_, but can fail if there are two or more outliers. 
+**Cook’s distance**, **leverages**, and **Mahalanobis distance** can be effective for finding influential cases when a **single outlier** _exist_, but can fail if there are two or more outliers. 
 
 Nevertheless, these numerical diagnostics combined with plots such as residuals versus fitted values and fitted values versus the response are probably the most effective techniques for detecting cases that affect the fitted values when the multiple linear regression model is a good approximation for the bulk of the data.
 

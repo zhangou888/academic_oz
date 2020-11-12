@@ -1,5 +1,33 @@
-<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
+---
+title: Outliers-Part 3:Outliers in Regression
+author: Ou Zhang
+date: '2020-11-09'
+categories:
+  - R
+  - Statistics
+tags:
+  - R
+  - Statistics
+slug: outliers-part3
+draft: no
+lastmod: '2020-11-09T23:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: Smart
+  preview_only: no
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 4
+    self_contained: no
+
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -96,7 +124,7 @@ abline(lm(dist ~ speed, data=cars1), col=&quot;blue&quot;, lwd=3, lty=2)</code><
 <p>It is common practice to distinguish between two types of outliers. Outliers in the <code>response variable</code> (DV) represent model failure. Such observations are called <strong>outliers</strong>. <strong>A regression outlier is an observation that has an unusual value of the dependent variable</strong> <span class="math inline">\(Y\)</span>, <strong>conditional on its value of the independent variable</strong> <span class="math inline">\(X\)</span>. A regression outlier will have a large residual but not necessarily affect the regression slope coefficient.</p>
 <p>See the Figure (a) below. This is an example of an outliers without influence.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig2"></span>
-<img src="figure/fig_a.JPG" alt="Figure (a): Outlier without influence" width="70%" />
+<img src="figure/fig_a.JPG" alt="Figure (a): Outlier without influence" width="60%" />
 <p class="caption">
 Figure 1.1: Figure (a): Outlier without influence
 </p>
@@ -110,7 +138,7 @@ An observation that has an unusual <span class="math inline">\(X\)</span> value-
 <p>It is possible to have a high leverage and yet follow straight in line with the pattern of the rest of the data. High leverage observations can affect the regression model, too. Their response variables need not be outliers.</p>
 <p>See the Figure (b) below. This is an example of high leverage observation.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig3"></span>
-<img src="figure/fig_b.JPG" alt="Figure (b): High leverage" width="70%" />
+<img src="figure/fig_b.JPG" alt="Figure (b): High leverage" width="60%" />
 <p class="caption">
 Figure 1.2: Figure (b): High leverage
 </p>
@@ -126,7 +154,7 @@ with an unusual <span class="math inline">\(Y-\)</span>value given its <span cla
 <p><span class="math display">\[Influence = Leverage \times Discrepancy\]</span>
 See the Figure (c) below. This is an example of a combination of discrepancy (unusual Y value) and high leverage (unusual X value) observation.</p>
 <div class="figure" style="text-align: center"><span id="fig:fig4"></span>
-<img src="figure/fig_c.JPG" alt="Figure (c): Combination of discrepancy (unusual Y value) and leverage (unusual X value)" width="70%" />
+<img src="figure/fig_c.JPG" alt="Figure (c): Combination of discrepancy (unusual Y value) and leverage (unusual X value)" width="60%" />
 <p class="caption">
 Figure 1.3: Figure (c): Combination of discrepancy (unusual Y value) and leverage (unusual X value)
 </p>
@@ -268,32 +296,26 @@ ratio &lt;- p/n
 
 # display hatvalues
 hatvalues(fit1)</code></pre>
-<pre><code>##        Alabama         Alaska        Arizona       Arkansas 
-##     0.09819211     0.43247319     0.12264914     0.08722029 
-##     California       Colorado    Connecticut       Delaware 
-##     0.34087628     0.05469964     0.09474658     0.05859637 
-##        Florida        Georgia         Hawaii          Idaho 
-##     0.12940379     0.05803142     0.22443594     0.06905425 
-##       Illinois        Indiana           Iowa         Kansas 
-##     0.09683616     0.03871740     0.04627447     0.05245106 
-##       Kentucky      Louisiana          Maine       Maryland 
-##     0.05131253     0.17022388     0.09966458     0.06942663 
-##  Massachusetts       Michigan      Minnesota    Mississippi 
-##     0.02687166     0.05740920     0.04638897     0.14748152 
-##       Missouri        Montana       Nebraska         Nevada 
-##     0.04199088     0.05253317     0.04421328     0.09508977 
-##  New Hampshire     New Jersey     New Mexico       New York 
-##     0.06387335     0.06616617     0.15998871     0.23298637 
-## North Carolina   North Dakota           Ohio       Oklahoma 
-##     0.05218913     0.10529028     0.08652446     0.05117056 
-##         Oregon   Pennsylvania   Rhode Island South Carolina 
-##     0.19057634     0.11185698     0.04562377     0.10445404 
-##   South Dakota      Tennessee          Texas           Utah 
-##     0.07553161     0.04580225     0.13392638     0.06970746 
-##        Vermont       Virginia     Washington  West Virginia 
-##     0.08788063     0.03230467     0.21662901     0.05839687 
-##      Wisconsin        Wyoming 
-##     0.04173326     0.06012359</code></pre>
+<pre><code>##        Alabama         Alaska        Arizona       Arkansas     California 
+##     0.09819211     0.43247319     0.12264914     0.08722029     0.34087628 
+##       Colorado    Connecticut       Delaware        Florida        Georgia 
+##     0.05469964     0.09474658     0.05859637     0.12940379     0.05803142 
+##         Hawaii          Idaho       Illinois        Indiana           Iowa 
+##     0.22443594     0.06905425     0.09683616     0.03871740     0.04627447 
+##         Kansas       Kentucky      Louisiana          Maine       Maryland 
+##     0.05245106     0.05131253     0.17022388     0.09966458     0.06942663 
+##  Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+##     0.02687166     0.05740920     0.04638897     0.14748152     0.04199088 
+##        Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+##     0.05253317     0.04421328     0.09508977     0.06387335     0.06616617 
+##     New Mexico       New York North Carolina   North Dakota           Ohio 
+##     0.15998871     0.23298637     0.05218913     0.10529028     0.08652446 
+##       Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+##     0.05117056     0.19057634     0.11185698     0.04562377     0.10445404 
+##   South Dakota      Tennessee          Texas           Utah        Vermont 
+##     0.07553161     0.04580225     0.13392638     0.06970746     0.08788063 
+##       Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+##     0.03230467     0.21662901     0.05839687     0.04173326     0.06012359</code></pre>
 <pre class="r"><code># High leverage function. 
 highleverage &lt;- function(fit) {
 

@@ -118,7 +118,7 @@ It is common practice to distinguish between two types of outliers. Outliers in 
 
 See the Figure (a) below. This is an example of an outliers without influence.
 
-```{r fig2, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Figure (a): Outlier without influence',echo = FALSE}
+```{r fig2, out.width='60%', fig.align='center', fig.pos='h', fig.cap='Figure (a): Outlier without influence',echo = FALSE}
 
     knitr::include_graphics("figure/fig_a.jpg", error = FALSE)
 
@@ -134,7 +134,7 @@ It is possible to have a high leverage and yet follow straight in line with the 
 
 See the Figure (b) below. This is an example of high leverage observation.
 
-```{r fig3, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Figure (b): High leverage',echo = FALSE}
+```{r fig3, out.width='60%', fig.align='center', fig.pos='h', fig.cap='Figure (b): High leverage',echo = FALSE}
 
     knitr::include_graphics("figure/fig_b.jpg", error = FALSE)
 
@@ -150,7 +150,7 @@ with an unusual $Y-$value given its $X-$value. In such cases both the intercept 
  $$Influence = Leverage \times Discrepancy$$
 See the Figure (c) below. This is an example of a combination of discrepancy (unusual Y value) and high leverage (unusual X value) observation.
 
-```{r fig4, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Figure (c): Combination of discrepancy (unusual Y value) and leverage (unusual X value)',echo = FALSE}
+```{r fig4, out.width='60%', fig.align='center', fig.pos='h', fig.cap='Figure (c): Combination of discrepancy (unusual Y value) and leverage (unusual X value)',echo = FALSE}
 
     knitr::include_graphics("figure/fig_c.jpg", error = FALSE)
 

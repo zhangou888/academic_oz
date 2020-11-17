@@ -55,7 +55,7 @@ packages <- lapply(packages, FUN = function(x) {
 
 ```
 
-```{r fig1, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
+```{r fig1, out.width='60%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
 
     knitr::include_graphics("figure/outlier.jpg", error = FALSE)
 
@@ -138,7 +138,7 @@ The reliability and approximate convergence of Bayesian models can be assessed u
 Mahalanobis (or generalized) distance for observation is the **distance from this observation to the center**, _taking into account the covariance matrix_.
 
 
-```{r fig2, out.width='100%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
+```{r fig2, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
 
     knitr::include_graphics("figure/mahalanobis.png", error = FALSE)
 

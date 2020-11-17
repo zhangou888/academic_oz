@@ -1,0 +1,316 @@
+---
+title: Outliers-Part 4:Finding Outliers in a multivariated way
+author: Ou Zhang
+date: '2020-11-03'
+categories:
+  - R
+  - Statistics
+tags:
+  - R
+  - Statistics
+slug: outliers-part4
+draft: no
+lastmod: '2020-11-16T09:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: Smart
+  preview_only: no
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 4
+    self_contained: no
+
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#model-specific-methods"><span class="toc-section-number">1</span> Model-specific methods</a><ul>
+<li><a href="#cooks-distance"><span class="toc-section-number">1.1</span> Cook’s Distance</a></li>
+<li><a href="#pareto"><span class="toc-section-number">1.2</span> Pareto</a></li>
+</ul></li>
+<li><a href="#multivariate-methods"><span class="toc-section-number">2</span> Multivariate methods</a><ul>
+<li><a href="#mahalanobis-distance"><span class="toc-section-number">2.1</span> Mahalanobis Distance</a></li>
+<li><a href="#robust-mahalanobis-distance"><span class="toc-section-number">2.2</span> Robust Mahalanobis Distance</a></li>
+<li><a href="#minimum-covariance-determinant-mcd"><span class="toc-section-number">2.3</span> Minimum Covariance Determinant (MCD)</a><ul>
+<li><a href="#robust-tolerance-ellipsoid-rte"><span class="toc-section-number">2.3.1</span> robust tolerance ellipsoid (RTE)</a></li>
+</ul></li>
+<li><a href="#invariant-coordinate-selection-ics"><span class="toc-section-number">2.4</span> Invariant Coordinate Selection (ICS)</a></li>
+<li><a href="#optics"><span class="toc-section-number">2.5</span> OPTICS</a></li>
+<li><a href="#isolation-forest"><span class="toc-section-number">2.6</span> Isolation Forest</a></li>
+<li><a href="#local-outlier-factor"><span class="toc-section-number">2.7</span> Local Outlier Factor</a></li>
+</ul></li>
+<li><a href="#check_outliers-function-in-performance-r-package."><span class="toc-section-number">3</span> ‘check_outliers’ function in {performance} R package.</a><ul>
+<li><a href="#threshold-specification"><span class="toc-section-number">3.0.1</span> Threshold specification</a></li>
+</ul></li>
+<li><a href="#reference"><span class="toc-section-number">4</span> Reference</a></li>
+</ul>
+</div>
+
+<div class="figure" style="text-align: center"><span id="fig:fig1"></span>
+<img src="figure/outlier.jpg" alt="Outliers" width="70%" />
+<p class="caption">
+Figure 0.1: Outliers
+</p>
+</div>
+<p>In the last blog posts, I’ve discussed the outliers detection in regression <a href="/2020/11/09/outliers-part3/">part 3</a>. In fact, outliers in regression is a special case of the multivariate outliers. Because regression has been used widely, I choose to make it as a special topic. Now, in this part I am going to discuss how we can better identify <strong>multivariate outlier</strong> or <strong>Outliers in higher dimensions</strong>.</p>
+<p>I will still use a linear regression as an example, but will apply the outlier detection in a multivariate way.</p>
+<blockquote>
+<p>Multivariate Statistics - Simultaneous observation and analysis of more than one outcome variable.</p>
+</blockquote>
+<p>I will use <code>Animals</code> data from the <code>MASS</code> package in R for demonstration.</p>
+<pre class="r"><code># Load library and pull out data
+library(MASS)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<pre class="r"><code>data(Animals)
+
+attach(Animals)
+
+# check data structure.
+head(Animals)</code></pre>
+<pre><code>##                     body brain
+## Mountain beaver     1.35   8.1
+## Cow               465.00 423.0
+## Grey wolf          36.33 119.5
+## Goat               27.66 115.0
+## Guinea pig          1.04   5.5
+## Dipliodocus     11700.00  50.0</code></pre>
+<p>The variables for the demonstration are <strong>body weight</strong> and <strong>brain weight</strong> of Animals which are converted to its log form (to make highly skewed distributions less skewed)</p>
+<pre class="r"><code># Log transformation.
+Y &lt;- data.frame(body = log(Animals$body), 
+                brain = log(Animals$brain))
+
+# Create Scatterplot
+plot_fig &lt;- ggplot(Y, aes(x = body, y = brain)) + 
+            geom_point(size = 5) +
+                       xlab(&quot;log(body)&quot;) + 
+                       ylab(&quot;log(brain)&quot;) + 
+                       ylim(-5, 15) +
+            scale_x_continuous(limits = c(-10, 16), breaks = seq(-15, 15, 5))</code></pre>
+<p>In the multivariate world, outliers can be defined as particularly <strong>influential observations</strong>.</p>
+<p><strong>An outlier is an observation which deviates so much from the other observations as to arouse suspicions that it was generated by a different mechanism.” D. M. Hawkins</strong></p>
+<p>Most multivariate outlier detection methods rely on the computation of some <em>distance metric</em>, and the observations greater than a certain threshold are considered outliers.</p>
+<p>Importantly, outliers detection methods are meant to provide information to the researcher, rather than being an automatized procedure which mindless application is a substitute for thinking.</p>
+<p>Again, outlier detection and handling is still a <strong>subjective process</strong> from researcher. It varies based on different research goals, perspectives, and theoretical frameworks.</p>
+<p>Using the composite approach, multivariate outliers are obtained via the joint application of multiple outliers detection algorithms:</p>
+<ul>
+<li>Mahalanobis distance</li>
+<li>Robust Mahalanobis distance<br />
+</li>
+<li>Minimum Covariance Determinant<br />
+</li>
+<li>Invariant Coordinate Selection</li>
+<li>OPTICS</li>
+<li>Isolation Forest</li>
+<li>Local Outlier Factor</li>
+</ul>
+<div id="model-specific-methods" class="section level1">
+<h1><span class="header-section-number">1</span> Model-specific methods</h1>
+<div id="cooks-distance" class="section level2">
+<h2><span class="header-section-number">1.1</span> Cook’s Distance</h2>
+<p>Among outlier detection methods, Cook’s distance and leverage are less common than the basic <strong>Mahalanobis distance</strong>, but still used. Cook’s distance estimates the variations in regression coefficients after removing each observation, one by one (Cook, 1977). Since Cook’s distance is in the metric of an F distribution with p and n-p degrees of freedom, the median point of the quantile distribution can be used as a cut-off (Bollen, 1985). A common approximation or heuristic is to use <code>4 divided by the numbers of observations</code>, which usually corresponds to a lower threshold (i.e., more outliers are detected). This only works for Frequentist models. For Bayesian models, see pareto.</p>
+</div>
+<div id="pareto" class="section level2">
+<h2><span class="header-section-number">1.2</span> Pareto</h2>
+<p>The reliability and approximate convergence of Bayesian models can be assessed using the estimates for the shape parameter <span class="math inline">\(k\)</span> of the generalized Pareto distribution. If the estimated tail shape parameter k exceeds <code>0.5</code>, the user should be warned, although in practice the authors of the loo package observed good performance for values of <span class="math inline">\(k\)</span> up to <code>0.7</code> (the default threshold used by performance).</p>
+</div>
+</div>
+<div id="multivariate-methods" class="section level1">
+<h1><span class="header-section-number">2</span> Multivariate methods</h1>
+<div id="mahalanobis-distance" class="section level2">
+<h2><span class="header-section-number">2.1</span> Mahalanobis Distance</h2>
+<p><strong>Mahalanobis distance</strong> (Mahalanobis, 1930) is often used for multivariate outliers detection as this distance takes into account the shape of the observations.</p>
+<p>Mahalanobis (or generalized) distance for observation is the <strong>distance from this observation to the center</strong>, <em>taking into account the covariance matrix</em>.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig2"></span>
+<img src="figure/mahalanobis.png" alt="Outliers" width="100%" />
+<p class="caption">
+Figure 2.1: Outliers
+</p>
+</div>
+<ul>
+<li><p>Classical Mahalanobis distances: <strong>sample mean</strong> as estimate for location and sample covariance matrix as estimate for scatter.</p></li>
+<li><p>To detect multivariate outliers the Mahalanobis distance is compared with a cut-off value, which is derived from the <code>chi-square distribution</code></p></li>
+<li><p>In two dimensions we can construct corresponding <code>97.5%</code> tolerance ellipsoid, which is defined by those observations whose Mahalanobis distance does not exceed the cut-off value.</p></li>
+</ul>
+<p>The default threshold is often arbitrarily set to some deviation (in terms of SD or MAD) from the mean (or median) of the Mahalanobis distance. However, as the Mahalanobis distance can be approximated by a Chi-squared distribution (Rousseeuw &amp; Van Zomeren, 1990), we can use the <code>alpha quantile</code> of the chi-square distribution with <code>k</code> degrees of freedom (<span class="math inline">\(k\)</span> being the number of columns).</p>
+<p>By default, the alpha threshold is set to <code>0.025</code> (corresponding to the 2.5% most extreme observations; Cabana, 2019). This criterion is a natural extension of the median plus or minus a coefficient times the MAD method (Leys et al., 2013).</p>
+<pre class="r"><code>Y_center &lt;- colMeans(Y)
+Y_cov &lt;- cov(Y)
+Y_radius &lt;- sqrt(qchisq(0.975, df = ncol(Y)))
+library(car)</code></pre>
+<pre><code>## Loading required package: carData</code></pre>
+<pre><code>## 
+## Attaching package: &#39;car&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     recode</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     some</code></pre>
+<pre class="r"><code>Y_ellipse &lt;- data.frame(ellipse(center = Y_center,
+                                shape = Y_cov,radius = Y_radius, 
+                                segments = 100, draw = FALSE))
+
+colnames(Y_ellipse) &lt;- colnames(Y)
+
+plot_fig &lt;- plot_fig +
+  geom_polygon(data=Y_ellipse, color = &quot;dodgerblue&quot;,
+               fill = &quot;dodgerblue&quot;, alpha = 0.2) +
+  geom_point(aes(x = Y_center[1], y = Y_center[2]),
+             color = &quot;blue&quot;, size = 6)
+plot_fig</code></pre>
+<p><img src="figure/mahalanobis-1.png" width="576" style="display: block; margin: auto;" /></p>
+<p>As you can observed from the plot graph above, Mahalanobis Distance method gives us <code>3</code> potential outlier observations, which are close to the ellipse line.</p>
+</div>
+<div id="robust-mahalanobis-distance" class="section level2">
+<h2><span class="header-section-number">2.2</span> Robust Mahalanobis Distance</h2>
+<p>A robust version of Mahalanobis distance using an Orthogonalized Gnanadesikan-Kettenring pairwise estimator (Gnanadesikan &amp; Kettenring, 1972). Requires the bigutilsr package.</p>
+</div>
+<div id="minimum-covariance-determinant-mcd" class="section level2">
+<h2><span class="header-section-number">2.3</span> Minimum Covariance Determinant (MCD)</h2>
+<p>Another robust version of Mahalanobis. Leys et al. (2018) argue that Mahalanobis Distance is not a robust way to determine outliers, as it uses the means and covariances of all the data – including the outliers – to determine individual difference scores.</p>
+<p>Minimum Covariance Determinant calculates the mean and covariance matrix based on the most central subset of the data (by default, <code>66%</code>), before computing the Mahalanobis Distance. This is deemed to be a more robust method of identifying and removing outliers than regular Mahalanobis distance.</p>
+<ol style="list-style-type: decimal">
+<li>MCD looks for those <code>h</code> observations whose classical covariance matrix has the lowest possible determinant.</li>
+<li>MCD estimate of location is then mean of these <code>h</code> observations</li>
+<li>MCD estimate of scatter is a sample covariance matrix of these <code>h</code> points (multiplied by consistency factor).</li>
+<li>The re-weighting step is applied to improve efficiency at normal data.</li>
+<li>The computation of MCD is difficult, but several fast algorithms are proposed.</li>
+</ol>
+<pre class="r"><code>Y_mcd &lt;- covMcd(Y)
+# Robust estimate of location
+Y_mcd$center</code></pre>
+<pre><code>##     body    brain 
+## 3.028827 4.275608</code></pre>
+<pre class="r"><code># Robust estimate of scatter
+Y_mcd$cov</code></pre>
+<pre><code>##           body    brain
+## body  18.85849 14.16031
+## brain 14.16031 11.03351</code></pre>
+<p>By plugging in these robust estimates of location and scatter in the definition of the Mahalanobis distances, we obtain <strong>robust distances</strong> and can create a <strong>robust tolerance ellipsoid (RTE)</strong>.</p>
+<div id="robust-tolerance-ellipsoid-rte" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> robust tolerance ellipsoid (RTE)</h3>
+<pre class="r"><code>Y_mcd &lt;- covMcd(Y)
+ellipse_mcd &lt;- data.frame(ellipse(center = Y_mcd$center,
+                                  shape = Y_mcd$cov,
+                                  radius= Y_radius, 
+                                  segments=100,draw=FALSE))
+colnames(ellipse_mcd) &lt;- colnames(Y)
+plot_fig &lt;- plot_fig +
+  geom_polygon(data=ellipse_mcd, color=&quot;red&quot;, fill=&quot;red&quot;, 
+  alpha=0.3) +
+  geom_point(aes(x = Y_mcd$center[1], y = Y_mcd$center[2]),
+             color = &quot;red&quot;, size = 6)
+plot_fig</code></pre>
+<p><img src="figure/rte-1.png" width="576" style="display: block; margin: auto;" />
+### Distance-Distance plot
+The distance-distance plot shows the robust distance of each observation versus its classical Mahalanobis distance, obtained immediately from MCD object.</p>
+<pre class="r"><code>plot(Y_mcd, which = &quot;dd&quot;)</code></pre>
+<p><img src="figure/dd_plot-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="invariant-coordinate-selection-ics" class="section level2">
+<h2><span class="header-section-number">2.4</span> Invariant Coordinate Selection (ICS)</h2>
+<p>The outlier are detected using ICS, which by default uses an alpha threshold of <code>0.025</code> (corresponding to the <code>2.5%</code> most extreme observations) as a cut-off value for outliers classification. Refer to the help-file of <code>ICSOutlier::ics.outlier()</code> to get more details about this procedure. Note that <code>method = "ics"</code> requires both <code>ICS</code> and <code>ICSOutlier</code> to be installed, and that it takes some time to compute the results.</p>
+</div>
+<div id="optics" class="section level2">
+<h2><span class="header-section-number">2.5</span> OPTICS</h2>
+<p>The Ordering Points To Identify the Clustering Structure (OPTICS) algorithm (Ankerst et al., 1999) is using similar concepts to DBSCAN (an unsupervised clustering technique that can be used for outliers detection). The threshold argument is passed as minPts, which corresponds to the minimum size of a cluster. By default, this size is set at 2 times the number of columns (Sander et al., 1998). Compared to the others techniques, that will always detect several outliers (as these are usually defined as a percentage of extreme values), this algorithm functions in a different manner and won’t always detect outliers. Note that <code>method = "optics"</code> requires the dbscan package to be installed, and that it takes some time to compute the results.</p>
+</div>
+<div id="isolation-forest" class="section level2">
+<h2><span class="header-section-number">2.6</span> Isolation Forest</h2>
+<p>The outliers are detected using the anomaly score of an isolation forest (a class of random forest). The default threshold of <code>0.025</code> will classify as outliers the observations located at <code>qnorm(1-0.025) * MAD</code>) (a robust equivalent of SD) of the median (roughly corresponding to the <code>2.5%</code> most extreme observations). Requires the solitude package.</p>
+</div>
+<div id="local-outlier-factor" class="section level2">
+<h2><span class="header-section-number">2.7</span> Local Outlier Factor</h2>
+<p>Based on a <code>K</code> nearest neighbours algorithm, LOF compares the local density of an point to the local densities of its neighbors instead of computing a distance from the center (Breunig et al., 2000). Points that have a substantially lower density than their neighbors are considered outliers. A LOF score of approximately 1 indicates that density around the point is comparable to its neighbors. Scores significantly larger than 1 indicate outliers. The default threshold of <code>0.025</code> will classify as outliers the observations located at <span class="math inline">\(qnorm(1-0.025) \times SD\)</span>) of the log-transformed LOF distance. Requires the <code>dbscan</code> package.</p>
+</div>
+</div>
+<div id="check_outliers-function-in-performance-r-package." class="section level1">
+<h1><span class="header-section-number">3</span> ‘check_outliers’ function in {performance} R package.</h1>
+<p>The <code>check_outliers</code> function in the {performance} R package (Lüdecke et al., 2019) contains multiple composite outlier score detection methods.</p>
+<p>You can find the function details from the below link.</p>
+<p><a href="https://easystats.github.io/performance/reference/check_outliers.html">check_outliers</a></p>
+<p>In this function, all the default thresholds are set as below.</p>
+<pre class="r"><code>library(performance)
+
+# Univariate
+check_outliers(mtcars$mpg)</code></pre>
+<pre><code>## Warning: 4 outliers detected (cases 18, 19, 20, 28).</code></pre>
+<pre class="r"><code>#&gt; Warning: 4 outliers detected (cases 18, 19, 20, 28).
+#&gt; 
+
+# Multivariate
+# select only mpg and disp (continuous)
+mt1 &lt;- mtcars[, c(1, 3, 4)]
+# create some fake outliers and attach outliers to main df
+mt2 &lt;- rbind(mt1, data.frame(mpg = c(37, 40), disp = c(300, 400), hp = c(110, 120)))
+# fit model with outliers
+model &lt;- lm(disp ~ mpg + hp, data = mt2)
+
+ol &lt;- check_outliers(model)
+# plot(ol)
+insight::get_data(mode)[ol, ]</code></pre>
+<pre><code>## Warning: Could not get model data.</code></pre>
+<pre><code>## NULL</code></pre>
+<pre class="r"><code>#&gt; Warning: Could not get model data.
+#&gt; NULL
+
+
+check_outliers(model, method = c(&quot;mahalabonis&quot;, &quot;mcd&quot;))</code></pre>
+<pre><code>## Warning: 6 outliers detected (cases 18, 20, 28, 31, 33, 34).</code></pre>
+<pre class="r"><code>#&gt; Warning: 6 outliers detected (cases 18, 20, 28, 31, 33, 34).
+#&gt; 
+if (FALSE) {
+# This one takes some seconds to finish...
+check_outliers(model, method = &quot;ics&quot;)
+
+# For dataframes
+check_outliers(mtcars)
+check_outliers(mtcars, method = &quot;all&quot;)
+}</code></pre>
+<div id="threshold-specification" class="section level3">
+<h3><span class="header-section-number">3.0.1</span> Threshold specification</h3>
+<pre class="r"><code># list of default Threshold specification. 
+list(zscore = stats::qnorm(p = 1 - 0.025), 
+     iqr = 1.5, 
+     cook = stats::qf(0.5, ncol(x), nrow(x) - ncol(x)), 
+     pareto = 0.7, 
+     mahalanobis = stats::qchisq(p = 1 - 0.025, df = ncol(x)), 
+     robust = stats::qchisq(p = 1 - 0.025, df = ncol(x)), 
+     mcd = stats::qchisq(p = 1 - 0.025, df = ncol(x)), 
+     ics = 0.025, 
+     optics = 2 * ncol(x), 
+     iforest = 0.025, 
+     lof = 0.025 )</code></pre>
+<pre><code>## Error in ncol(x): object &#39;x&#39; not found</code></pre>
+<p><em>Note: Some of the contents are originally from Mishtert T and Will Hipson online tutorials. If you are interested in, you can find both online tutorials below.</em></p>
+<p><em><a href="https://medium.com/towards-artificial-intelligence/outlier-detection-part-2-multivariate-df486f658d09">Mishtert T</a></em></p>
+<p><em><a href="https://www.r-bloggers.com/2019/01/a-new-way-to-handle-multivariate-outliers/">Will Hipson</a></em></p>
+<p>– To be Continued</p>
+</div>
+</div>
+<div id="reference" class="section level1">
+<h1><span class="header-section-number">4</span> Reference</h1>
+<ul>
+<li><p>Archimbaud, A., Nordhausen, K., &amp; Ruiz-Gazen, A. (2018). ICS for multivariate outlier detection with application to quality control. Computational Statistics &amp; Data Analysis, 128, 184–199. doi: 10.1016/j.csda.2018.06.011</p></li>
+<li><p>Gnanadesikan, R., &amp; Kettenring, J. R. (1972). Robust estimates, residuals, and outlier detection with multiresponse data. Biometrics, 81-124.</p></li>
+<li><p>Bollen, K. A., &amp; Jackman, R. W. (1985). Regression diagnostics: An expository treatment of outliers and influential cases. Sociological Methods &amp; Research, 13(4), 510-542.</p></li>
+<li><p>Cabana, E., Lillo, R. E., &amp; Laniado, H. (2019). Multivariate outlier detection based on a robust Mahalanobis distance with shrinkage estimators. arXiv preprint arXiv:1904.02596.</p></li>
+<li><p>Cook, R. D. (1977). Detection of influential observation in linear regression. Technometrics, 19(1), 15-18.</p></li>
+<li><p>Iglewicz, B., &amp; Hoaglin, D. C. (1993). How to detect and handle outliers (Vol. 16). Asq Press.</p></li>
+<li><p>Leys, C., Klein, O., Dominicy, Y., &amp; Ley, C. (2018). Detecting multivariate outliers: Use a robust variant of Mahalanobis distance. Journal of Experimental Social Psychology, 74, 150-156.</p></li>
+<li><p>Liu, F. T., Ting, K. M., &amp; Zhou, Z. H. (2008, December). Isolation forest. In 2008 Eighth IEEE International Conference on Data Mining (pp. 413-422). IEEE.</p></li>
+<li><p>Rousseeuw, P. J., &amp; Van Zomeren, B. C. (1990). Unmasking multivariate outliers and leverage points. Journal of the American Statistical association, 85(411), 633-639.</p></li>
+</ul>
+</div>

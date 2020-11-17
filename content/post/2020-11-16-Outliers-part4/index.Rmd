@@ -99,6 +99,8 @@ plot_fig <- ggplot(Y, aes(x = body, y = brain)) +
                        ylim(-5, 15) +
             scale_x_continuous(limits = c(-10, 16), breaks = seq(-15, 15, 5))
 
+plot_fig
+
 ```
 
 In the multivariate world, outliers can be defined as particularly **influential observations**. 

@@ -353,21 +353,21 @@ mt1 <- mtcars[, c(1, 3, 4)]
 # create some fake outliers and attach outliers to main df
 mt2 <- rbind(mt1, data.frame(mpg = c(37, 40), disp = c(300, 400), hp = c(110, 120)))
 # fit model with outliers
-model <- lm(disp ~ mpg + hp, data = mt2)
+model1 <- lm(disp ~ mpg + hp, data = mt2)
 
-ol <- check_outliers(model)
+ol <- check_outliers(model1)
 # plot(ol)
-insight::get_data(mode)[ol, ]
+insight::get_data(model1)[ol, ]
 #> Warning: Could not get model data.
 #> NULL
 
 
-check_outliers(model, method = c("mahalabonis", "mcd"))
+check_outliers(model1, method = c("mahalabonis", "mcd"))
 #> Warning: 6 outliers detected (cases 18, 20, 28, 31, 33, 34).
 #> 
 if (FALSE) {
 # This one takes some seconds to finish...
-check_outliers(model, method = "ics")
+check_outliers(model1, method = "ics")
 
 # For dataframes
 check_outliers(mtcars)

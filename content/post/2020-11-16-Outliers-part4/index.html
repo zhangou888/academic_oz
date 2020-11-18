@@ -1,5 +1,33 @@
-<link href="index_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="index_files/anchor-sections-1.0/anchor-sections.js"></script>
+---
+title: Outliers-Part 4:Finding Outliers in a multivariated way
+author: Ou Zhang
+date: '2020-11-16'
+categories:
+  - R
+  - Statistics
+tags:
+  - R
+  - Statistics
+slug: outliers-part4
+draft: no
+lastmod: '2020-11-16T09:53:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: Smart
+  preview_only: no
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 4
+    self_contained: no
+
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
 
 <div id="TOC">
 <ul>
@@ -358,17 +386,19 @@ mt1 &lt;- mtcars[, c(1, 3, 4)]
 # create some fake outliers and attach outliers to main df
 mt2 &lt;- rbind(mt1, data.frame(mpg = c(37, 40), disp = c(300, 400), hp = c(110, 120)))
 # fit model with outliers
-model &lt;- lm(disp ~ mpg + hp, data = mt2)
+model1 &lt;- lm(disp ~ mpg + hp, data = mt2)
 
-ol &lt;- check_outliers(model)
+ol &lt;- check_outliers(model1)
 # plot(ol)
-insight::get_data(mode)[ol, ]</code></pre>
-<pre><code>## NULL</code></pre>
+insight::get_data(model1)[ol, ]</code></pre>
+<pre><code>##               disp mpg  hp
+## Maserati Bora  301  15 335
+## 2              400  40 120</code></pre>
 <pre class="r"><code>#&gt; Warning: Could not get model data.
 #&gt; NULL
 
 
-check_outliers(model, method = c(&quot;mahalabonis&quot;, &quot;mcd&quot;))</code></pre>
+check_outliers(model1, method = c(&quot;mahalabonis&quot;, &quot;mcd&quot;))</code></pre>
 <pre><code>## Warning: 6 outliers detected (cases 18, 20, 28, 31, 33, 34).</code></pre>
 <pre class="r"><code>#&gt; Warning: 6 outliers detected (cases 18, 20, 28, 31, 33, 34).
 #&gt; 

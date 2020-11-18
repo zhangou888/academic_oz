@@ -356,10 +356,9 @@ mt2 <- rbind(mt1, data.frame(mpg = c(37, 40), disp = c(300, 400), hp = c(110, 12
 model1 <- lm(disp ~ mpg + hp, data = mt2)
 
 ol <- check_outliers(model1)
+
 # plot(ol)
-insight::get_data(model1)[ol, ]
-#> Warning: Could not get model data.
-#> NULL
+
 
 
 check_outliers(model1, method = c("mahalabonis", "mcd"))
@@ -378,7 +377,7 @@ check_outliers(mtcars, method = "all")
 
 
 ### Threshold specification
-```{r Threshold}
+```{r Threshold, eval=FALSE}
 # list of default Threshold specification. 
 list(zscore = stats::qnorm(p = 1 - 0.025), 
      iqr = 1.5, 

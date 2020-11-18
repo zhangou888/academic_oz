@@ -389,13 +389,9 @@ mt2 &lt;- rbind(mt1, data.frame(mpg = c(37, 40), disp = c(300, 400), hp = c(110,
 model1 &lt;- lm(disp ~ mpg + hp, data = mt2)
 
 ol &lt;- check_outliers(model1)
+
 # plot(ol)
-insight::get_data(model1)[ol, ]</code></pre>
-<pre><code>##               disp mpg  hp
-## Maserati Bora  301  15 335
-## 2              400  40 120</code></pre>
-<pre class="r"><code>#&gt; Warning: Could not get model data.
-#&gt; NULL
+
 
 
 check_outliers(model1, method = c(&quot;mahalabonis&quot;, &quot;mcd&quot;))</code></pre>
@@ -404,7 +400,7 @@ check_outliers(model1, method = c(&quot;mahalabonis&quot;, &quot;mcd&quot;))</co
 #&gt; 
 if (FALSE) {
 # This one takes some seconds to finish...
-check_outliers(model, method = &quot;ics&quot;)
+check_outliers(model1, method = &quot;ics&quot;)
 
 # For dataframes
 check_outliers(mtcars)
@@ -424,7 +420,6 @@ list(zscore = stats::qnorm(p = 1 - 0.025),
      optics = 2 * ncol(x), 
      iforest = 0.025, 
      lof = 0.025 )</code></pre>
-<pre><code>## Error in ncol(x): object &#39;x&#39; not found</code></pre>
 <p><em>Note: Some of the contents are originally from Mishtert T and Will Hipson online tutorials. If you are interested in, you can find both online tutorials below.</em></p>
 <p><em><a href="https://medium.com/towards-artificial-intelligence/outlier-detection-part-2-multivariate-df486f658d09">Mishtert T</a></em></p>
 <p><em><a href="https://www.r-bloggers.com/2019/01/a-new-way-to-handle-multivariate-outliers/">Will Hipson</a></em></p>

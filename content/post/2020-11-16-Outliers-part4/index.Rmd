@@ -149,7 +149,7 @@ Pareto is a coefficient used for for Bayesian models. The reliability and approx
 Mahalanobis (or generalized) distance for observation is the **distance from this observation to the center**, _taking into account the covariance matrix_.
 
 
-```{r fig2, out.width='70%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
+```{r fig2, out.width='60%', fig.align='center', fig.pos='h', fig.cap='Outliers',echo = FALSE}
 
     knitr::include_graphics("figure/mahalanobis.png", error = FALSE)
 

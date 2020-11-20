@@ -16,8 +16,8 @@ summary: General Intelligence G-loading
 
 categories: []
 tags:
-- Psychology
-- Factor Analysis
+- Workshop
+- Statistics
 
 url_code: ""
 url_pdf: ""

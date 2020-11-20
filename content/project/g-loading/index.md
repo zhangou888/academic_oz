@@ -40,9 +40,9 @@ This project applied Wechsler Intelligence Scale for Children (5th) data to eval
 
 The materials below list a couple of selected examples and resource files.   
 
-* [Technical notes for g-loading](../../slides/g-loading/G-loading Notes.docx)
+* [Technical notes for g-loading](../../slides/g-loading/G_loading_Notes.docx)
 
-* [g-loading calculate spreadsheet](../../slides/g-loading/wisc5_final CFA model Omega-squared and g-loading.xlsx)
+* [g-loading calculate spreadsheet](../../slides/g-loading/wisc5_final_CFA_model_Omega_squared_and_g_loading.xlsx)
 
 * [g-loading SAS example scrpit](../../slides/g-loading/wisc5_g_loading.sas)
 

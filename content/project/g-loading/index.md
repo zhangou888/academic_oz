@@ -36,7 +36,8 @@ links:
 {{< figure src="featured.jpg" numbered="true" alt="g-loading" title="g-loading"
 caption="" >}}
 
-This project applied Wechsler Intelligence Scale for Children (5th) data to evaluate the general intelligence (g-loading).
+This project applied Wechsler Intelligence Scale for Children (5th) data to evaluate the general intelligence factor (g-loading). 
+This study intends to reveal how the general intellience factor influences different sub-domains and more.
 
 The materials below list a couple of selected examples and resource files.   
 

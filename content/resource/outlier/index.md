@@ -49,19 +49,19 @@ caption="" >}}
 
 This repository contains all the useful resources (personal opinion) I have found during my outlier detection study and research.
 
-I've spent a lot of words to discuss outlier detections in my blogs. You can find these 4 blog post below.
+I've spent a lot of words to discuss outlier detection philosophy and methods in my blogs. You can find these 4 blog posts below.
 
 1. The philosophy of outliers ([part 1](/2020/11/02/outliers-part1/)) 
 2. Outlier detection univariate methods ([part 2](/2020/11/03/outliers-part2/))
 3. Outliers detection in regression ([part 3](/2020/11/09/outliers-part3/))
 4. Outlier detection multivariate methods ([part 4](/2020/11/16/outliers-part4/))
 
-Besides above blog articles, I put my [technical notes](https://github.com/zhangou888/Outlier/blob/main/Notes/remove_outlier.docx) under 'Notes' folder. In the meantime, all the relevant online sources and useful links are saved in the [EXCEL](https://github.com/zhangou888/Outlier/blob/main/Notes/Outliers.xlsx) file.
-It includes multiple useful handouts and valuable papers. You can find these papers and handout from the 'Handout' folder.
+Besides my blog articles, I put my [technical notes](https://github.com/zhangou888/Outlier/blob/main/Notes/remove_outlier.docx) in the 'Notes' folder for your information. In the meantime, all the relevant online sources and useful links are saved in the [EXCEL](https://github.com/zhangou888/Outlier/blob/main/Notes/Outliers.xlsx) file.
+It includes multiple useful handouts and some valuable papers. You can find them in the 'Handout' folder.
 
 Among all the materials, [William G. Jacoby's handout](https://github.com/zhangou888/Outlier/blob/main/Handout/regression/Outliers_William%20G.%20Jacoby.pdf) is worthy of special mention.
 
-A lot useful 'Outlier detection' R packages are available. 
+**A lot useful 'Outlier detection' R packages are available.** 
 
 * [outliers](https://cran.r-project.org/web/packages/outliers/) is useful for the univariate outlier detection. it contains multiple statistical tests (i.e, 'grubbs', 'dixon').
 * [EnvStats](https://cran.r-project.org/web/packages/EnvStats/index.html) has 'rosner test' (`rosnerTest`).
@@ -75,7 +75,7 @@ Vertical reference lines are drawn at twice and three times the average hat valu
 * [performance](https://cran.r-project.org/web/packages/performance/index.html) offers one of the most multivariate outlier detection function-`check_outliers`. With different option keywords, this function is able to cover most of multivariate outlier detection criteria. You can find more details through the link below.
 [check_outliers](https://www.rdocumentation.org/packages/performance/versions/0.5.1/topics/check_outliers)
 
-In addition, I've listed all 9 useful R example scripts, you can download them and practice on your local R app.       
+In addition, I've listed all 9 useful R example scripts. These R scripts are great practice resources for you to understand the outlier detection process and some available methods. You can download them and practice on your local computer.       
 
 * [General Outlier Detection](https://github.com/zhangou888/Outlier/blob/main/code/outlier_analysis1.R)
 

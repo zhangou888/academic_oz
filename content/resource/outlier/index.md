@@ -54,6 +54,20 @@ It includes multiple useful handouts and valuable papers. You can find these pap
 
 Among all the materials, [William G. Jacoby's handout](https://github.com/zhangou888/Outlier/blob/main/Handout/regression/Outliers_William%20G.%20Jacoby.pdf) is worthy of special mention.
 
+A lot useful 'Outlier detection' R packages are available. 
+
+* [outliers](https://cran.r-project.org/web/packages/outliers/) is useful for the univariate outlier detection. it contains multiple statistical tests (i.e, 'grubbs', 'dixon').
+* [EnvStats](https://cran.r-project.org/web/packages/EnvStats/index.html) has 'rosner test' (`rosnerTest`).
+* [car](https://cran.r-project.org/web/packages/car/index.html) is super useful and it has a lot of wonderful functions for the outlier detection. 
+The `outlierTest()` function from the {car} package gives the most extreme observation based on the given model and allows to test whether it is an outlier.
+In addition, `car` package provides a series of graphing functions to plot outliers through `residualPlots`, `avPlots`, `qqPlot`, `influenceIndexPlot`. Among all these useful plot functions, the function-`influencePlot` deserves special mention. This function creates a bubble plot of Studentized residuals versus hat values, with the areas of the circles representing the observations proportional to the value Cook's distance.
+Vertical reference lines are drawn at twice and three times the average hat value, horizontal reference lines at -2, 0, and 2 on the Studentized-residual scale. [x-axis: Hat-value (with cutoffs), Y-axis: studentized residual, size of bubble (Cook's D).]  
+* [mvoutlier](https://cran.r-project.org/web/packages/mvoutlier/index.html) includes a variety of functions for the multivariate outlier detection.
+* [DMwR](https://cran.r-project.org/web/packages/DMwR/index.html) has a useful function-`lofactor()` which obtains local outlier factors using the LOF algorithm. 
+* [robustbase](https://cran.r-project.org/web/packages/robustbase/index.html) provides a higher level of multivariate outlider criteria calculation. For example, the function `covMcd` calculates Robust Location and Scatter Estimation via MCD.
+* [performance](https://cran.r-project.org/web/packages/performance/index.html) offers one of the most multivariate outlier detection function-`check_outliers`. With different option keywords, this function is able to cover most of multivariate outlier detection criteria. You can find more details through the link below.
+[check_outliers](https://www.rdocumentation.org/packages/performance/versions/0.5.1/topics/check_outliers)
+
 In addition, I've listed all 9 useful R example scripts, you can download them and practice on your local R app.       
 
 * [General Outlier Detection](https://github.com/zhangou888/Outlier/blob/main/code/outlier_analysis1.R)

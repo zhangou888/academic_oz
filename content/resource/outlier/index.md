@@ -49,7 +49,14 @@ caption="" >}}
 
 This repository contains all the useful resources (personal opinion) I have found during my outlier detection study and research.
 
-I put my [technical notes](https://github.com/zhangou888/Outlier/blob/main/Notes/remove_outlier.docx) under 'Notes' folder. In the meantime, all the relevant online sources and useful links are saved in the [EXCEL](https://github.com/zhangou888/Outlier/blob/main/Notes/Outliers.xlsx) file.
+I've spent a lot of words to discuss outlier detections in my blogs. You can find these 4 blog post below.
+
+1. The philosophy of outliers ([part 1](/2020/11/02/outliers-part1/)) 
+2. Outlier detection univariate methods ([part 2](/2020/11/03/outliers-part2/))
+3. Outliers detection in regression ([part 3](/2020/11/09/outliers-part3/))
+4. Outlier detection multivariate methods ([part 4](/2020/11/16/outliers-part4/))
+
+Besides above blog articles, I put my [technical notes](https://github.com/zhangou888/Outlier/blob/main/Notes/remove_outlier.docx) under 'Notes' folder. In the meantime, all the relevant online sources and useful links are saved in the [EXCEL](https://github.com/zhangou888/Outlier/blob/main/Notes/Outliers.xlsx) file.
 It includes multiple useful handouts and valuable papers. You can find these papers and handout from the 'Handout' folder.
 
 Among all the materials, [William G. Jacoby's handout](https://github.com/zhangou888/Outlier/blob/main/Handout/regression/Outliers_William%20G.%20Jacoby.pdf) is worthy of special mention.

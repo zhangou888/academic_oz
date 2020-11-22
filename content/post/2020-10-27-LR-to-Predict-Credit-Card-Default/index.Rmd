@@ -66,9 +66,7 @@ I've recently got in touch with some Statistics with other fields, besides the e
 
 This post originally came from James Hilton Jr. who used 'Default' data (The brief introduction of the 'Default' data is in the next section.) from the book `<An Introduction to Statistical Learning: With Applications in R>` and corresponding R-package-"[ISLR](https://cran.r-project.org/web/packages/ISLR/index.html)". 
 
-All I am doing here in this post is trying to understand every single piece of how  Logistic regression model is used in the finance industry. It seems fun to me to see the same model is used but **Xs** and **Ys** are given to different meaning.
-
-You can find his original post [here](https://rstudio-pubs-static.s3.amazonaws.com/124689_053566cefb744fa4bb4f35011f5b5e0f.html).
+All I am doing here in this post is trying to understand every single piece of how Logistic regression model is used in the finance industry. It seems fun to me to see the same model is used but **Xs** and **Ys** are given to different meaning.
 
 
 So, without further ado, let's begin. 

@@ -13,7 +13,7 @@ image:
   focal_point: "Smart"
   preview_only: true
   
-summary: Parallel Analysis tutorial and codes 
+summary: Outlier Detection tutorial and codes 
 
 categories: []
 tags:

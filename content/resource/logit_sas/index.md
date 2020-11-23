@@ -13,11 +13,11 @@ image:
   focal_point: "Smart"
   preview_only: true
   
-summary: Parallel Analysis tutorial and codes 
+summary: Logistic Regression and ROC in SAS 
 
 categories: []
 tags:
-- R
+- SAS
 - Statistics
 
 url_code: ""

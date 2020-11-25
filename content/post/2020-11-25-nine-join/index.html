@@ -1,0 +1,295 @@
+---
+title: 9 Join Function Example with the R {dplyr} Package
+author: Ou Zhang
+date: '2020-11-25'
+categories:
+  - R
+  - data wrangling
+  - SQL
+tags:
+  - R
+  - SQL
+slug: nine-join
+draft: no
+lastmod: '2020-11-25T10:59:01-05:00'
+featured: no
+disable_jquery: no
+image:
+  caption: ''
+  focal_point: Smart
+  preview_only: no
+output:
+  blogdown::html_page:
+    toc: yes
+    number_sections: yes
+    toc_depth: 1
+    self_contained: no
+
+---
+
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+<div id="TOC">
+<ul>
+<li><a href="#simple-example-data"><span class="toc-section-number">1</span> Simple Example Data</a></li>
+<li><a href="#load-dplyr-package"><span class="toc-section-number">2</span> Load {dplyr} package</a></li>
+<li><a href="#function-1-inner_join"><span class="toc-section-number">3</span> Function 1: inner_join</a></li>
+<li><a href="#function-2-left_join"><span class="toc-section-number">4</span> Function 2: left_join</a></li>
+<li><a href="#function-3-right_join"><span class="toc-section-number">5</span> Function 3: right_join</a></li>
+<li><a href="#function-4-full_join"><span class="toc-section-number">6</span> Function 4: full_join</a></li>
+<li><a href="#function-5-semi_join"><span class="toc-section-number">7</span> Function 5: semi_join</a></li>
+<li><a href="#function-6-anti_join"><span class="toc-section-number">8</span> Function 6: anti_join</a></li>
+<li><a href="#complex-example-1-join-multiple-data-frames"><span class="toc-section-number">9</span> Complex Example 1: Join Multiple Data Frames</a></li>
+<li><a href="#complex-example-2-join-by-multiple-columns"><span class="toc-section-number">10</span> Complex example 2: Join by Multiple Columns</a></li>
+<li><a href="#complex-example-3-join-data-delete-id"><span class="toc-section-number">11</span> Complex example 3: Join Data &amp; Delete ID</a></li>
+</ul>
+</div>
+
+<p>I always wanted to write a blog post summarizing the <code>join</code> function. A few weeks ago, one of my friends asked me questions about this function again. From this matter, I decided to go with this topic for my next blog.</p>
+<p>As you may know, <strong>join</strong> function inherit from <code>SQL</code> and most often it is used to combine or merge two tables/data frames by certain condition. However, it is a bit difficult to remember all the <strong>join</strong>-related function definitions and how they work.</p>
+<p>In this blog, I am going to provide you a series of simple examples and demonstrate how datasets are merged with the <code>join</code> functions from <code>{dplyr}</code>. In my personal opinion, <code>{dplyr}</code> is one of the most powerful data wrangling package in R.</p>
+<p>In my blog I will cover following <code>join</code> functions:</p>
+<ul>
+<li>inner_join</li>
+<li>left_join</li>
+<li>right_join</li>
+<li>full_join</li>
+<li>semi_join</li>
+<li>anti_join</li>
+</ul>
+<p>First I will explain the basic concepts of the functions and their differences. Simple examples and Venn diagrams are also provided so that you will have a clear sense about how each <code>join</code> function works. Later on, some more complex examples are provided:</p>
+<div id="simple-example-data" class="section level1">
+<h1><span class="header-section-number">1</span> Simple Example Data</h1>
+<p>Before I start with the join examples, 2 datasets are generated in R:</p>
+<pre class="r"><code># Create first example data frame (data1)
+data1 &lt;- data.frame(ID = 1:2,                      
+                    X1 = c(&quot;a1&quot;, &quot;a2&quot;),
+                    stringsAsFactors = FALSE)
+
+# Create second example data frame (data2)
+data2 &lt;- data.frame(ID = 2:3,                      
+                    X2 = c(&quot;b1&quot;, &quot;b2&quot;),
+                    stringsAsFactors = FALSE)</code></pre>
+<p>Figure 1 illustrates how these two data frames look like and how we can merge them based on the different <code>join</code> functions of the <code>{dplyr}</code> package.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig1"></span>
+<img src="figure/fig1.png" alt="Overview of the dplyr Join Functions." width="60%" />
+<p class="caption">
+Figure 1.1: Overview of the dplyr Join Functions.
+</p>
+</div>
+<p>On the top of Figure 1, you can see the structure of the example data frames. Both data frames contain two columns: The <strong>ID</strong> and one variable (e.g, X1, X2). Note that both data frames have the <code>ID=2</code> in common.</p>
+<p>On the bottom row of Figure 1, you can see <strong>how each of the join functions merges</strong> two example data frames. Figure 1 summarizes the big picture of how the <code>join</code> function family works.</p>
+</div>
+<div id="load-dplyr-package" class="section level1">
+<h1><span class="header-section-number">2</span> Load {dplyr} package</h1>
+<p>Before we can apply all the <code>join</code> functions, we need to install and load the <code>{dplyr}</code> package (I’ve already installed and loaded this package on my PC. So the load package step is just for demonstration purpose).</p>
+<pre class="r"><code># load pacakge
+library(dplyr)</code></pre>
+</div>
+<div id="function-1-inner_join" class="section level1">
+<h1><span class="header-section-number">3</span> Function 1: inner_join</h1>
+<p><code>inner_join</code> produces only the set of records that match in both Table A and Table B. It is the <strong>most commonly used</strong> join function.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig2"></span>
+<img src="figure/inner_join3.JPG" alt="Inner Join" width="60%" />
+<p class="caption">
+Figure 3.1: Inner Join
+</p>
+</div>
+<p>In this first example, I apply the <code>inner_join</code> function to our example data.</p>
+<p>In order to merge our data based on <code>inner_join</code>, we simply have to specify the names of our two data frames (i.e. data1 and data2) and the column based on which we want to merge (i.e. the column ID):</p>
+<pre class="r"><code># Apply inner_join dplyr function
+inner_join(data1, data2, by = &quot;ID&quot;)                </code></pre>
+<pre><code>##   ID X1 X2
+## 1  2 a2 b1</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:fig3"></span>
+<img src="figure/inner_join.png" alt="dplyr inner_join Function." width="60%" />
+<p class="caption">
+Figure 3.2: dplyr inner_join Function.
+</p>
+</div>
+<p>Figure 3.2 illustrates the output of the inner join that we have just performed. As you can see, the <code>inner_join</code> function merges the variables of both data frames, but retains only rows with a shared ID (i.e. <code>ID=2</code>).</p>
+<p>More precisely, this is what the R documentation is saying:</p>
+<p><img src="figure/inner_join2.png" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="function-2-left_join" class="section level1">
+<h1><span class="header-section-number">4</span> Function 2: left_join</h1>
+<p>The <code>left_join</code> function from <code>{dplyr}</code> package is similar to the <code>left outer join</code> function in <code>SQL</code>. It produces a complete set of records from Table A, with the matching records (where available) in Table B. If there is no match, the right side will contain null.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig5"></span>
+<img src="figure/left_join3.JPG" alt="left_join" width="60%" />
+<p class="caption">
+Figure 4.1: left_join
+</p>
+</div>
+<p>The <code>left_join</code> function can be applied as follows:</p>
+<pre class="r"><code># Example 2: left_join dplyr R Function
+left_join(data1, data2, by = &quot;ID&quot;)                 </code></pre>
+<pre><code>##   ID X1   X2
+## 1  1 a1 &lt;NA&gt;
+## 2  2 a2   b1</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:fig6"></span>
+<img src="figure/left_join.png" alt="dplyr left_join Function." width="60%" />
+<p class="caption">
+Figure 4.2: dplyr left_join Function.
+</p>
+</div>
+<p>The difference to the <code>inner_join</code> function is that <code>left_join</code> retains all rows of the data table, which is inserted first into the function (i.e. the X-data).</p>
+<p>Have a look at the R documentation for a precise definition:</p>
+<p><img src="figure/left_join2.png" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="function-3-right_join" class="section level1">
+<h1><span class="header-section-number">5</span> Function 3: right_join</h1>
+<p>The <code>right_join</code> function from <code>{dplyr}</code> package is similar to the <code>right outer join</code> function in <code>SQL</code>. <code>right_join</code> produces a complete set of records from Table B, with the matching records (where available) in Table A. If there is no match, the left side will contain null.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig8"></span>
+<img src="figure/right_join3.jpg" alt="right join" width="60%" />
+<p class="caption">
+Figure 5.1: right join
+</p>
+</div>
+<p>As you can see from the Venn diagram, right join is the reversed function of left join:</p>
+<pre class="r"><code># Example 3: right_join dplyr R Function
+right_join(data1, data2, by = &quot;ID&quot;)                # Apply right_join dplyr function</code></pre>
+<pre><code>##   ID   X1 X2
+## 1  2   a2 b1
+## 2  3 &lt;NA&gt; b2</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:fig9"></span>
+<img src="figure/right_join.png" alt="dplyr right_join Function." width="60%" />
+<p class="caption">
+Figure 5.2: dplyr right_join Function.
+</p>
+</div>
+<p>Figure 5.2 shows that the <code>right_join</code> function retains all rows of the data on the right side (i.e. the Y-data). If you compare <strong>left join</strong> vs. <strong>right join</strong>, you can see that both functions are keeping the rows of the opposite data.</p>
+<p>This behavior is also documented in the definition of right_join below:</p>
+<p><img src="figure/right_join2.png" width="60%" style="display: block; margin: auto;" /></p>
+<p>So what if we want to keep all rows of our data tables?</p>
+</div>
+<div id="function-4-full_join" class="section level1">
+<h1><span class="header-section-number">6</span> Function 4: full_join</h1>
+<p>The <code>full_join</code> function from <code>{dplyr}</code> package is similar to the <code>full outer join</code> function in <code>SQL</code>. It produces the set of all records in Table A and Table B, with matching records from both sides where available. If there is no match, the missing side will contain null.</p>
+<div class="figure" style="text-align: center"><span id="fig:fig11"></span>
+<img src="figure/full_join3.JPG" alt="full join" width="60%" />
+<p class="caption">
+Figure 6.1: full join
+</p>
+</div>
+<p>A <code>full_join</code> retains the most data of all the join functions. Let’s have a look:</p>
+<pre class="r"><code># Example 4: full_join dplyr R Function
+full_join(data1, data2, by = &quot;ID&quot;)                 </code></pre>
+<pre><code>##   ID   X1   X2
+## 1  1   a1 &lt;NA&gt;
+## 2  2   a2   b1
+## 3  3 &lt;NA&gt;   b2</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:fig12"></span>
+<img src="figure/full_join.png" alt="dplyr full_join Function." width="60%" />
+<p class="caption">
+Figure 6.2: dplyr full_join Function.
+</p>
+</div>
+<p>As Figure 6.2 illustrates, the <code>full_join</code> functions retains all rows of both input data sets and inserts NA when an ID is missing in one of the data frames.</p>
+<p>You can find the help documentation of <code>full_join</code> below:</p>
+<p><img src="figure/full_join2.png" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="function-5-semi_join" class="section level1">
+<h1><span class="header-section-number">7</span> Function 5: semi_join</h1>
+<p>The four previous join functions (i.e. <strong>inner_join, left_join, right_join</strong>, and <strong>full_join</strong>) are so called <strong>mutating joins</strong>. Mutating joins combine variables from the two data sources.</p>
+<p>The next two join functions (i.e. <code>semi_join</code> and <code>anti_join</code>) are so called <strong>filtering joins</strong>. Filtering joins keep cases from the left data table (i.e. the X-data) and use the right data (i.e. the Y-data) as <strong>filter</strong>.</p>
+<p>Let’s have a look at semi join first:</p>
+<div class="figure" style="text-align: center"><span id="fig:fig14"></span>
+<img src="figure/semi_join3.JPG" alt="semi join" width="60%" />
+<p class="caption">
+Figure 7.1: semi join
+</p>
+</div>
+<pre class="r"><code># Example 5: semi_join dplyr R Function (filtering joins)
+# Only keep the variable from data1
+semi_join(data1, data2, by = &quot;ID&quot;)                 # Apply semi_join dplyr function</code></pre>
+<pre><code>##   ID X1
+## 1  2 a2</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:fig15"></span>
+<img src="figure/semi_join.png" alt="dplyr semi_join Function." width="60%" />
+<p class="caption">
+Figure 7.2: dplyr semi_join Function.
+</p>
+</div>
+<p>Figure 7.2 illustrates what is happening here: The <code>semi_join</code> function retains <strong>only rows that both data frames have in common</strong> AND <strong>only columns of the left-hand data frame</strong>. You can find a precise definition of semi join below:</p>
+<p><img src="figure/semi_join2.png" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="function-6-anti_join" class="section level1">
+<h1><span class="header-section-number">8</span> Function 6: anti_join</h1>
+<p><code>anti_join</code> does the opposite of <code>semi_join</code>:</p>
+<div class="figure" style="text-align: center"><span id="fig:fig17"></span>
+<img src="figure/anti_join3.JPG" alt="anti join" width="60%" />
+<p class="caption">
+Figure 8.1: anti join
+</p>
+</div>
+<pre class="r"><code># Example 6: anti_join dplyr R Function (Only keep the variable from data1)
+anti_join(data1, data2, by = &quot;ID&quot;)                 # Apply anti_join dplyr function</code></pre>
+<pre><code>##   ID X1
+## 1  1 a1</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:fig18"></span>
+<img src="figure/anti_join.png" alt="dplyr anti_join Function." width="60%" />
+<p class="caption">
+Figure 8.2: dplyr anti_join Function.
+</p>
+</div>
+<p>As you can see, the <code>anti_join</code> functions keeps <strong>only rows that are non-existent in the right-hand data</strong> AND <strong>keeps only columns of the left-hand data</strong>. The R help documentation of anti join is shown below:</p>
+<p><img src="figure/anti_join2.png" width="60%" style="display: block; margin: auto;" /></p>
+<p>At this point, you have seen the basic principles of the <strong>six dplyr join functions</strong>. However, in practice the data is of cause much more complex than in the previous examples.</p>
+<p>In the remaining blog, I will apply the join functions in more complex data situations.</p>
+</div>
+<div id="complex-example-1-join-multiple-data-frames" class="section level1">
+<h1><span class="header-section-number">9</span> Complex Example 1: Join Multiple Data Frames</h1>
+<p>To make the remaining examples a bit more complex, I’m going to create a third data frame:</p>
+<pre class="r"><code>data3 &lt;- data.frame(ID = c(2, 4),                   # Create third example data frame
+                    X2 = c(&quot;c1&quot;, &quot;c2&quot;),
+                    X3 = c(&quot;d1&quot;, &quot;d2&quot;),
+                    stringsAsFactors = FALSE)
+data3                                               # Print data to RStudio console</code></pre>
+<pre><code>##   ID X2 X3
+## 1  2 c1 d1
+## 2  4 c2 d2</code></pre>
+<p>The third data frame data3 also contains an <code>ID</code> column as well as the variables <code>X2</code> and <code>X3</code>. Note that the variable <code>X2</code> also exists in data2.</p>
+<p>In this example, I’ll explain how to merge multiple data sources into a single data set.</p>
+<p>For the following examples, I am going to us the <code>full_join</code> function, but we could use every other join function the same way:</p>
+<pre class="r"><code># how to merge multiple data sources 
+full_join(data1, data2, by = &quot;ID&quot;) %&gt;%  # Full outer join of multiple data frames
+  full_join(., data3, by = &quot;ID&quot;) </code></pre>
+<pre><code>##   ID   X1 X2.x X2.y   X3
+## 1  1   a1 &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;
+## 2  2   a2   b1   c1   d1
+## 3  3 &lt;NA&gt;   b2 &lt;NA&gt; &lt;NA&gt;
+## 4  4 &lt;NA&gt; &lt;NA&gt;   c2   d2</code></pre>
+<p>As you can see based on the previous code and the RStudio console output:</p>
+<ol style="list-style-type: decimal">
+<li>We first merged data1 and data2 and then,</li>
+<li>in the second line of code, we added data3.</li>
+</ol>
+<p>Note that X2 was duplicated, since it exists in data1 and data2 simultaneously. In the next example, I’ll show you how you might deal with that.</p>
+</div>
+<div id="complex-example-2-join-by-multiple-columns" class="section level1">
+<h1><span class="header-section-number">10</span> Complex example 2: Join by Multiple Columns</h1>
+<p>As you have seen in the previous example, data2 and data3 share several variables (i.e. ID and X2). If we want to combine two data frames based on multiple columns, we can select several joining variables for the by option simultaneously:</p>
+<pre class="r"><code># Example 8: Join by Multiple Columns
+full_join(data2, data3, by = c(&quot;ID&quot;, &quot;X2&quot;))         # Join by multiple columns</code></pre>
+<pre><code>##   ID X2   X3
+## 1  2 b1 &lt;NA&gt;
+## 2  3 b2 &lt;NA&gt;
+## 3  2 c1   d1
+## 4  4 c2   d2</code></pre>
+<p>Note: The row of ID No. 2 was replicated, since the row with this ID contained different values in data2 and data3.</p>
+</div>
+<div id="complex-example-3-join-data-delete-id" class="section level1">
+<h1><span class="header-section-number">11</span> Complex example 3: Join Data &amp; Delete ID</h1>
+<p>In the last example, I want to show you a simple trick, which can be helpful in practice. Often you won’t need the ID, based on which the data frames where joined, anymore. In order to get rid of the ID efficiently, you can simply use the following code:</p>
+<pre class="r"><code># Example 9: Join Data &amp; Delete ID
+inner_join(data1, data2, by = &quot;ID&quot;) %&gt;%              # Automatically delete ID
+  select(- ID)</code></pre>
+<pre><code>##   X1 X2
+## 1 a2 b1</code></pre>
+<p>That’s all I like to share. Thank you for reading.</p>
+<p>I have also created a github repo, called-<a href="https://github.com/zhangou888/nine_join">nine_join</a> and uploaded all the useful materials for you to have a better understanding of the <code>join</code> function family.</p>
+<p>You can download the example R script from this link: <a href="https://github.com/zhangou888/nine_join/blob/main/code/nine_join.r">Code</a>.</p>
+<p>And some supplementary handouts are saved at <a href="https://github.com/zhangou888/nine_join/tree/main/Handout">Handout</a>.</p>
+<p>All the best~</p>
+</div>

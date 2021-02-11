@@ -18,12 +18,32 @@ date_format = "January 2006"
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 [[experience]]
+  title = "Model Analyst I"
+  company = "The United Services Automobile Association"
+  company_url = "https://www.usaa.com/"
+  location = "San Antonio, Texas"
+  date_start = "2021-01-19"
+  date_end = ""
+  description = """
+  
+  Responsibilities include:
+  
+  * Develop, enhance and support implementation of statistical and other quantitative models to support forecasting, member behavior based scoring and other business applications
+  * Utilize in-depth understanding toward technical issues in econometric and statistical modeling and apply them toward solving business problems
+  * Proficient in the model development process and builds relationships with the business customer: from conceptualization through data exploration, model selection and validation, implementation, business user training and support
+  * Manage model lifecycle process with ability to apply to models
+  * Monitor statistical model performance and provide technical guidance to business leadership
+  * Communicate technical subject matter clearly and concisely to individuals from various backgrounds
+  
+"""
+
+[[experience]]
   title = "Data Scientist & Research Scientist"
   company = "Pearson Psychometrics Service"
   company_url = "https://www.pearsonassessments.com/"
   location = "San Antonio, Texas"
   date_start = "2017-03-27"
-  date_end = ""
+  date_end = "2021-1-15"
   description = """Member of the Pearson psychometric team working across multiple projects including the 
   [NY Regents](https://www.regents.nysed.gov/), 
   [The Partnership for Assessment of Readiness for College and Careers (PARCC)](https://en.wikipedia.org/wiki/PARCC),
@@ -59,6 +79,7 @@ date_format = "January 2006"
   * Evaluated and interpreted the statistical and psychometric analysis results for the internal stakeholders and research development
   * Authored technical documentations and statistical reports for the Pearson measurement projects
   * Motored and supervised psychometric teams including guiding psychometrician and statistical analysts in completing assignments and building up necessary statistical analysis and modeling techniques
+  
 """
   
 [[experience]]

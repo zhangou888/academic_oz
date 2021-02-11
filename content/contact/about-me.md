@@ -52,8 +52,11 @@ I am originally from Chengdu, China and was graduated from [Chendu University of
 
 After college, I studied psychology, psychometrics, and quantitative methods, receiving my MEd. from [Boston College](https://www.bc.edu/) (2007), and Ph.D. from [University of Florida](https://www.uf.edu/) (2012). 
 
-I am now a data scientist and psychometrician at [Pearson Psychometrics Service](https://www.pearson.com/). 
-Prior to that, I was the psychometrician II and team lead at [Pearson Clinical Assessment](https://www.pearsonassessments.com/professional-assessments.html), and the research fellow at [Assessment and Program Evaluation Services, University of Florida](https://education.ufl.edu/capes/).
+I am now a model analyst I at [the United Services Automobile Association (USAA)](https://www.usaa.com/).
+
+Prior to that, I was a data scientist and psychometrician (2017-2020) at [Pearson Psychometrics Service](https://www.pearson.com/). 
+
+I was the psychometrician II and team lead (2012-2016) at [Pearson Clinical Assessment](https://www.pearsonassessments.com/professional-assessments.html), and the research fellow (2008-2012) at [Assessment and Program Evaluation Services, University of Florida](https://education.ufl.edu/capes/).
 
 <p align="center">
 	<img src="wisc5_int.jpg" class="center-block" alt="One assessment project I led is published" style="width:60%;height:30%;">

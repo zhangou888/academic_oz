@@ -10,22 +10,23 @@ authors:
 superuser: true
 
 # Role/position
-role: Research Scientist &  Data Scientist
+role: Model Analyst I
 
 # Organizations/Affiliations
 organizations:
-- name: Pearson Psychometrics Service
-  url: https://www.pearsonassessments.com/
+- name: USAA
+  url: https://www.usaa.com/
 
 # Short bio (displayed in user profile at end of posts)
-bio: I'm a research scientist, psychometrician, and data scientist, who loves psychometrics, applied statistics, general data science, and programming.
+bio: Currently, I'm a model analyst I at USAA. I self-claimed myself as a data scientist, psychometrician, and statistician, who loves psychometrics, applied statistics, general data science, and programming.
 
 interests:
-- Psychometrics
-- Applied Statistics
 - Data Science
+- Applied Statistics
 - Machine Learning
 - Data Visualization
+- Psychometrics
+
 
 education:
   courses:
@@ -78,12 +79,12 @@ user_groups:
 - Researchers
 - Visitors
 ---
-I am a data scientist and psychometrician at [Pearson](https://www.pearsonassessments.com/). My research interests include psychometrics, applied statistics, data visualization, machine learning, and general data science. My current work mainly focuses on data science, psychometrics modeling, statistical analysis, testing development, and consulting. 
+I am a model analyst at [USAA](https://www.usaa.com/). My research interests include applied statistics, data visualization, machine learning, general data science, and psychometrics. My current work mainly focuses on data science, psychometrics modeling, statistical analysis, testing development, and consulting. 
 
 I received my PhD in Educational Research, Evaluation, and Methodology from [University of Florida](http://www.ufl.edu/) in 2012. 
 
-Prior to joining Pearson Psychometrics Service,  I was a Psychometrician II and team lead at clinical assessment branch in Pearson. While at clinical branch, I led multiple flagship clinical assessment products, including WISC-5, GFTA-3, KLPA-3, Quotient ADHD diagnosis test, TEACH-2 Behavior test. 
+Prior to joining USAA, I was a research scientist (2017-2020) at Pearson Psychometrics Service and Psychometrician II and team lead (2012-2017) at clinical assessment branch in Pearson. While at clinical branch, I led multiple flagship clinical assessment products, including WISC-5, GFTA-3, KLPA-3, Quotient ADHD diagnosis test, TEACH-2 Behavior test. 
 
-Outside of psychometrics and data science, I am also a programming lover, a sports fan, and a father of two wonderful kids.
+Outside of data science and applied statistics, I am also a programming lover, a sports fan, and a father of two wonderful kids.
 
 
